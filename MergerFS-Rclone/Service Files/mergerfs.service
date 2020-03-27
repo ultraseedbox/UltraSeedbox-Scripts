@@ -1,0 +1,15 @@
+[Unit]
+Description = MergerFS Mount
+After=rclone-vfs.service
+RequiresMountsFor=/homexx/yyyyy/Stuff/Local
+RequiresMountsFor=/homexx/yyyyy/Stuff/Mount
+
+[Service]
+Type=forking
+KillMode=none
+ExecStart=/homexx/yyyyy/bin/mergerfs /homexx/yyyyy/Stuff/Local:/homexx/yyyyy/Stuff/Mount /homexx/yyyyy/MergerFS -o rw,async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true,threads=12
+ExecStop=/bin/fusermount -uz /homexx/yyyyy/MergerFS
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
