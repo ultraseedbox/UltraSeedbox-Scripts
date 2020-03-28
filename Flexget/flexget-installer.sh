@@ -13,11 +13,12 @@ source "$HOME"/flexget/bin/activate
 if command -v flexget ;
 then
     echo "Flexget installed"
-    sleep 1
     mkdir -p "$HOME"/.config/flexget
-    flexget
+    sleep 1
+    echo ""
     echo "If you need to use cron, the full path of flexget is"
     echo "$HOME/flexget/bin/flexget"
+    echo ""
     echo "Make your first YAML by doing"
     echo "nano $HOME/.config/flexget/config.yml"
     exit
