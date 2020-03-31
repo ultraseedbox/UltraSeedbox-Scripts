@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# rclone Installer/Updater by Xan#7777
+# rclone stable Installer/Updater by Xan#7777
 
 if pgrep "rclone";
 then
@@ -10,9 +10,9 @@ else
     echo "Installing/Upgrading rclone stable..."
     mkdir -p "$HOME"/.rclone-tmp
     cd "$HOME"/.rclone-tmp || exit
-    wget https://downloads.rclone.org/v1.50.2/rclone-v1.50.2-linux-amd64.zip
-    unzip rclone-v1.50.2-linux-amd64.zip
-    cp "$HOME"/.rclone-tmp/rclone-v1.50.2-linux-amd64/rclone "$HOME"/bin
+    wget https://downloads.rclone.org/rclone-current-linux-amd64.zip
+    unzip rclone-current-linux-amd64.zip
+    cp "$HOME"/.rclone-tmp/rclone-current-linux-amd64/rclone "$HOME"/bin
     cd "$HOME" || exit
     rm -rf "$HOME"/.rclone-tmp
     command -v rclone
