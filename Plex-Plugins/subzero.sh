@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Subzero Installer/Updater by Liara#9557 and Xan#7777
+
 plugindir=$HOME/.config/plex/Library/Application\ Support/Plex\ Media\ Server/Plug-ins/
 
 if [ ! -d "$HOME/.config/plex/" ];
@@ -11,7 +13,7 @@ fi
 if [[ -d "$plugindir/Sub-Zero.bundle" ]];
 then
     echo "Sub-zero found. Upgrading..."
-    cd "$plugindir/Sub-Zero.bundle" || exit
+    cd "$plugindir/Sub-Zero.bundle/" || exit
     git pull
     app-plex restart
     sleep 15

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Hama Bundle and Absolute Series Scanner Installer/Updater by Liara#9557 and Xan#7777
+
 plugindir=$HOME/.config/plex/Library/Application\ Support/Plex\ Media\ Server/Plug-ins/
 scannerdir=$HOME/.config/plex/Library/Application\ Support/Plex\ Media\ Server/Scanners/Series
 supportdir=$HOME/.config/plex/Library/Application\ Support/Plex\ Media\ Server/Plug-in\ Support/Data/com.plexapp.agents.hama/DataItems/
@@ -13,7 +15,7 @@ fi
 if [[ -f "$scannerdir/Absolute Series Scanner.py" && -d "$supportdir" && -d "$plugindir/Hama.bundle" ]];
 then
   echo "HAMA Found. Upgrading..."
-  cd "$plugindir/Hama.bundle" || exit
+  cd "$plugindir/Hama.bundle/" || exit
   git pull
   rm -rf "$scannerdir/Absolute Series Scanner.py"
   wget -O "$scannerdir/Absolute Series Scanner.py" https://raw.githubusercontent.com/ZeroQI/Absolute-Series-Scanner/master/Scanners/Series/Absolute%20Series%20Scanner.py

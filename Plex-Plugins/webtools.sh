@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Webtools Installer/Updater by Liara#9557 and Xan#7777
+
 plugindir=$HOME/.config/plex/Library/Application\ Support/Plex\ Media\ Server/Plug-ins/
 supportdir=$HOME/.config/plex/Library/Application\ Support/Plex\ Media\ Server/Plug-in\ Support/
 
@@ -12,7 +14,7 @@ fi
 if [ -d "$plugindir/WebTools.bundle" ];
 then
   echo "Webtools Found. Upgrading..."
-  cd "$plugindir/WebTools.bundle" || exit
+  cd "$plugindir/WebTools.bundle/" || exit
   git pull
   rm -rf "$supportdir/Caches/com.plexapp.plugins.WebTools"
   rm -rf "$supportdir/Data/com.plexapp.plugins.WebTools"
