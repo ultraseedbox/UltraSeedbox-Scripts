@@ -5,8 +5,6 @@ After=network-online.target
 
 [Service]
 Type=notify
-KillMode=none
-Environment=GOMAXPROCS=2
 
 ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --config=/homexx/yyyyy/.config/rclone/rclone.conf \
