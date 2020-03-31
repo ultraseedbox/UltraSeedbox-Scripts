@@ -2,7 +2,7 @@
 Description=RClone Uploader
 
 [Service]
-Type=notify
+Type=simple
 
 ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --config=/homexx/yyyyy/.config/rclone/rclone.conf \
