@@ -19,7 +19,6 @@ ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --transfers=2 \
     --checkers=4 \
     --log-file /homexx/yyyyy/scripts/rclone-uploader.log
-ExecStop=/usr/bin/pgrep -a rclone | /bin/grep -v 'mount' | /usr/bin/awk '{ print $2 }' | /usr/bin/xargs /bin/kill
 Restart=on-failure
 
 [Install]
