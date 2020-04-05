@@ -20,7 +20,7 @@ tar xvf "$PACKAGE_FILE"
 sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-Xmx1536m\"' filebot.sh
 
 # Check if filebot.sh works
-"$PWD/filebot.sh" -script https://raw.githubusercontent.com/no5tyle/UltraSeedbox-Scripts/master/FileBot/usbsysinfo.groovy
+"$PWD/filebot.sh" -script https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/usbsysinfo.groovy
 
 # Link into user $PATH
 ln -sf "$PWD/filebot.sh" $HOME/bin/filebot
