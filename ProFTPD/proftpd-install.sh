@@ -104,9 +104,9 @@ systemctl --user start proftpd
 
 echo "Downloading Scripts..."
 cd ~
-wget -q https://raw.githubusercontent.com/no5tyle/UltraSeedbox-Scripts/master/ProFTPD/proftpd-uninstall.sh
+wget -q https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/ProFTPD/proftpd-uninstall.sh
 chmod +x proftpd-uninstall.sh
-wget -q https://raw.githubusercontent.com/no5tyle/UltraSeedbox-Scripts/master/ProFTPD/proftpd-users.sh
+wget -q https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/ProFTPD/proftpd-users.sh
 chmod +x proftpd-users.sh
 
 echo "Cleaning Up..."
