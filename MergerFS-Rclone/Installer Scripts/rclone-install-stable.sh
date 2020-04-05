@@ -12,7 +12,7 @@ else
     cd "$HOME"/.rclone-tmp || exit
     wget https://downloads.rclone.org/rclone-current-linux-amd64.zip
     unzip rclone-current-linux-amd64.zip
-    cp "$HOME"/.rclone-tmp/rclone-current-linux-amd64/rclone "$HOME"/bin
+    cp "$HOME"/.rclone-tmp/rclone-v*/rclone "$HOME"/bin
     cd "$HOME" || exit
     rm -rf "$HOME"/.rclone-tmp
     command -v rclone
