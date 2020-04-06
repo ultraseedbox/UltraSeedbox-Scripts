@@ -1,21 +1,31 @@
-## FileBot AMC
+# FileBot AMC Script
 
-### Prerequisites
+AMC scripts automatically organizes your latest torrent downloads to your library. Once a torrent finishes downloading, by default the scripts do the following:
+
+* Unpack archives to `~/files/_extracted`
+* Auto-detect movie and episode files
+* Fetch subtitles and transcode to SubRip/UTF-8
+* Creates a symbolic link and organize episodes, movies and music files to `~/media`
+
+You can also edit the scripts to your liking to automate more of your setup. For more information on that, you can visit [this link](https://www.filebot.net/cli.html) for more information.
+
+## Prerequisites
 
 Before adding the scripts, make sure to do the following:
 
 1. SSH in and create a folder to save your AMC scripts by doing `mkdir -p ~/scripts/amc`
-2. Then choose the following script based on the torrent client you used.
+2. Uninstall Filebot from the UCP if you have it installed.
+3. Then choose the following script based on the torrent client you used.
 
-### AMC Scripts
-#### rtorrent
+## AMC Scripts
+### rtorrent
 
 1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/AMC/rtorrent-amc.sh && chmod +rx ~/scripts/amc/rtorrent-amc.sh`
 2. `sed -i '/method.set_key = event.download.finished,filebot/d' ~/.config/rtorrent/rtorrent.rc`
 3. `echo 'method.set_key = event.download.finished,filebot,"execute.nothrow=~/scripts/amc/rtorrent-amc.sh,$d.base_path=,$d.name=,$d.custom1="' >> ~/.config/rtorrent/rtorrent.rc`
 4. `app-rtorrent restart` to apply the changes
 
-#### Deluge
+### Deluge
 
 1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/AMC/deluge-amc.sh && chmod +rx ~/scripts/amc/deluge-amc.sh`
 2. `readlink -f ~/scripts/amc/deluge-amc.sh` and copy the output
@@ -25,4 +35,5 @@ Before adding the scripts, make sure to do the following:
 Event: Torrent Complete
 Command: paste the output of readlink -f ~/scripts/amc/deluge-amc.sh (eg. /homexx/username/amc/scripts/deluge-amc.sh)
 ```
+
 4. Press OK and `app-deluge restart`
