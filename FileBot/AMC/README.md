@@ -17,7 +17,7 @@ Before adding the scripts, make sure to do the following:
 #### Deluge
 
 1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/filebot-amc/FileBot/AMC/deluge-amc.sh && chmod +rx ~/scripts/amc/deluge-amc.sh`
-2. `~/scripts/amc/deluge-amc.sh` and copy the output
+2. `readlink -f ~/scripts/amc/deluge-amc.sh` and copy the output
 3. In Deluge, Go to Preferences -> Execute. Set the following:
 
 ```
