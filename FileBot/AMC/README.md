@@ -10,14 +10,14 @@ Before adding the scripts, make sure to do the following:
 ### AMC Scripts
 #### rtorrent
 
-1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/filebot-amc/FileBot/AMC/rtorrent-amc.sh && chmod +rx ~/scripts/amc/rtorrent-amc.sh`
+1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/AMC/rtorrent-amc.sh && chmod +rx ~/scripts/amc/rtorrent-amc.sh`
 2. `sed -i '/method.set_key = event.download.finished,filebot/d' ~/.config/rtorrent/rtorrent.rc`
 3. `echo 'method.set_key = event.download.finished,filebot,"execute.nothrow=~/scripts/amc/rtorrent-amc.sh,$d.base_path=,$d.name=,$d.custom1="' >> ~/.config/rtorrent/rtorrent.rc`
 4. `app-rtorrent restart` to apply the changes
 
 #### Deluge
 
-1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/filebot-amc/FileBot/AMC/deluge-amc.sh && chmod +rx ~/scripts/amc/deluge-amc.sh`
+1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/AMC/deluge-amc.sh && chmod +rx ~/scripts/amc/deluge-amc.sh`
 2. `readlink -f ~/scripts/amc/deluge-amc.sh` and copy the output
 3. In Deluge, Go to Preferences -> Execute. Set the following:
 
