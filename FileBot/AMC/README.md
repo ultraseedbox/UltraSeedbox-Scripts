@@ -37,3 +37,11 @@ Command: paste the output of readlink -f ~/scripts/amc/deluge-amc.sh (eg. /homex
 ```
 
 4. Press OK and `app-deluge restart`
+
+### Transmission
+
+1. `app-transmission stop`
+2. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/AMC/transmission-amc.sh && chmod +rx ~/scripts/amc/transmission-amc.sh`
+3. `sed -i 's#^    "script-torrent-done-enabled".*#    "script-torrent-done-enabled": true,#' "$HOME"/.config/transmission-daemon/settings.json`
+4. `sed -i 's#^    "script-torrent-done-filename".*#    "script-torrent-done-filename": "'"$HOME"'/scripts/amc/transmission-amc.sh",#' "$HOME"/.config/transmission-daemon/settings.json`
+5. `app-transmission restart`
