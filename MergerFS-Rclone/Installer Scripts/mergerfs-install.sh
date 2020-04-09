@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# MergerFS Installer/Updater by Xan#7777 and doob187@GitHub
-
-mgversion="$(curl -s https://api.github.com/repos/trapexit/mergerfs/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')"
+# MergerFS 2.28.3 Installer/Updater by Xan#7777
 
 if pgrep "mergerfs";
 then
@@ -11,7 +9,7 @@ then
 else
     echo "mergerfs is installing/upgrading..."
     mkdir -p "$HOME"/tmp
-    wget https://github.com/trapexit/mergerfs/releases/download/"$mgversion"/mergerfs_"$mgversion".debian-stretch_amd64.deb -O "$HOME"/tmp/mergerfs.deb
+    wget https://github.com/trapexit/mergerfs/releases/download/2.29.0/mergerfs_2.29.0.debian-stretch_amd64.deb -O "$HOME"/tmp/mergerfs.deb
     dpkg -x "$HOME"/tmp/mergerfs.deb "$HOME"/tmp
     mv "$HOME"/tmp/usr/bin/* "$HOME"/bin
     rm -rf "$HOME"/tmp
