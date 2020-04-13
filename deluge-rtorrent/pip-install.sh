@@ -8,5 +8,4 @@ echo "Done."
 echo "Installer needs to logout your SSH session to properly apply the changes."
 echo "Please login to your slot's SSH again. Logging out..."
 sleep 5
-logout
 exit
