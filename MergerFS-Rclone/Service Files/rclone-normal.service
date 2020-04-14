@@ -10,15 +10,9 @@ Environment=GOMAXPROCS=2
 
 ExecStart=/homexx/yyyyy/bin/rclone mount remote: /homexx/yyyyy/Stuff/Mount \
   --allow-other \
-  --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36' \
+  --user-agent='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36' \
   --config /homexx/yyyyy/.config/rclone/rclone.conf \
-  --use-mmap \
-  --dir-cache-time 168h \
-  --timeout 1h \
-  --umask 002 \
-  --poll-interval=1m \
-  --tpslimit 10 \
-  --tpslimit-burst 10
+  --use-mmap
 ExecStop=/bin/fusermount -uz /homexx/yyyyy/Stuff/Mount
 Restart=on-failure
 
