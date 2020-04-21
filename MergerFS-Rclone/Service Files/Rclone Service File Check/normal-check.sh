@@ -14,5 +14,4 @@ case $option in
   2) cat "$HOME"/.config/systemd/user/rclone-normal.service | sed -n '/^ExecStop=/,$p' | sed -n '/^Restart=/q;p' | sed 's/^ExecStop=//g' ;;
   3) cat "$HOME"/.config/systemd/user/rclone-normal.service | sed -n '/^ExecStart=/,$p' | sed -n '/^ExecStop=/q;p' | sed 's/^ExecStart=//g' | bash ;;
   4) exit 0 ;;
-  *) echo "Wrong option $option"
 esac
