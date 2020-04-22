@@ -13,7 +13,7 @@ You can also edit the scripts to your liking to automate more of your setup. For
 
 Before adding the scripts, make sure to do the following:
 
-1. Uninstall Filebot from the UCP if you have it installed.
+1. Uninstall FileBot from the UCP if you have it installed.
 2. SSH in and create a folder to save your AMC scripts by doing `mkdir -p ~/scripts/amc`
 2. Then choose the following script based on the torrent client you used.
 
