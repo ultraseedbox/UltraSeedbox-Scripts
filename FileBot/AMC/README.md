@@ -1,4 +1,4 @@
-# FileBot AMC Script
+# FileBot AMC Scripts
 
 AMC scripts automatically organizes your latest torrent downloads to your library. Once a torrent finishes downloading, by default the scripts do the following:
 
@@ -13,9 +13,9 @@ You can also edit the scripts to your liking to automate more of your setup. For
 
 Before adding the scripts, make sure to do the following:
 
-1. SSH in and create a folder to save your AMC scripts by doing `mkdir -p ~/scripts/amc`
-2. Uninstall Filebot from the UCP if you have it installed.
-3. Then choose the following script based on the torrent client you used.
+1. Uninstall Filebot from the UCP if you have it installed.
+2. SSH in and create a folder to save your AMC scripts by doing `mkdir -p ~/scripts/amc`
+2. Then choose the following script based on the torrent client you used.
 
 ## AMC Scripts
 ### rtorrent
@@ -44,4 +44,4 @@ Command: paste the output of readlink -f ~/scripts/amc/deluge-amc.sh (eg. /homex
 2. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/AMC/transmission-amc.sh && chmod +rx ~/scripts/amc/transmission-amc.sh`
 3. `sed -i 's#^    "script-torrent-done-enabled".*#    "script-torrent-done-enabled": true,#' "$HOME"/.config/transmission-daemon/settings.json`
 4. `sed -i 's#^    "script-torrent-done-filename".*#    "script-torrent-done-filename": "'"$HOME"'/scripts/amc/transmission-amc.sh",#' "$HOME"/.config/transmission-daemon/settings.json`
-5. `app-transmission restart`
+5. `app-transmission restart` to apply the changes
