@@ -16,6 +16,8 @@ from twisted.internet import reactor, defer
 home_dir = os.environ['HOME']
 host_name = socket.gethostname()
 host_ip = socket.gethostbyname(host_name)
+import logging
+logging.basicConfig()
 
 #######################################################
 # Customize
