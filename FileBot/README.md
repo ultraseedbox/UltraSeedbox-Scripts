@@ -17,7 +17,7 @@ You can install this version using the instructions below:
 ## Version 4.9.0
 You can install this version using the instructions below:
 
-1. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-490-installer.sh)"`
+1. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-491-installer.sh)"`
 2. `filebot --license /path/to/FileBot_License_P1234567.psm`
 
 ## AMC/ Torrent Client Post-processing
