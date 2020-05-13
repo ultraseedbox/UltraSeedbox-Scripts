@@ -7,7 +7,7 @@ AMC scripts automatically organizes your latest torrent downloads to your librar
 * Fetch subtitles and transcode to SubRip/UTF-8
 * Creates a symbolic link and organize episodes, movies and music files to `~/media`
 
-You can also edit the scripts to your liking to automate more of your setup. For more information on that, you can visit [this link](https://www.filebot.net/cli.html) for more information.
+You can also edit the scripts to your liking to automate more of your setup. For more information on AMC options, you can visit [this link](https://www.filebot.net/forums/viewtopic.php?t=215) for more information.
 
 ## Prerequisites
 
