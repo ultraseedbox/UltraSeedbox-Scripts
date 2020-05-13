@@ -1,5 +1,4 @@
 # FileBot
-
 ## Prerequisites
 
 For the installers and the AMC scripts hosted here to work, you may have to do the following:
@@ -7,22 +6,23 @@ For the installers and the AMC scripts hosted here to work, you may have to do t
 * Uninstall FileBot from the UCP
 * Purchase a FileBot License and upload it to your slot using FTPS/SFTP
 
-## Version 4.8.5 (Recommended)
+## Installation
+### Version 4.9.1 (Latest) (Recommended)
+You can install this version using the instructions below:
+
+1. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-491-installer.sh)"`
+2. `filebot --license /path/to/FileBot_License_P1234567.psm`
+
+### Version 4.8.5 (old-stable)
 You can install this version using the instructions below:
 
 1. `mkdir filebot-portable && cd filebot-portable`
 2. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-485-installer.sh)"`
 3. `filebot --license /path/to/FileBot_License_P1234567.psm`
 
-## Version 4.9.0
-You can install this version using the instructions below:
+### AMC/ Torrent Client Post-processing
 
-1. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-491-installer.sh)"`
-2. `filebot --license /path/to/FileBot_License_P1234567.psm`
-
-## AMC/ Torrent Client Post-processing
-
-If you're using FileBot for your torrent client post-processing, refer to the AMC folder.
+If you're using FileBot for your torrent client post-processing, refer to the [AMC folder.](https://github.com/ultraseedbox/UltraSeedbox-Scripts/tree/master/FileBot/AMC)
 
 ## Issues/Bugs
 
