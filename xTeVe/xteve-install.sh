@@ -5,8 +5,10 @@
 
 # Create Folders
 mkdir -p "$HOME"/bin
+mkdir -p "$HOME"/.xteve-tmp
 
 # xTeve Extract
+cd "$HOME"/.xteve-tmp || exit
 wget https://xteve.de/download/xteve_2_linux_amd64.zip
 unzip xteve_2_linux_amd64.zip -d "$HOME"/bin/
 
@@ -51,6 +53,9 @@ WantedBy=default.target" > "$HOME/.config/systemd/user/xteve.service"
 systemctl --user daemon-reload
 systemctl --user start xteve.service
 systemctl --user enable xteve.service
+
+# Cleanup
+rm -rfv "$HOME"/.xteve-tmp
 
 echo ""
 echo ""
