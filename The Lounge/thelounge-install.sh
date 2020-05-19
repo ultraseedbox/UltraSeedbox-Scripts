@@ -63,5 +63,12 @@ systemctl --user enable thelounge.service
 
 echo ""
 echo ""
+echo "Installation complete."
 echo "You can access it via https://$USER.$HOSTNAME.usbx.me/thelounge"
-echo "run the command thelounge add <name> to add a username before accessing The Lounge"
+echo "Run the command below to add username before accessing The Lounge"
+echo ""
+echo "============================="
+echo "thelounge add <name>"
+echo "============================="
+
+exit
