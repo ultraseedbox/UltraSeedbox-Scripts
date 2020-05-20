@@ -6,18 +6,31 @@
 
 # curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && source .bashrc && nvm install node
 
-# Uninstall ZNC before installing. This needs your slot's ZNC port to work.
-
-
-# Set Variables
-port=$(app-ports show | grep ZNC | cut -b -5)
-
 
 # Install The Lounge
 npm install --global --unsafe-perm thelounge
 
-# Test The Lounge
+# Generate Config file and Test The Lounge Installation
 timeout 5 thelounge start
+
+# Unused Port Picker
+app-ports show
+
+echo "Pick any application from this list that you're not currently using."
+echo "We'll be using this port for The Lounge."
+echo "For example, you chose SickRage so type in 'sickrage'. Please type it in full name."
+echo "Type in the application below."
+
+read -r appname
+proper_app_name=$(app-ports show | grep -i "$appname" | cut -c 7-)
+port=$(app-ports show | grep -i "$appname" | cut -b -5)
+
+echo "Are you sure you want to use $proper_app_name's port? type 'confirm' to proceed."
+read -r input
+if [ ! "$input" = "confirm" ]
+then
+    exit
+fi
 
 # Sed ZNC Port
 sed  -i "s/port: 9000,/port: $port,/g" "$HOME"/.thelounge/config.js
