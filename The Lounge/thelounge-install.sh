@@ -4,7 +4,7 @@
 # Quick and dirty way to install The Lounge to USB Slot
 # Install NVM and Node using the following command
 
-# curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && source .bashrc && nvm install node
+# curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && source .bashrc && nvm install 'lts/*'
 
 
 # Install The Lounge
@@ -64,7 +64,7 @@ Description=The Lounge
 [Service]
 Type=simple
 
-WorkingDirectory=$NVM_DIR/versions/node/v14.2.0
+WorkingDirectory=$NVM_DIR/versions/node/v12.16.3
 ExecStart=$(command -v node) bin/thelounge start
 
 [Install]
