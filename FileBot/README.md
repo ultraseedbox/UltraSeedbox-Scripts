@@ -7,18 +7,19 @@ For the installers and the AMC scripts hosted here to work, you may have to do t
 * Purchase a FileBot License and upload it to your slot using FTPS/SFTP
 
 ## Installation
-### Version 4.9.1 (Latest) (Recommended)
-You can install this version using the instructions below:
 
-1. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-491-installer.sh)"`
-2. `filebot --license /path/to/FileBot_License_P1234567.psm`
-
-### Version 4.8.5 (old-stable)
+### Version 4.8.5 (Recommended)
 You can install this version using the instructions below:
 
 1. `mkdir filebot-portable && cd filebot-portable`
 2. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-485-installer.sh)"`
 3. `filebot --license /path/to/FileBot_License_P1234567.psm`
+
+### Version 4.9.1 (Latest)
+You can install this version using the instructions below:
+
+1. `sh -xu <<< "$(curl -fsSL https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-491-installer.sh)"`
+2. `filebot --license /path/to/FileBot_License_P1234567.psm`
 
 ### AMC/ Torrent Client Post-processing
 
