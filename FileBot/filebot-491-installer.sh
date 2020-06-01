@@ -9,7 +9,7 @@ PACKAGE_FILE=FileBot_$PACKAGE_VERSION-portable.tar.xz
 PACKAGE_URL=https://get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/$PACKAGE_FILE
 
 # Create directory for all FileBot data and change working directory
-mkdir -p "$HOME"/filebot-latest && cd "$HOME"/filebot-latest
+mkdir -p "$HOME"/filebot-latest && cd "$HOME"/filebot-latest || exit
 
 # Fetch Java 11 binaries archive
 curl -o Java11.tar.gz "https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz"
@@ -43,3 +43,7 @@ ln -sf "$PWD/filebot.sh" "$HOME"/bin/filebot
 
 # Check if the filebot command works
 filebot -version
+
+# Script Cleanup and exit
+rm -- "$0"
+exit

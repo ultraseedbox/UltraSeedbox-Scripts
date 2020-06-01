@@ -27,3 +27,7 @@ ln -sf "$PWD/filebot.sh" $HOME/bin/filebot
 
 # Check if the filebot command works
 filebot -version
+
+# Script Cleanup and exit
+rm -- "$0"
+exit
