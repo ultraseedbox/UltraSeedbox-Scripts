@@ -1,6 +1,14 @@
-#!/bin/sh -xu
+#!/bin/sh
+
 # Based on the official tar installer: https://raw.githubusercontent.com/filebot/plugins/master/installer/tar.sh
-# Includes installer for Java 11, required to run FileBot 4.9+
+# Includes installer for OpenJDK 14.0.1, required to run FileBot 4.9+
+
+printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
+read -r -p "Type confirm if you wish to continue:" input
+if [ ! "$input" = "confirm" ]
+then
+    exit
+fi
 
 # Set FileBot version and URLs
 PACKAGE_VERSION=4.9.1
@@ -9,13 +17,13 @@ PACKAGE_FILE=FileBot_$PACKAGE_VERSION-portable.tar.xz
 PACKAGE_URL=https://get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/$PACKAGE_FILE
 
 # Create directory for all FileBot data and change working directory
-mkdir -p "$HOME"/filebot-latest && cd "$HOME"/filebot-latest || exit
+mkdir -p "$HOME"/filebot-491 && cd "$HOME"/filebot-491 || exit
 
-# Fetch Java 11 binaries archive
-curl -o Java11.tar.gz "https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz"
+# Fetch OpenJDK 14 binaries archive
+curl -o Java14.tar.gz "https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz"
 
-# Extract Java 11 binaries and remove archive
-tar xf Java11.tar.gz && rm Java11.tar.gz
+# Extract OpenJDK 14 binaries and remove archives
+tar xf Java14.tar.gz && rm Java14.tar.gz
 
 # Download FileBot package
 curl -o "$PACKAGE_FILE" -z "$PACKAGE_FILE" "$PACKAGE_URL"
@@ -33,7 +41,7 @@ rm "$PACKAGE_FILE" reinstall-filebot.sh update-filebot.sh
 sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-Xmx1536m\"' filebot.sh
 
 # Use custom Java 11 installation to run FileBot
-sed -i '/^java/ s#java#'"$PWD"'\/jdk-11\/bin\/java#' filebot.sh
+sed -i '/^java/ s#java#'"$PWD"'\/jdk-14.0.1\/bin\/java#' filebot.sh
 
 # Check if filebot.sh works
 "$PWD/filebot.sh" -script https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/usbsysinfo.groovy
@@ -41,9 +49,6 @@ sed -i '/^java/ s#java#'"$PWD"'\/jdk-11\/bin\/java#' filebot.sh
 # Link into user bin
 ln -sf "$PWD/filebot.sh" "$HOME"/bin/filebot
 
-# Check if the filebot command works
+# Check if the filebot command works and exit
 filebot -version
-
-# Script Cleanup and exit
-rm -- "$0"
 exit
