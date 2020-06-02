@@ -1,7 +1,8 @@
 #!/bin/sh
 
+# Filebot 4.9.1 Installer by tylerforesthauser#9004 and Xan#7777
 # Based on the official tar installer: https://raw.githubusercontent.com/filebot/plugins/master/installer/tar.sh
-# Includes installer for OpenJDK 14.0.1, required to run FileBot 4.9+
+# Includes installer for OpenJDK 14.0.1
 
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
 read -r -p "Type confirm if you wish to continue:" input
