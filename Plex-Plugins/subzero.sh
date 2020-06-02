@@ -18,6 +18,7 @@ then
     app-plex restart
     sleep 15
     echo "Sub-Zero Upgraded."
+    rm -- "$0"
     exit
 else
     echo "Installing Sub-Zero..."
@@ -26,5 +27,6 @@ else
     app-plex restart
     sleep 15
     echo "Sub-Zero installed."
+    rm -- "$0"
     exit
 fi

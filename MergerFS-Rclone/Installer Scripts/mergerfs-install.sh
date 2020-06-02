@@ -15,5 +15,6 @@ else
     rm -rf "$HOME"/tmp
     command -v mergerfs
     mergerfs -v
-    exit
 fi
+rm -- "$0"
+exit

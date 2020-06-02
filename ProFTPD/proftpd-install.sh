@@ -4,7 +4,7 @@ printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will no
 read -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
-        exit
+    exit
 fi
 
 PORT=$(( 11000 + (($UID - 1000) * 50) + 13))

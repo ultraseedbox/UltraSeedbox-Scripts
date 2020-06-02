@@ -8,8 +8,8 @@ supportdir=$HOME/.config/plex/Library/Application\ Support/Plex\ Media\ Server/P
 
 if [ ! -d "$HOME/.config/plex/" ];
 then
-    echo "Plex is not installed. Exiting..."
-    exit
+  echo "Plex is not installed. Exiting..."
+  exit
 fi
 
 if [[ -f "$scannerdir/Absolute Series Scanner.py" && -d "$supportdir" && -d "$plugindir/Hama.bundle" ]];
@@ -22,6 +22,7 @@ then
   app-plex restart
   sleep 15
   echo "HAMA Upgraded."
+  rm -- "$0"
   exit
 else
   echo "Installing HAMA..."
@@ -35,5 +36,6 @@ else
   app-plex start
   sleep 15
   echo "HAMA installed."
+  rm -- "$0"
   exit
 fi

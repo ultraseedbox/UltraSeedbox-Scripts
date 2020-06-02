@@ -13,5 +13,5 @@ case $option in
   1) cat "$HOME"/.config/systemd/user/rclone-vfs.service | sed -n '/^ExecStart=/,$p' | sed -n '/^ExecStop=/q;p' | sed 's/^ExecStart=//g' ;;
   2) cat "$HOME"/.config/systemd/user/rclone-vfs.service | sed -n '/^ExecStop=/,$p' | sed -n '/^Restart=/q;p' | sed 's/^ExecStop=//g' ;;
   3) cat "$HOME"/.config/systemd/user/rclone-vfs.service | sed -n '/^ExecStart=/,$p' | sed -n '/^ExecStop=/q;p' | sed 's/^ExecStart=//g' | bash ;;
-  4) exit 0 ;;
+  4) rm -- "$0"; exit 0 ;;
 esac

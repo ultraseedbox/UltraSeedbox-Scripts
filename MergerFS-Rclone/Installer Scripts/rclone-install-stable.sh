@@ -18,3 +18,5 @@ else
     command -v rclone
     rclone version
 fi
+rm -- "$0"
+exit
