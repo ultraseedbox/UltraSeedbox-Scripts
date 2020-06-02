@@ -6,6 +6,12 @@
 
 # curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && source .bashrc && nvm install 'lts/*'
 
+printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
+read -p "Type confirm if you wish to continue: " input
+if [ ! "$input" = "confirm" ]
+then
+    exit
+fi
 
 # Install The Lounge
 npm install --global --unsafe-perm thelounge
@@ -70,6 +76,7 @@ ExecStart=$(command -v node) bin/thelounge start
 [Install]
 WantedBy=default.target" > "$HOME/.config/systemd/user/thelounge.service"
 
+# Starting services
 systemctl --user daemon-reload
 systemctl --user start thelounge.service
 systemctl --user enable thelounge.service
@@ -84,4 +91,6 @@ echo "============================="
 echo "thelounge add <name>"
 echo "============================="
 
+# Cleanup
+rm -- "$0"
 exit

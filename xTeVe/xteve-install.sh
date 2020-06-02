@@ -3,6 +3,13 @@
 # xTeVe installer by Xan#7777
 # Installs XTeVe Locally in USB Slot
 
+printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
+read -p "Type confirm if you wish to continue: " input
+if [ ! "$input" = "confirm" ]
+then
+     exit
+fi
+
 # Create Folders
 mkdir -p "$HOME"/bin
 mkdir -p "$HOME"/.xteve-tmp
@@ -50,15 +57,16 @@ ExecStart=$HOME/bin/xteve -port="$port"
 [Install]
 WantedBy=default.target" > "$HOME/.config/systemd/user/xteve.service"
 
+# Start Services
 systemctl --user daemon-reload
 systemctl --user start xteve.service
 systemctl --user enable xteve.service
-
-# Cleanup
-rm -rfv "$HOME"/.xteve-tmp
 
 echo ""
 echo ""
 echo "Access xTeVe's Web Interface via http://$HOSTNAME.usbx.me:$port/web"
 
+# Cleanup
+rm -rfv "$HOME"/.xteve-tmp
+rm -- "$0"
 exit
