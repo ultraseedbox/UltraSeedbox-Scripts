@@ -6,12 +6,19 @@
 
 # curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && source .bashrc && nvm install 'lts/*'
 
+# Unofficial Script warning
+
+echo "This is The Lounge Installer!"
+echo ""
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -p "Type confirm if you wish to continue: " input
+read -r -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
     exit
 fi
+
+# Get Node version
+node_ver=$(node -v)
 
 # Install The Lounge
 npm install --global --unsafe-perm thelounge
@@ -70,7 +77,7 @@ Description=The Lounge
 [Service]
 Type=simple
 
-WorkingDirectory=$NVM_DIR/versions/node/v12.16.3
+WorkingDirectory=$NVM_DIR/versions/node/$node_ver
 ExecStart=$(command -v node) bin/thelounge start
 
 [Install]
