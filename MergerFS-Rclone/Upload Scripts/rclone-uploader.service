@@ -6,6 +6,7 @@ Type=simple
 
 ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --config=/homexx/yyyyy/.config/rclone/rclone.conf \
+    --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36' \
     --drive-chunk-size 64M \
     --tpslimit 5 \
     --drive-acknowledge-abuse=true \
@@ -16,6 +17,7 @@ ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --use-mmap \
     --transfers=2 \
     --checkers=4 \
+    --drive-stop-on-upload-limit \
     --log-file /homexx/yyyyy/scripts/rclone-uploader.log
 Restart=on-failure
 

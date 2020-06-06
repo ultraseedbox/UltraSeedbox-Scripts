@@ -31,6 +31,7 @@ else
     rclone_command=$(
       "$HOME"/bin/rclone move -vP \
       --config="$HOME"/.config/rclone/rclone.conf \
+      --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36' \
       --drive-chunk-size 64M \
       --use-mmap \
       --delete-empty-src-dirs \
@@ -41,6 +42,7 @@ else
       --transfers=2 \
       --checkers=4 \
       --bwlimit=8M \
+      --drive-stop-on-upload-limit \
       "$SOURCE_DIR" "$DESTINATION_DIR" 2>&1
     )
     # "--stats=9999m" mitigates early stats output 
