@@ -42,9 +42,9 @@ echo "You can also type 'quit' to quit the installer."
 while true; do
     read -rp "Enter your response here: " pyver
     case $pyver in
-        3.6 ) pyenv latest install 3.6 -v && break ;;
-        3.7 ) pyenv latest install 3.7 -v && break ;;
-        latest ) pyenv latest install -v && break ;;
+        3.6 ) "$HOME"/.pyenv/bin/pyenv latest install 3.6 -v && break ;;
+        3.7 ) "$HOME"/.pyenv/bin/pyenv latest install 3.7 -v && break ;;
+        latest ) "$HOME"/.pyenv/bin/pyenv latest install -v && break ;;
         quit ) exit 0 ;;
         * ) echo "Unknown response. Try again..." ;;
     esac
@@ -52,7 +52,7 @@ done
 
 # Check Python
 clear
-pyenv latest global
+"$HOME"/.pyenv/bin/pyenv latest global
 echo "Getting python version..."
 command -v python
 python -m pip -V
@@ -71,5 +71,6 @@ source "$HOME"/.profile
 
 # Cleanup, reload shell and Exit
 clear
-echo "Done. Please logout and login again into your shell to complete installation."
+echo "Done. Run the following command to properly load up your Python/Pip Install."
+echo "               exec $SHELL                 "
 exit 1
