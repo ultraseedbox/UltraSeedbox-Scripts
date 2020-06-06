@@ -32,9 +32,9 @@ echo "Installing flexget..."
 sleep 1
 python3 -m venv "$HOME"/flexget/
 cd "$HOME"/flexget || exit
-"$HOME"/flexget/bin/pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 "$HOME"/flexget/bin/pip install -U 
-"$HOME"/flexget/bin/pip install wheel
-"$HOME"/flexget/bin/pip install flexget --upgrade
+"$HOME"/flexget/bin/python -m "$HOME"/flexget/bin/pip -V list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 "$HOME"/flexget/bin/python -m "$HOME"/flexget/bin/pip -V install -U 
+"$HOME"/flexget/bin/python -m "$HOME"/flexget/bin/pip -V install wheel
+"$HOME"/flexget/bin/python -m "$HOME"/flexget/bin/pip -V install flexget --upgrade
 ln -s "$HOME"/flexget/bin/flexget "$HOME"/bin/flexget
 
 # Check flexget

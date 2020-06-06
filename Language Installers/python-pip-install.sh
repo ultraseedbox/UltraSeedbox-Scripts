@@ -15,9 +15,6 @@ then
     exit
 fi
 
-# Variables
-python="$HOME"/.pyenv/shims/python
-
 # Install pyenv
 clear
 echo "Installing pyenv..."
@@ -58,12 +55,13 @@ clear
 pyenv latest global
 echo "Getting python version..."
 command -v python
+python -m pip -V
 sleep 2
 
-# Installing pip
+# Updating all pip packages
 clear
-echo "Installing pip..."
-"$python" <(curl https://bootstrap.pypa.io/get-pip.py) --user
+echo "Updating all pip packages..."
+python -m pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 python -m pip install -U
 
 # Replacing PATH
 sed -i -e 's|PATH="$HOME/bin:$PATH"|PATH="$HOME/bin:$HOME/.local/bin:$PATH"|g' "$HOME"/.profile
