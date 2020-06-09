@@ -8,7 +8,7 @@ clear
 echo "This is Flexget Installer!"
 echo ""
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -rp "Type confirm if you wish to continue: " input
+read -r "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
     exit
@@ -30,7 +30,7 @@ fi
 clear
 echo "Installing flexget..."
 sleep 1
-python3 -m venv "$HOME"/flexget/
+python -m venv "$HOME"/flexget/
 cd "$HOME"/flexget || exit
 "$HOME"/flexget/bin/pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 "$HOME"/flexget/bin/pip install -U 
 "$HOME"/flexget/bin/pip install wheel
