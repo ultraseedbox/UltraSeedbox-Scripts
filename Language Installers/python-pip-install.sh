@@ -16,7 +16,7 @@ then
 fi
 
 # Install pyenv
-clear
+
 echo "Installing pyenv..."
 sleep 1
 curl https://pyenv.run | bash
@@ -28,25 +28,32 @@ eval "$(pyenv virtualenv-init -)"' >> "$HOME"/.bashrc
 sed -i "s|\/homexx\/yyyyy|$HOME|g" "$HOME"/.bashrc
 
 # Load new bashrc
-source "$HOME"/.bashrc
+. "$HOME"/.bashrc
 
 # Install xxenv-latest
 git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/pyenv-latest
 
 # Python Version Chooser
 clear
-echo "Choose between '3.6', '3.7' or 'latest'."
-echo "We recommend entering '3.7' as your Python version."
-echo "You can also type 'quit' to quit the installer."
+echo "Choose between 3.6, 3.7 or latest."
+echo "We recommend entering 3.7 as your Python version."
 
 while true; do
-    read -rp "Enter your response here: " pyver
+read -rp "Enter your response here: " pyver
     case $pyver in
-        3.6 ) "$HOME"/.pyenv/bin/pyenv latest install 3.6 -v && break ;;
-        3.7 ) "$HOME"/.pyenv/bin/pyenv latest install 3.7 -v && break ;;
-        latest ) "$HOME"/.pyenv/bin/pyenv latest install -v && break ;;
-        quit ) exit 0 ;;
-        * ) echo "Unknown response. Try again..." ;;
+        3.6)
+            "$HOME"/.pyenv/bin/pyenv latest install 3.6 -v
+            break
+            ;;
+        3.7)
+            "$HOME"/.pyenv/bin/pyenv latest install 3.7 -v
+            break
+            ;;
+        latest)
+            "$HOME"/.pyenv/bin/pyenv latest install -v
+            break
+            ;;
+        *) echo "Unknown response. Try again..." ;;
     esac
 done
 
@@ -59,18 +66,19 @@ python -m pip -V
 sleep 2
 
 # Updating all pip packages
-clear
+
 echo "Updating all pip packages..."
-python -m pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 python -m pip install -U
+"$(command -v python)" -m pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 "$(command -v python)" -m pip install -U
 
 # Replacing PATH
 sed -i -e 's|PATH="$HOME/bin:$PATH"|PATH="$HOME/bin:$HOME/.local/bin:$PATH"|g' "$HOME"/.profile
 
 # Reload new profile
-source "$HOME"/.profile
+. "$HOME"/.profile
 
 # Cleanup, reload shell and Exit
 clear
 echo "Done. Run the following command to properly load up your Python/Pip Install."
 echo "               exec $SHELL                 "
+rm -- "$0"
 exit 1
