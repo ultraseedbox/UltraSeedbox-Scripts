@@ -1,7 +1,7 @@
 #!/bin/sh
 
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -r "Type confirm if you wish to continue: " input
+read -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
      exit
@@ -18,6 +18,7 @@ if [ ! -f "$HOME"/bin/sqlite3 ]; then
     make install
     cd "$HOME" || exit
     rm -rfv "$HOME"/.sqlite-tmp
+    rm -- "$0"
     exit 0
 else
     echo "Sqlite3 is already installed!"
