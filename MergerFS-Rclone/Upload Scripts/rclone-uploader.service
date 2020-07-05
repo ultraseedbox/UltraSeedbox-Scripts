@@ -17,8 +17,9 @@ ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --use-mmap \
     --transfers=2 \
     --checkers=4 \
-    --drive-stop-on-upload-limit \
-    --log-file /homexx/yyyyy/scripts/rclone-uploader.log
+    --drive-stop-on-upload-limit
+
+StandardOutput=file:/homexx/yyyyy/scripts/rclone_uploader.log
 Restart=on-failure
 
 [Install]

@@ -12,6 +12,8 @@ ExecStart=/homexx/yyyyy/bin/rclone mount remote: /homexx/yyyyy/Stuff/Mount \
   --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36' \
   --config /homexx/yyyyy/.config/rclone/rclone.conf \
   --use-mmap
+
+StandardOutput=file:/homexx/yyyyy/scripts/rclone_mount.log
 ExecStop=/bin/fusermount -uz /homexx/yyyyy/Stuff/Mount
 Restart=on-failure
 
