@@ -19,6 +19,5 @@ else
     app-plex restart
     sleep 15
     echo "Trakt.tv Scrobbler installed!"
-    rm -- "$0"
     exit
 fi

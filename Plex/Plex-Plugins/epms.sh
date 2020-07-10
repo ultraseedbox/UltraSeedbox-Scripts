@@ -22,7 +22,6 @@ then
     app-plex restart
     sleep 15
     echo "EPMS updated successfully!"
-    rm -- "$0"
     exit
 else
     echo "Installing EPMS..."
@@ -34,6 +33,5 @@ else
     app-plex restart
     sleep 15
     echo "EPMS installed successfully!"
-    rm -- "$0"
     exit
 fi

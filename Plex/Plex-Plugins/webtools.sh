@@ -22,7 +22,6 @@ then
   app-plex restart
   sleep 15
   echo "Webtools Upgraded."
-  rm -- "$0"
   exit
 else
   echo "Installing WebTools..."
@@ -31,6 +30,5 @@ else
   app-plex restart
   sleep 15
   echo "Webtools installed."
-  rm -- "$0"
   exit
 fi

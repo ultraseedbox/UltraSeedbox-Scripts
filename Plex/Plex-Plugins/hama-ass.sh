@@ -22,7 +22,6 @@ then
   app-plex restart
   sleep 15
   echo "HAMA Upgraded."
-  rm -- "$0"
   exit
 else
   echo "Installing HAMA..."
@@ -36,6 +35,5 @@ else
   app-plex start
   sleep 15
   echo "HAMA installed."
-  rm -- "$0"
   exit
 fi
