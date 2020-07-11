@@ -4,7 +4,7 @@
 # Installs XTeVe Locally in USB Slot
 
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -p "Type confirm if you wish to continue: " input
+read -r -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
      exit
@@ -45,7 +45,7 @@ timeout 10  "$HOME"/bin/xteve -port="$port"
 sed -i "s|/tmp/xteve|/tmp/$USER/xteve|g" "$HOME"/.xteve/settings.json
 
 # systemd service
-
+export XDG_RUNTIME_DIR=/run/user/"$UID"
 echo "[Unit]
 Description=xTeve Tuner
 

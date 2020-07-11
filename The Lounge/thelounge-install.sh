@@ -81,6 +81,7 @@ app-nginx restart
 
 # Systemd service
 echo "Installing systemd service..."
+export XDG_RUNTIME_DIR=/run/user/"$UID"
 echo "[Unit]
 Description=The Lounge
 
@@ -102,9 +103,9 @@ echo "Installation complete."
 echo "You can access it via https://$USER.$HOSTNAME.usbx.me/thelounge"
 echo "Run the command below to add username before accessing The Lounge."
 echo ""
-echo "============================="
-echo "thelounge add <name>"
-echo "============================="
+echo "======================="
+echo "thelounge add $USER"
+echo "======================="
 
 # Cleanup
 rm -- "$0"
