@@ -14,10 +14,10 @@ ExecStart=/homexx/yyyyy/bin/rclone mount gdrive: /homexx/yyyyy/Stuff/Mount \
   --use-mmap \
   --dir-cache-time 1000h \
   --drive-skip-gdocs \
-  --drive-acknowledge-abuse \
+  --drive-acknowledge-abuse=true \
   --timeout 1h \
   --umask 002 \
-  --poll-interval=15s \
+  --poll-interval=30s \
   --vfs-cache-mode writes \
   --vfs-read-chunk-size 32M \
   --tpslimit 10 \
