@@ -4,7 +4,7 @@ Description=RClone Uploader
 [Service]
 Type=simple
 
-ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
+ExecStartPre=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --config=/homexx/yyyyy/.config/rclone/rclone.conf \
     --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36' \
     --drive-chunk-size 64M \
@@ -18,6 +18,8 @@ ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --transfers=2 \
     --checkers=4 \
     --drive-stop-on-upload-limit
+ExecStart=/bin/sleep 10
+ExecStartPost=/homexx/yyyyy/bin/rclone rc vfs/refresh --rc-addr=127.0.0.1:zzzzz
 
 StandardOutput=file:/homexx/yyyyy/scripts/rclone_uploader.log
 Restart=on-failure

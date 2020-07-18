@@ -12,14 +12,18 @@ ExecStart=/homexx/yyyyy/bin/rclone mount gdrive: /homexx/yyyyy/Stuff/Mount \
   --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36' \
   --config /homexx/yyyyy/.config/rclone/rclone.conf \
   --use-mmap \
-  --dir-cache-time 168h \
+  --dir-cache-time 1000h \
+  --drive-skip-gdocs \
+  --drive-acknowledge-abuse \
   --timeout 1h \
   --umask 002 \
-  --poll-interval=1m \
+  --poll-interval=15s \
   --vfs-cache-mode writes \
-  --vfs-read-chunk-size 64M \
-  --vfs-read-chunk-size-limit 2048M \
-  --tpslimit 10
+  --vfs-read-chunk-size 32M \
+  --tpslimit 10 \
+  --rc \
+  --rc-addr=127.0.0.1:zzzzz
+ExecStartPost=/homexx/yyyyy/bin/rclone rc vfs/refresh recursive=true --rc-addr=127.0.0.1:zzzzz _async=true
 
 StandardOutput=file:/homexx/yyyyy/scripts/rclone_vfs_mount.log
 ExecStop=/bin/fusermount -uz /homexx/yyyyy/Stuff/Mount
