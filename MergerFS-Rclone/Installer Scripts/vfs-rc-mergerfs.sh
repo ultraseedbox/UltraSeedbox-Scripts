@@ -6,7 +6,7 @@
 clear
 
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -p -r "Type confirm if you wish to continue: " input
+read -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
     exit
@@ -33,14 +33,11 @@ echo "Killing all rclone/mergerfs instances..."
     killall mergerfs
 
 echo "Removing service files and old binaries for upgrade..."
-    cd "$HOME"/.config/systemd/user || exit
-    rm rclone*
-    rm mergerfs*
-    cd "$HOME"/bin || exit
-    rm rclone*
-    rm mergerfs*
-    cd "$HOME"/scripts || return
-    rm rclone*
+    rm "$HOME"/.config/systemd/user/rclone*
+    rm "$HOME"/.config/systemd/user/mergerfs*
+    rm "$HOME"/bin/rclone*
+    rm "$HOME"/bin/mergerfs*
+    rm "$HOME"/scripts/rclone*
     rm -rfv "$HOME"/.rclone-tmp/*
     rm -rfv "$HOME"/.mergerfs-tmp/*
 
@@ -119,7 +116,7 @@ read -r input
 
 if [ ! "$input" = "confirm" ]
 then
-    exit 0
+    exit
 fi
 
 echo "Done. Downloading service files..."
