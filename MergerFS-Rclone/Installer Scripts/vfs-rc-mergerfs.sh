@@ -103,7 +103,7 @@ clear
 app-ports show
 
 echo "Pick any application from this list that you're not currently using."
-echo "We'll be using this port for The Lounge."
+echo "We'll be using this port for rclone."
 echo "For example, you chose SickRage so type in 'sickrage'. Please type it in full name."
 echo "Type in the application below."
 read -r appname
