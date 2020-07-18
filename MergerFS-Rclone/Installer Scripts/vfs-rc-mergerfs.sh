@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Rclone VFS/MergerFS Installer/Updater Script by Xan#7777
+# With RC. Use with caution
 
 clear
 
@@ -142,10 +143,9 @@ echo "Installing systemd uploader..."
 echo "Adding Aliases..."
     sleep 2
     touch "$HOME"/.bash_aliases
-    echo "alias vfs-refresh='$HOME/bin/rclone rc vfs/refresh --rc-addr=127.0.0.1:zzzzz'" > "$HOME"/.bash_aliases
-    echo "alias vfs-forget='$HOME/bin/rclone rc vfs/forget --rc-addr=127.0.0.1:zzzzz'" > "$HOME"/.bash_aliases
+    echo "alias vfs-refresh='$HOME/bin/rclone rc vfs/refresh --rc-addr=127.0.0.1:zzzzz'" >> "$HOME"/.bash_aliases
+    echo "alias vfs-forget='$HOME/bin/rclone rc vfs/forget --rc-addr=127.0.0.1:zzzzz'" >> "$HOME"/.bash_aliases
     sed -i "s|zzzzz|$port|g" "$HOME"/.bash_aliases
-    source "$HOME"/.bash_aliases
 
 clear
 
@@ -212,7 +212,7 @@ echo "Cleaning up..."
     rm -rfv "$HOME"/.mergerfs-tmp
 
 clear
-echo "Done."
+echo "Done. Run exec $SHELL to complete installation."
 cd "$HOME" || exit
 rm -- "$0"
 exit
