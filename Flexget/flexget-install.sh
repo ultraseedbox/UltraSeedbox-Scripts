@@ -46,5 +46,4 @@ sleep 1
 # Cleanup and exit
 clear
 echo "Done. You can now create your flexget YAML"
-rm -- "$0"
 exit 1

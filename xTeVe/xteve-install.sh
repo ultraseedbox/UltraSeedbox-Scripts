@@ -68,5 +68,4 @@ echo "Access xTeVe's Web Interface via http://$HOSTNAME.usbx.me:$port/web"
 
 # Cleanup
 rm -rfv "$HOME"/.xteve-tmp
-rm -- "$0"
 exit

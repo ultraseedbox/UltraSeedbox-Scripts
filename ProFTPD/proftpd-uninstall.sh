@@ -13,6 +13,5 @@ systemctl --user daemon-reload
 echo "Cleaning up..."
 
 rm $HOME/proftpd-users.sh
-rm -- "$0"
 
 echo "Done!"

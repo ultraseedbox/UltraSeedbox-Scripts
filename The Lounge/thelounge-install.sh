@@ -106,7 +106,4 @@ echo ""
 echo "======================="
 echo "thelounge add $USER"
 echo "======================="
-
-# Cleanup
-rm -- "$0"
 exit

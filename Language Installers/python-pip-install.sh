@@ -86,5 +86,4 @@ echo 'eval "$(register-python-argcomplete pipx)"' >> "$HOME"/.bashrc
 clear
 echo "Done. Run the following command to properly load up your Python/Pip Install."
 echo "               exec $SHELL                 "
-rm -- "$0"
 exit 1

@@ -107,6 +107,5 @@ done
 clear
 cd "$HOME" || exit
 rm -rf "$HOME"/.megatools-tmp
-rm -- "$0"
 echo "Goodbye."
 exit

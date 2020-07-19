@@ -109,9 +109,6 @@ chmod +x proftpd-uninstall.sh
 wget -q https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/ProFTPD/proftpd-users.sh
 chmod +x proftpd-users.sh
 
-echo "Cleaning Up..."
-rm -- "$0"
-
 printf "\033[0;32mDone!\033[0m\n"
 echo "Access your ProFTPD installation at ftp://$(hostname).usbx.me:$PORT"
 echo "Run ./proftpd-uninstall.sh to uninstall | Run ./proftpd-users.sh to manage users"

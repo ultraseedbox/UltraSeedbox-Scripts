@@ -16,5 +16,4 @@ else
     command -v mergerfs
     mergerfs -v
 fi
-rm -- "$0"
 exit
