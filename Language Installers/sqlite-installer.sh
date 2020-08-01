@@ -1,10 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
+# Python 3 and Pip Installer for USB Slots by Xan#7777
+# This installs python 3, pip and pipx on your slot using pyenv
+
+clear
+echo "This is the sqlite3 Installer!"
+echo ""
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
 read -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
-     exit
+    exit
 fi
 
 if [ ! -f "$HOME"/bin/sqlite3 ]; then
@@ -18,7 +24,6 @@ if [ ! -f "$HOME"/bin/sqlite3 ]; then
     make install
     cd "$HOME" || exit
     rm -rfv "$HOME"/.sqlite-tmp
-    rm -- "$0"
     exit 0
 else
     echo "Sqlite3 is already installed!"
