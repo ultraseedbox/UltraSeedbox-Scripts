@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Python 3 and Pip Installer for USB Slots by Xan#7777
-# This installs python 3, pip and pipx on your slot using pyenv
+# SQlite3 installer for USB Slots by Xan#7777
+# This compiles and installs sqlite3 to your slot
 
 clear
 echo "This is the sqlite3 Installer!"
@@ -16,9 +16,9 @@ fi
 if [ ! -f "$HOME"/bin/sqlite3 ]; then
     mkdir -p "$HOME"/.sqlite-tmp
     cd "$HOME"/.sqlite-tmp || exit
-    wget https://www.sqlite.org/2020/sqlite-autoconf-3320200.tar.gz
-    tar xvfz sqlite-autoconf-3320200.tar.gz
-    cd "$HOME"/.sqlite-tmp/sqlite-autoconf-3320200 || exit
+    wget https://www.sqlite.org/2020/sqlite-autoconf-3320300.tar.gz
+    tar xvfz sqlite-autoconf-3320300.tar.gz
+    cd "$HOME"/.sqlite-tmp/sqlite-autoconf-3320300 || exit
     ./configure --prefix="$HOME"
     make
     make install
