@@ -17,7 +17,7 @@ https://ngosang.github.io/trackerslist
 https://trackerslist.com
 https://newtrackon.com
 
-Generated Mon 03 Aug 2020 02:57:01 PM CEST
+Generated Mon 03 Aug 2020 03:42:30 PM CEST
 
 ["Tracker","matches regex","match case",".*00.mercax.com.*"],
 ["Tracker","matches regex","match case",".*0205.uptm.ch.*"],
@@ -80,7 +80,6 @@ Generated Mon 03 Aug 2020 02:57:01 PM CEST
 ["Tracker","matches regex","match case",".*asger.xyz.*"],
 ["Tracker","matches regex","match case",".*atrack-asia-s1.114913.xyz.*"],
 ["Tracker","matches regex","match case",".*atrack.pow7.com.*"],
-["Tracker","matches regex","match case",".*bclearning.top.*"],
 ["Tracker","matches regex","match case",".*beertracker.ml.*"],
 ["Tracker","matches regex","match case",".*benouworldtrip.fr.*"],
 ["Tracker","matches regex","match case",".*bioquantum.co.za.*"],
@@ -143,6 +142,7 @@ Generated Mon 03 Aug 2020 02:57:01 PM CEST
 ["Tracker","matches regex","match case",".*movies.zsw.ca.*"],
 ["Tracker","matches regex","match case",".*mts.tvbit.co.*"],
 ["Tracker","matches regex","match case",".*nagios.tks.sumy.ua.*"],
+["Tracker","matches regex","match case",".*ns-1.x-fins.com.*"],
 ["Tracker","matches regex","match case",".*ns3107607.ip-54-36-126.eu.*"],
 ["Tracker","matches regex","match case",".*ns349743.ip-91-121-106.eu.*"],
 ["Tracker","matches regex","match case",".*open.acgnxtracker.com.*"],
@@ -189,13 +189,11 @@ Generated Mon 03 Aug 2020 02:57:01 PM CEST
 ["Tracker","matches regex","match case",".*teamspeak.value-wolf.org.*"],
 ["Tracker","matches regex","match case",".*thetracker.org.*"],
 ["Tracker","matches regex","match case",".*threads.run.*"],
-["Tracker","matches regex","match case",".*t.jaekr.sh.*"],
 ["Tracker","matches regex","match case",".*t.nyaatracker.com.*"],
 ["Tracker","matches regex","match case",".*torrent.nwps.ws.*"],
 ["Tracker","matches regex","match case",".*torrentsmd.com.*"],
 ["Tracker","matches regex","match case",".*torrenttracker.nwc.acsalaska.net.*"],
 ["Tracker","matches regex","match case",".*t.overflow.biz.*"],
-["Tracker","matches regex","match case",".*tr1.jilangyy.com.*"],
 ["Tracker","matches regex","match case",".*tr2.ysagin.top.*"],
 ["Tracker","matches regex","match case",".*tracker.0o.is.*"],
 ["Tracker","matches regex","match case",".*tracker0.ufibox.com.*"],
