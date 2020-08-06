@@ -53,7 +53,7 @@ else
 
   if [ "$DISCORD_WEBHOOK_URL" != "" ]; then
   
-    rclone_sani_command="$(echo $rclone_command | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g')" # Remove all escape sequences
+    rclone_sani_command=$($rclone_command | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g') # Remove all escape sequences
 
     # Notifications assume following rclone ouput: 
     # Transferred: 0 / 0 Bytes, -, 0 Bytes/s, ETA - Errors: 0 Checks: 0 / 0, - Transferred: 0 / 0, - Elapsed time: 0.0s
