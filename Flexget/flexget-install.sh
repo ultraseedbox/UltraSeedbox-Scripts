@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Flexget Installer by Xan#7777
-# This installs flexget under python-venv
+# Flexget Installer/Updater by Xan#7777
+# This installs/updates flexget under python-venv
 
 # Unofficial Script warning
 clear
@@ -30,12 +30,15 @@ fi
 clear
 echo "Installing flexget..."
 sleep 1
-python -m venv "$HOME"/flexget/
-cd "$HOME"/flexget || exit
+if [ ! -d "$HOME"/flexget/ ]; then
+    python -m venv "$HOME"/flexget/
+fi
 "$HOME"/flexget/bin/pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 "$HOME"/flexget/bin/pip install -U 
-"$HOME"/flexget/bin/pip install wheel
+"$HOME"/flexget/bin/pip install wheel --upgrade
 "$HOME"/flexget/bin/pip install flexget --upgrade
-ln -s "$HOME"/flexget/bin/flexget "$HOME"/bin/flexget
+if [ ! -f "$HOME"/bin/flexget ]; then
+    ln -s "$HOME"/flexget/bin/flexget "$HOME"/bin/flexget
+fi
 
 # Check flexget
 clear
