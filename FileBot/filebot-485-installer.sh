@@ -45,7 +45,7 @@ sed -i '/^java/ s#java#'"$PWD"'\/jdk-11\/bin\/java#' filebot.sh
 "$PWD/filebot.sh" -script https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/usbsysinfo.groovy
 
 # Link into user $PATH
-ln -sf "$PWD/filebot.sh" $HOME/bin/filebot
+ln -sf "$PWD/filebot.sh" "$HOME"/bin/filebot
 
 # Check if the filebot command works and exit
 filebot -version

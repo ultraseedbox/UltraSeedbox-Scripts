@@ -52,7 +52,7 @@ Description=xTeve Tuner
 [Service]
 Type=simple
 
-ExecStart=$HOME/bin/xteve -port="$port"
+ExecStart=$HOME/bin/xteve -port=$port
 
 [Install]
 WantedBy=default.target" > "$HOME/.config/systemd/user/xteve.service"

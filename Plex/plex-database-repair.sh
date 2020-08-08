@@ -20,13 +20,13 @@ repair()
     echo "Repairing now with sqlite tools"
     echo "----------------------------------"
     sleep 2
-    echo "Working in directory "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/tmp""
-    cd "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/"
+    echo "Working in directory $HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/tmp"
+    cd "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/" || exit
     sleep 2
     # Creating TMP directory for us to work in and moving the DB inside.
     mkdir tmp
     mv com.plexapp.plugins.library.db tmp/com.plexapp.plugins.library.db
-    cd tmp
+    cd tmp || exit
     # Running repair commands
     "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db "DROP index 'index_title_sort_naturalsort'"
     sleep 1
@@ -47,18 +47,19 @@ repair()
     rm -rf "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db-shm"
     rm -rf "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db-wal"
     # Moving into DB directory and removing the tmp work directory. 
-    cd "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/"
+    cd "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/" || exit
     rm -r "tmp"
     # Starting plex server again and exiting with good code. (Should generate com.plexapp.plugins.library.db-shm com.plexapp.plugins.library.db-wal on startup.)
     /usr/bin/app-plex start
     echo "----------------------------------"
     echo "Plex has been started with recovered DB!"
-    echo "The old DB can be found in "$HOME/plexbackup""
+    echo "The old DB can be found in $HOME/plexbackup"
     echo "----------------------------------"
     exit 0
 }
 
-# Start main of script 
+# Start main of script
+
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
 read -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
@@ -101,7 +102,7 @@ else
 fi
 
 # Start the DB Recovery
-if [[ -e ""$HOME"/bin/sqlite3" ]]; 
+if [[ -e "$HOME/bin/sqlite3" ]]; 
 then
     repair
 else
