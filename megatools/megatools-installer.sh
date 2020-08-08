@@ -30,7 +30,7 @@ echo "Type '3' to uninstall megatools."
 echo "Type 'exit' to exit the installer."
 
 while true; do
-    read -rp "Enter your response here: " mega
+    read -p "Enter your response here: " mega
     case $mega in
         1)
             if [ ! "$(megadl --version)" ]; then

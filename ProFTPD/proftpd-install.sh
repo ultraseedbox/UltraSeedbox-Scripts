@@ -14,7 +14,7 @@ ROOT="${ROOT/#\~/$HOME}"
 
 echo "Installing ProFTPD..."
 
-mkdir -p $ROOT
+mkdir -p "$ROOT"
 mkdir -p ~/.config/proftpd
 
 echo "User                    $USER
@@ -41,7 +41,7 @@ while [ "$input" = "y" ]
 do
   read -p "Username: " username
   read -s -p "Password: " password
-  echo "$password" | /usr/sbin/ftpasswd --passwd --stdin --file="$HOME/.config/proftpd/proftpd.passwd" --name=$username --uid=$UID --home=$ROOT --shell=$SHELL --gid=$(id -g $USER)
+  echo "$password" | /usr/sbin/ftpasswd --passwd --stdin --file="$HOME/.config/proftpd/proftpd.passwd" --name="$username" --uid="$UID" --home="$ROOT" --shell="$SHELL" --gid=$(id -g "$USER")
   read -p "Do you want to create another user? (y/n) " input
 done
 
@@ -81,7 +81,7 @@ WantedBy=default.target" > ~/.config/systemd/user/proftpd.service
 systemctl --user daemon-reload
 systemctl --user enable proftpd
 
-loginctl enable-linger $USER
+loginctl enable-linger "$USER"
 
 echo "Configuring TLS..."
 
@@ -103,7 +103,7 @@ echo "Starting ProFTPD..."
 systemctl --user start proftpd
 
 echo "Downloading Scripts..."
-cd ~
+cd "$HOME" || exit
 wget -q https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/ProFTPD/proftpd-uninstall.sh
 chmod +x proftpd-uninstall.sh
 wget -q https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/ProFTPD/proftpd-users.sh

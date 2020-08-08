@@ -28,7 +28,7 @@ eval "$(pyenv virtualenv-init -)"' >> "$HOME"/.bashrc
 sed -i "s|\/homexx\/yyyyy|$HOME|g" "$HOME"/.bashrc
 
 # Load new bashrc
-. "$HOME"/.bashrc
+source "$HOME"/.bashrc
 
 # Install xxenv-latest
 git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/pyenv-latest
@@ -39,7 +39,7 @@ echo "Choose between 3.6, 3.7 or latest."
 echo "We recommend entering 3.7 as your Python version."
 
 while true; do
-read -rp "Enter your response here: " pyver
+read -p "Enter your response here: " pyver
     case $pyver in
         3.6)
             "$HOME"/.pyenv/bin/pyenv latest install 3.6 -v
@@ -74,16 +74,15 @@ echo "Updating all pip packages..."
 sed -i -e 's|PATH="$HOME/bin:$PATH"|PATH="$HOME/bin:$HOME/.local/bin:$PATH"|g' "$HOME"/.profile
 
 # Reload new profile
-. "$HOME"/.profile
+source "$HOME"/.profile
 
 # Installing pipx
 "$(command -v python)" -m pip install pipx
 "$(command -v python)" -m pipx ensurepath
 echo 'eval "$(register-python-argcomplete pipx)"' >> "$HOME"/.bashrc
-. "$HOME"/.bashrc
 
 # Cleanup, reload shell and Exit
 clear
 echo "Done. Run the following command to properly load up your Python/Pip Install."
 echo "               exec $SHELL                 "
-exit 1
+exit
