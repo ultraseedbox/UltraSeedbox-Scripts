@@ -41,7 +41,34 @@ ln -s "$HOME"/flexget/bin/flexget "$HOME"/bin/flexget
 clear
 command -v flexget
 flexget --version
-sleep 1
+sleep 2
+
+# Client Installer
+clear
+echo "You may need to install a client that can interface with your actual torent client."
+echo "Choose between deluge or transmission. You may also skip if you do not need it."
+
+while true; do
+read -p "Enter your response here: " flexent
+    case $flexent in
+        deluge)
+            "$HOME"/flexget/bin/python -m pip install deluge-client --upgrade
+            echo "Refer to this page for more info: https://flexget.com/Plugins/deluge"
+            sleep 7
+            break
+            ;;
+        transmission)
+            "$HOME"/flexget/bin/python -m pip install transmissionrpc --upgrade
+            echo "Refer to this page for more info: https://flexget.com/Plugins/transmission"
+            sleep 7
+            break
+            ;;
+        skip)
+            break
+            ;;
+        *) echo "Unknown response. Try again..." ;;
+    esac
+done
 
 # Cleanup and exit
 clear
