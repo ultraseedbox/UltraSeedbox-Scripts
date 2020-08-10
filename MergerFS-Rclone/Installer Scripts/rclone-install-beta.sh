@@ -11,7 +11,7 @@ else
     echo "Installing/Upgrading rclone beta..."
     mkdir -p "$HOME"/.rclone-tmp
     wget https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip -O "$HOME"/.rclone-tmp/rclone.zip
-    unzip "$HOME"/.rclone-tmp/rclone.zip
+    unzip "$HOME"/.rclone-tmp/rclone.zip -d "$HOME"/.rclone-tmp/
     cp "$HOME"/.rclone-tmp/rclone-v*/rclone "$HOME"/bin
 fi
 

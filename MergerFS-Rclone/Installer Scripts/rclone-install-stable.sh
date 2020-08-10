@@ -11,7 +11,7 @@ else
     echo "Installing/Upgrading rclone stable..."
     mkdir -p "$HOME"/.rclone-tmp
     wget https://downloads.rclone.org/rclone-current-linux-amd64.zip -O "$HOME"/.rclone-tmp/rclone.zip
-    unzip "$HOME"/.rclone-tmp/rclone.zip
+    unzip "$HOME"/.rclone-tmp/rclone.zip -d "$HOME"/.rclone-tmp/
     cp "$HOME"/.rclone-tmp/rclone-v*/rclone "$HOME"/bin
 fi
 
