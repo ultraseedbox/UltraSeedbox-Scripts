@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Python 3 and Pip Installer for USB Slots by Xan#7777
-# This installs python 3, pip and pipx on your slot using pyenv
+# This installs python 3, pip and pyenv on your slot using pyenv
 # After installing, close your SSH and login again for profile to properly load.
 
 # Unofficial Script warning
@@ -75,11 +75,6 @@ sed -i -e 's|PATH="$HOME/bin:$PATH"|PATH="$HOME/bin:$HOME/.local/bin:$PATH"|g' "
 
 # Reload new profile
 source "$HOME"/.profile
-
-# Installing pipx
-"$(command -v python)" -m pip install pipx
-"$(command -v python)" -m pipx ensurepath
-echo 'eval "$(register-python-argcomplete pipx)"' >> "$HOME"/.bashrc
 
 # Cleanup, reload shell and Exit
 clear
