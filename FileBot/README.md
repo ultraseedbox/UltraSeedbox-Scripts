@@ -8,22 +8,22 @@ For the installers and the AMC scripts hosted here to work, you may have to do t
 
 ## Installation
 
-### Version 4.8.5 (Recommended)
-You can install this version using the instructions below:
-
-1. `wget https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-485-installer.sh`
-2. `chmod +x filebot-485-installer.sh`
-3. `./filebot-485-installer.sh`
-4. `rm filebot-485-installer.sh`
-5. `filebot --license /path/to/FileBot_License_P1234567.psm`
-
-### Version 4.9.1 (Latest)
+### Version 4.9.1 (Recommended)
 You can install this version using the instructions below:
 
 1. `wget https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-491-installer.sh`
 2. `chmod +x filebot-491-installer.sh`
 3. `./filebot-491-installer.sh`
 4. `rm filebot-491-installer.sh`
+5. `filebot --license /path/to/FileBot_License_P1234567.psm`
+
+### Version 4.8.5
+You can install this version using the instructions below:
+
+1. `wget https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/filebot-485-installer.sh`
+2. `chmod +x filebot-485-installer.sh`
+3. `./filebot-485-installer.sh`
+4. `rm filebot-485-installer.sh`
 5. `filebot --license /path/to/FileBot_License_P1234567.psm`
 
 > To switch version, uninstall it first. This is to prevent any conflicts.
