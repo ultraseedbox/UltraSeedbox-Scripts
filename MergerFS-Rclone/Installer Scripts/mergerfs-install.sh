@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# MergerFS 2.28.3 Installer/Updater by Xan#7777
+# MergerFS Installer/Updater by Xan#7777
 
 if pgrep "mergerfs";
 then
