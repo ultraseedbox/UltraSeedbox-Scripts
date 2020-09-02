@@ -6,10 +6,8 @@ Type=simple
 
 ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ gdrive: \
     --config=/homexx/yyyyy/.config/rclone/rclone.conf \
-    --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36' \
     --drive-chunk-size 64M \
     --tpslimit 5 \
-    --drive-acknowledge-abuse=true \
     -vvv \
     --delete-empty-src-dirs \
     --fast-list \

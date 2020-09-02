@@ -9,15 +9,12 @@ KillMode=none
 Environment=GOMAXPROCS=2
 
 ExecStart=/homexx/yyyyy/bin/rclone mount gdrive: /homexx/yyyyy/Stuff/Mount \
-  --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36' \
   --config /homexx/yyyyy/.config/rclone/rclone.conf \
   --use-mmap \
-  --dir-cache-time 168h \
-  --timeout 1h \
-  --poll-interval=1m \
+  --dir-cache-time 1000h \
+  --poll-interval=30s \
   --vfs-cache-mode writes \
-  --vfs-read-chunk-size 64M \
-  --vfs-read-chunk-size-limit 2048M \
+  --vfs-read-chunk-size 32M \
   --tpslimit 10
 
 StandardOutput=file:/homexx/yyyyy/scripts/rclone_vfs_mount.log

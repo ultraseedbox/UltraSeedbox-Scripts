@@ -31,7 +31,6 @@ else
     rclone_command=$(
       "$HOME"/bin/rclone move -vP \
       --config="$HOME"/.config/rclone/rclone.conf \
-      --user-agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36' \
       --drive-chunk-size 64M \
       --use-mmap \
       --delete-empty-src-dirs \
@@ -53,7 +52,7 @@ else
 
   if [ "$DISCORD_WEBHOOK_URL" != "" ]; then
   
-    rclone_sani_command=$($rclone_command | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g') # Remove all escape sequences
+    rclone_sani_command="$(echo $rclone_command | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g')" # Remove all escape sequences
 
     # Notifications assume following rclone ouput: 
     # Transferred: 0 / 0 Bytes, -, 0 Bytes/s, ETA - Errors: 0 Checks: 0 / 0, - Transferred: 0 / 0, - Elapsed time: 0.0s
