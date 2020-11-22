@@ -8,13 +8,12 @@ Type=notify
 KillMode=none
 Environment=GOMAXPROCS=2
 
-ExecStart=/homexx/yyyyy/bin/rclone mount gdrive: /homexx/yyyyy/Stuff/Mount \
+ExecStart=/homexx/yyyyy/bin/rclone mount remote: /homexx/yyyyy/Stuff/Mount \
   --config /homexx/yyyyy/.config/rclone/rclone.conf \
   --use-mmap \
   --dir-cache-time 1000h \
-  --poll-interval=30s \
+  --poll-interval=15s \
   --vfs-cache-mode writes \
-  --vfs-read-chunk-size 32M \
   --tpslimit 10
 
 StandardOutput=file:/homexx/yyyyy/scripts/rclone_vfs_mount.log

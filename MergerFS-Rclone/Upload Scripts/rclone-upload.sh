@@ -10,7 +10,7 @@ then
 else
     rm "$HOME"/scripts/rclone-upload.log
     touch "$lock_file"
-    "$HOME"/bin/rclone move "$HOME"/Stuff/Local/ gdrive: \
+    "$HOME"/bin/rclone move "$HOME"/Stuff/Local/ remote: \
         --config="$HOME"/.config/rclone/rclone.conf \
         --drive-chunk-size 64M \
         --tpslimit 5 \
