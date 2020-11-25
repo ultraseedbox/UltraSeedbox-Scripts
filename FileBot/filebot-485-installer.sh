@@ -36,7 +36,7 @@ echo "$PACKAGE_SHA256 *$PACKAGE_FILE" | sha256sum --check || exit 1
 tar xvf "$PACKAGE_FILE"
 
 # Increase maximum amount of memory that can be allocated to the JVM heap
-sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-Xmx1536m\"' filebot.sh
+sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-XX:CompressedClassSpaceSize=175m -XX:MaxMetaspaceSize=175m -XX:NativeMemoryTracking=summary -XX:MaxRAM=2g -XX:MaxRAMPercentage=70\"' filebot.sh
 
 # Use custom OpenJDK 11 installation to run FileBot
 sed -i '/^java/ s#java#'"$PWD"'\/jdk-11\/bin\/java#' filebot.sh
