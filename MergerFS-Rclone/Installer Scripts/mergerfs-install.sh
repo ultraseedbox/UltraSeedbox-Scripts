@@ -21,7 +21,9 @@ then
     dpkg -x "$HOME"/.mergerfs-tmp/mergerfs.deb "$HOME"/.mergerfs-tmp
     rm -rf "$HOME"/bin/mergerfs*
     cp "$HOME"/.mergerfs-tmp/usr/bin/* "$HOME"/bin
-elif [ "$mfs" = "2" ];
+fi
+
+if [ "$mfs" = "2" ];
 then
     echo "mergerfs is installing/upgrading..."
     mkdir -p "$HOME"/.mergerfs-tmp/
