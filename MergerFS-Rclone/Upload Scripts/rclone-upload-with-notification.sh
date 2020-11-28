@@ -108,7 +108,7 @@ else
         ]
       }'
       
-      /usr/local/bin/curl -H "Content-Type: application/json" -d "$notification_data" $DISCORD_WEBHOOK_URL 
+      /usr/bin/curl -H "Content-Type: application/json" -d "$notification_data" $DISCORD_WEBHOOK_URL 
     }
     
     if [ "$transferred_amount" != "0" ]; then
