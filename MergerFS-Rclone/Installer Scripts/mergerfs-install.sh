@@ -18,12 +18,10 @@ then
     echo "mergerfs is installing/upgrading..."
     mkdir -p "$HOME"/.mergerfs-tmp/
     wget https://github.com/trapexit/mergerfs/releases/download/2.28.3/mergerfs_2.28.3.debian-stretch_amd64.deb -O "$HOME"/.mergerfs-tmp/mergerfs.deb
-    dpkg -x "$HOME"/.mergerfs-tmp/mergerfs.deb "$HOME"/.mergerfs-tmp
     rm -rf "$HOME"/bin/mergerfs*
+    dpkg -x "$HOME"/.mergerfs-tmp/mergerfs.deb "$HOME"/.mergerfs-tmp
     cp "$HOME"/.mergerfs-tmp/usr/bin/* "$HOME"/bin
-fi
-
-if [ "$mfs" = "2" ];
+elif [ "$mfs" = "2" ];
 then
     echo "mergerfs is installing/upgrading..."
     mkdir -p "$HOME"/.mergerfs-tmp/
@@ -35,7 +33,7 @@ fi
 
 clear
 
-if [[ $(mergerfs -v) ]]; then
+if [[ $(mergerfs -V) ]]; then
     echo "MergerFS installed correctly!"
     rm -rf "$HOME"/.mergerfs-tmp
     exit 0
