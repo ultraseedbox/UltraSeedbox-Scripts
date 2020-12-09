@@ -1,13 +1,12 @@
 #!/bin/bash
-
 # MergerFS Installer/Updater by Xan#7777
 
 if pgrep "mergerfs";
 then
     echo "mergerfs is running. Please close all mergerfs instances before proceeding."
-    exit
+    exit 0
 fi
-
+clear
 echo "Which version of mergerfs do you want to install?"
 echo "1 = 2.28.3"
 echo "2 = latest (2.31)"
@@ -33,12 +32,12 @@ fi
 
 clear
 
-if [[ $(mergerfs -V) ]]; then
-    echo "MergerFS installed correctly!"
+if [[ $("$HOME"/bin/mergerfs -V) ]]; then
+    echo "MergerFS installed correctly! Restart your SSH session to properly apply changes!"
     rm -rf "$HOME"/.mergerfs-tmp
-    exit 0
+    exit 1
 else
     echo "mergerfs install somehow failed. Please run this again!"
     rm -rf "$HOME"/.mergerfs-tmp
-    exit 1
+    exit 2
 fi
