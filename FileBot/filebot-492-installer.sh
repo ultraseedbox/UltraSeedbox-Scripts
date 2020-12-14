@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Filebot 4.9.1 Installer by tylerforesthauser#9004 and Xan#7777
+# Filebot 4.9.2 Installer by tylerforesthauser#9004 and Xan#7777
 # Based on the official tar installer: https://raw.githubusercontent.com/filebot/plugins/master/installer/tar.sh
 # Includes installer for OpenJDK 14.0.1
 
@@ -12,13 +12,13 @@ then
 fi
 
 # Set FileBot version and URLs
-PACKAGE_VERSION=4.9.1
+PACKAGE_VERSION=4.9.2
 PACKAGE_SHA256=$(curl -fsSL https://raw.githubusercontent.com/filebot/website/master/get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/FileBot_$PACKAGE_VERSION-portable.tar.xz.sha256)
 PACKAGE_FILE=FileBot_$PACKAGE_VERSION-portable.tar.xz
 PACKAGE_URL=https://get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/$PACKAGE_FILE
 
 # Create directory for all FileBot data and change working directory
-mkdir -p "$HOME"/filebot-491 && cd "$HOME"/filebot-491 || exit
+mkdir -p "$HOME"/filebot-492 && cd "$HOME"/filebot-492 || exit
 
 # Fetch OpenJDK 14 binaries archive
 curl -o Java14.tar.gz "https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz"
