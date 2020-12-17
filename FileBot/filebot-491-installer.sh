@@ -2,7 +2,7 @@
 
 # Filebot 4.9.1 Installer by tylerforesthauser#9004 and Xan#7777
 # Based on the official tar installer: https://raw.githubusercontent.com/filebot/plugins/master/installer/tar.sh
-# Includes installer for OpenJDK 14.0.1
+# Includes installer for OpenJDK 15.0.1
 
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
 read -r -p "Type confirm if you wish to continue: " input
@@ -20,11 +20,11 @@ PACKAGE_URL=https://get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/$PACKAGE_FI
 # Create directory for all FileBot data and change working directory
 mkdir -p "$HOME"/filebot-491 && cd "$HOME"/filebot-491 || exit
 
-# Fetch OpenJDK 14 binaries archive
-curl -o Java14.tar.gz "https://download.java.net/java/GA/jdk14.0.1/664493ef4a6946b186ff29eb326336a2/7/GPL/openjdk-14.0.1_linux-x64_bin.tar.gz"
+# Fetch OpenJDK 15 binaries archive
+curl -o Java15.tar.gz "https://download.java.net/java/GA/jdk15.0.1/51f4f36ad4ef43e39d0dfdbaf6549e32/9/GPL/openjdk-15.0.1_linux-x64_bin.tar.gz"
 
-# Extract OpenJDK 14 binaries and remove archives
-tar xf Java14.tar.gz && rm Java14.tar.gz
+# Extract OpenJDK 15 binaries and remove archives
+tar xf Java15.tar.gz && rm Java15.tar.gz
 
 # Download FileBot package
 curl -o "$PACKAGE_FILE" -z "$PACKAGE_FILE" "$PACKAGE_URL"
@@ -41,8 +41,8 @@ rm "$PACKAGE_FILE" reinstall-filebot.sh update-filebot.sh
 # Increase maximum amount of memory that can be allocated to the JVM heap
 sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-XX:CompressedClassSpaceSize=175m -XX:MaxMetaspaceSize=175m -XX:NativeMemoryTracking=summary -XX:MaxRAM=2g -XX:MaxRAMPercentage=70\"' filebot.sh
 
-# Use custom Java 11 installation to run FileBot
-sed -i '/^java/ s#java#'"$PWD"'\/jdk-14.0.1\/bin\/java#' filebot.sh
+# Use custom OpenJDK 15 installation to run FileBot
+sed -i '/^java/ s#java#'"$PWD"'\/jdk-15.0.1\/bin\/java#' filebot.sh
 
 # Check if filebot.sh works
 "$PWD/filebot.sh" -script https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/usbsysinfo.groovy
