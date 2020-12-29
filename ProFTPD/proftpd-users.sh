@@ -17,7 +17,7 @@ case $option in
     do
       read -p "Username: " username
       read -s -p "Password: " password
-      echo "$password" | /usr/sbin/ftpasswd --passwd --stdin --file="$HOME/.config/proftpd/proftpd.passwd" --name="$username" --uid="$UID" --home="$ROOT"--shell="$SHELL" --gid="$(id -g $USER)"
+      echo "$password" | /usr/sbin/ftpasswd --passwd --stdin --file="$HOME/.config/proftpd/proftpd.passwd" --name="$username" --uid="$UID" --home="$ROOT" --shell="$SHELL" --gid="$(id -g $USER)"
       read -p "Do you want to create another user? (y/n) " input
     done
     ;;
