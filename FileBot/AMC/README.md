@@ -18,6 +18,7 @@ Before adding the scripts, make sure to do the following:
 2. Then choose the following script based on the torrent client you used.
 
 ## AMC Scripts
+
 ### rtorrent
 
 1. `wget -P ~/scripts/amc https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/FileBot/AMC/rtorrent-amc.sh && chmod +rx ~/scripts/amc/rtorrent-amc.sh`
