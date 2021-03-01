@@ -9,7 +9,7 @@ clear
 echo "This is the Python and PIP Installer!"
 echo ""
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -p "Type confirm if you wish to continue: " input
+read -r -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
     exit
@@ -22,38 +22,52 @@ sleep 1
 curl https://pyenv.run | bash
 
 # Add pyenv to bashrc
-echo 'export PATH="/homexx/yyyyy/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"' >> "$HOME"/.bashrc
-sed -i "s|\/homexx\/yyyyy|$HOME|g" "$HOME"/.bashrc
+printf 'export PATH="$HOME/.pyenv/bin:$PATH"\neval "$(pyenv init -)"\neval "$(pyenv virtualenv-init -)"' >> "$HOME"/.bashrc
 
 # Load new bashrc
+# shellcheck disable=SC1091
 source "$HOME"/.bashrc
+source "$HOME"/.profile
 
 # Install xxenv-latest
 git clone https://github.com/momo-lab/xxenv-latest.git "$(pyenv root)"/plugins/pyenv-latest
 
 # Python Version Chooser
 clear
-echo "Choose between 3.6, 3.7 or latest."
-echo "We recommend entering 3.7 as your Python version."
+echo "Choose between 3.6, 3.7, 3.8, or latest."
+echo "1 = Python 3.6"
+echo "2 = Python 3.7"
+echo "3 = Python 3.8"
+echo "4 = Latest Python 3 release"
+echo "5 = Python 2.7"
+echo "We recommend using Python 3.8 as your default Python version."
 
 while true; do
-read -p "Enter your response here: " pyver
+read -r -p "Enter your response here: " pyver
     case $pyver in
-        3.6)
+        1)
             "$HOME"/.pyenv/bin/pyenv latest install 3.6 -v
             break
             ;;
-        3.7)
+        2)
             "$HOME"/.pyenv/bin/pyenv latest install 3.7 -v
             break
             ;;
-        latest)
+        3)
+            "$HOME"/.pyenv/bin/pyenv latest install 3.8 -v
+            break
+            ;;
+        4)
             "$HOME"/.pyenv/bin/pyenv latest install -v
             break
             ;;
-        *) echo "Unknown response. Try again..." ;;
+        5)
+            "$HOME"/.pyenv/bin/pyenv latest install 2.7 -v
+            break
+            ;;
+        *)
+            echo "Unknown response. Try again..."
+            ;;
     esac
 done
 
@@ -68,12 +82,13 @@ sleep 2
 # Updating all pip packages
 
 echo "Updating all pip packages..."
-"$(command -v python)" -m pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 "$(command -v python)" -m pip install -U
+"$(command -v python)" -m pip list --outdated --format=freeze | grep -v "^\-e" | cut -d = -f 1 | xargs -n1 "$(command -v python)" -m pip install -U
 
 # Replacing PATH
 sed -i -e 's|PATH="$HOME/bin:$PATH"|PATH="$HOME/bin:$HOME/.local/bin:$PATH"|g' "$HOME"/.profile
 
 # Reload new profile
+# shellcheck disable=SC1091
 source "$HOME"/.profile
 
 # Cleanup, reload shell and Exit
