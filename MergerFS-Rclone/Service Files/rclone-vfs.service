@@ -8,16 +8,16 @@ Type=notify
 KillMode=none
 Environment=GOMAXPROCS=2
 
-ExecStart=/homexx/yyyyy/bin/rclone mount remote: /homexx/yyyyy/Stuff/Mount \
-  --config /homexx/yyyyy/.config/rclone/rclone.conf \
+ExecStart=%h/bin/rclone mount remote: %h/Stuff/Mount \
+  --config %h/.config/rclone/rclone.conf \
   --use-mmap \
   --dir-cache-time 1000h \
   --poll-interval=15s \
   --vfs-cache-mode writes \
   --tpslimit 10
 
-StandardOutput=file:/homexx/yyyyy/scripts/rclone_vfs_mount.log
-ExecStop=/bin/fusermount -uz /homexx/yyyyy/Stuff/Mount
+StandardOutput=file:%h/scripts/rclone_vfs_mount.log
+ExecStop=/bin/fusermount -uz %h/Stuff/Mount
 Restart=on-failure
 
 [Install]
