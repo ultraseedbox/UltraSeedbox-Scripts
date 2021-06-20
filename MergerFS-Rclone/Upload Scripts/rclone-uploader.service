@@ -4,8 +4,8 @@ Description=RClone Uploader
 [Service]
 Type=simple
 
-ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ remote: \
-    --config=/homexx/yyyyy/.config/rclone/rclone.conf \
+ExecStart=%h/bin/rclone move %h/Stuff/Local/ remote: \
+    --config=%h/.config/rclone/rclone.conf \
     --drive-chunk-size 64M \
     --tpslimit 5 \
     -vvv \
@@ -17,7 +17,7 @@ ExecStart=/homexx/yyyyy/bin/rclone move /homexx/yyyyy/Stuff/Local/ remote: \
     --checkers=4 \
     --drive-stop-on-upload-limit
 
-StandardOutput=file:/homexx/yyyyy/scripts/rclone_uploader.log
+StandardOutput=file:%h/scripts/rclone_uploader.log
 Restart=on-failure
 
 [Install]
