@@ -18,7 +18,7 @@ fi
 clear
 echo "Checking your python version..."
 sleep 1
-if python -V | grep -q 3.[6-8].[0-9];
+if python -V | grep -q 3.[6-9].[0-9];
 then
     echo "Required python version detected. Continuing..."
 else
