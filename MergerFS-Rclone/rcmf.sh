@@ -1,10 +1,7 @@
 #!/bin/bash
-OLDH=$1
-OLDU=$2
-OLD="/$1/$2"
 if test -f "$HOME/transfer/.config/systemd/user/rclone-vfs.service"; then
    cp $HOME/transfer/.config/systemd/user/rclone-vfs.service $HOME/.config/systemd/user/
-   sed -i "s+$OLD+%h+g" $HOME/.config/systemd/user/rclone-vfs.service
+   sed -i -E "s+/home[0-9]{0,2}/\w*+%h+g" $HOME/.config/systemd/user/rclone-vfs.service
    systemctl --user daemon-reload
    systemctl --user restart rclone-vfs.service
    echo "rclone-vfs service edited and restarted"
@@ -13,7 +10,7 @@ fi
 
 if test -f "$HOME/transfer/.config/systemd/user/mergerfs.service"; then
    cp $HOME/transfer/.config/systemd/user/mergerfs.service $HOME/.config/systemd/user/
-   sed -i "s+$OLD+%h+g" $HOME/.config/systemd/user/mergerfs.service
+   sed -i -E "s+/home[0-9]{0,2}/\w*+%h+g" $HOME/.config/systemd/user/mergerfs.service
    systemctl --user daemon-reload
    systemctl --user restart mergerfs.service
    echo "mergerfs service edited and restarted"
