@@ -22,7 +22,9 @@ sleep 1
 curl https://pyenv.run | bash
 
 # Add pyenv to bashrc
-printf 'export PATH="$HOME/.pyenv/bin:$PATH"\neval "$(pyenv init -)"\neval "$(pyenv virtualenv-init -)"' >> "$HOME"/.bashrc
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
+echo 'eval "$(pyenv init --path)"' >> ~/.profile
 
 # Load new bashrc
 # shellcheck disable=SC1091
