@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -d "$HOME/.config/rtorrent/logs" ];
+if [ -d "$HOME/.config/rtorrent/logs" ];
 then
     echo "rTorrent logging already enabled. Exiting..."
     exit
