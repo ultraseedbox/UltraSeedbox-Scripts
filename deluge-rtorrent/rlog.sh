@@ -27,11 +27,7 @@ log.add_output = "tracker_debug", "tracker"
   
 log.add_output = "storage_debug", "storage"
 
-log.add_output = "connection_bind", "network"
-log.add_output = "connection_fd", "network"
-log.add_output = "connection_filter", "network"
-log.add_output = "connection_hanshake", "network"
-log.add_output = "connection_listen", "network"
+log.add_output = "connection_debug", "network"
 log.add_output = "socket_error", "network"
 log.add_output = "socket_warn", "network"
 log.add_output = "socket_notice", "network"
