@@ -5,7 +5,6 @@ then
    echo "Rtorrent logging already enabled"
    exit 0
 fi
-else
 app-rtorrent stop
 mkdir -p $HOME/.config/rtorrent/logs
 cp $HOME/.config/rtorrent/rtorrent.rc $HOME/.config/rtorrent/rtorrent.rc.bak
@@ -40,4 +39,3 @@ log.add_output = "socket_debug", "network"" >> $HOME/.config/rtorrent/rtorrent.r
 app-rtorrent restart
 sleep 2
 tail -f $HOME/.config/rtorrent/logs/rtorrent.log
-fi
