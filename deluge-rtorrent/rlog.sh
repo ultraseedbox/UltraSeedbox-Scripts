@@ -35,4 +35,4 @@ log.add_output = "socket_info", "network"
 log.add_output = "socket_debug", "network"" >> $HOME/.config/rtorrent/rtorrent.rc
 app-rtorrent restart
 sleep 2
-tail -f $HOME/.config/rtorrent/logs/rtorrent.log
+echo "rTorrent logging enabled. All log files located in ~/.config/rtorrent/logs".
