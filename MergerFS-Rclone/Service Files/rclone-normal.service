@@ -8,7 +8,7 @@ Type=notify
 KillMode=none
 Environment=GOMAXPROCS=2
 
-ExecStart=%h/bin/rclone mount remote: /homexx/yyyyy/Stuff/Mount \
+ExecStart=%h/bin/rclone mount remote: %h/Stuff/Mount \
   --config %h/.config/rclone/rclone.conf \
   --use-mmap
 
