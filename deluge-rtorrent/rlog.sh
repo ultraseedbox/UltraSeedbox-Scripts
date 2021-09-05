@@ -1,10 +1,11 @@
 #!/bin/bash
 
-if [ -d "$HOME/.config/rtorrent/logs" ]
+if [ ! -d "$HOME/.config/rtorrent/logs" ];
 then
-   echo "Rtorrent logging already enabled"
-   exit 0
+    echo "rTorrent logging already enabled. Exiting..."
+    exit
 fi
+
 app-rtorrent stop
 mkdir -p $HOME/.config/rtorrent/logs
 cp $HOME/.config/rtorrent/rtorrent.rc $HOME/.config/rtorrent/rtorrent.rc.bak
