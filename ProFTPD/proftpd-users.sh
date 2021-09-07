@@ -7,10 +7,11 @@ echo "3) Change a user's password"
 echo "4) Exit"
 read -p "Select an option: " option
 
+ABS_PATH=$(readlink -f ~)
 case $option in
   1)
     read -p "FTP Root Folder: " ROOT
-    ROOT="${ROOT/#\~/$HOME}"
+    ROOT="${ROOT/#\~/$ABS_PATH}"
 
     input="y"
     while [ "$input" = "y" ]
