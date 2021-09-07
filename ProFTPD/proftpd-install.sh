@@ -7,10 +7,11 @@ then
     exit
 fi
 
+ABS_PATH=$(readlink -f ~)
 PORT=$(( 11000 + (($UID - 1000) * 50) + 13))
 
 read -p "FTP Root Folder: " ROOT
-ROOT="${ROOT/#\~/$HOME}"
+ROOT="${ROOT/#\~/$ABS_PATH}"
 
 echo "Installing ProFTPD..."
 
@@ -25,11 +26,11 @@ Umask                   022
 MaxInstances            10
 DefaultServer           on
 AuthPAM                 off
-AuthUserFile            $HOME/.config/proftpd/proftpd.passwd
-PidFile                 $HOME/.config/proftpd/proftpd.pid
-ScoreboardFile          $HOME/.config/proftpd/proftpd.scoreboard
-DelayTable              $HOME/.config/proftpd/proftpd.delay
-SystemLog               $HOME/.config/proftpd/proftpd.log
+AuthUserFile            $ABS_PATH/.config/proftpd/proftpd.passwd
+PidFile                 $ABS_PATH/.config/proftpd/proftpd.pid
+ScoreboardFile          $ABS_PATH/.config/proftpd/proftpd.scoreboard
+DelayTable              $ABS_PATH/.config/proftpd/proftpd.delay
+SystemLog               $ABS_PATH/.config/proftpd/proftpd.log
 TransferLog             None
 WtmpLog                 None
 DefaultChdir            $ROOT" > ~/.config/proftpd/proftpd.conf
@@ -94,8 +95,8 @@ LoadModule mod_tls.c
 TLSEngine on
 TLSProtocol TLSv1.2
 TLSRequired on
-TLSRSACertificateFile $HOME/.config/proftpd/server.crt
-TLSRSACertificateKeyFile $HOME/.config/proftpd/server.key
+TLSRSACertificateFile $ABS_PATH/.config/proftpd/server.crt
+TLSRSACertificateKeyFile $ABS_PATH/.config/proftpd/server.key
 TLSVerifyClient off" >> ~/.config/proftpd/proftpd.conf
 
 echo "Starting ProFTPD..."
