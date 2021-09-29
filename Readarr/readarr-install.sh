@@ -72,7 +72,7 @@ systemctl --user daemon-reload
 systemctl --user enable --now readarr.service
 sleep 10
 
-#Set prowlarr port
+#Set readarr port
 echo '<Config>
   <LogLevel>info</LogLevel>
   <UrlBase>/readarr</UrlBase>
