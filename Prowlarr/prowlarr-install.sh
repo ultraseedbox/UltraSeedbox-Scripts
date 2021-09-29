@@ -11,7 +11,7 @@ fi
 app-ports show
 echo "Pick any application from this list that you're not currently using."
 echo "We'll be using this port for Prowlarr."
-echo "For example, you chose SickRage so type in 'sickrage'. Please type it in full name."
+echo "For example, you chose SickChill so type in 'sickchill'. Please type it in full name."
 echo "Type in the application below."
 read -r appname
 proper_app_name=$(app-ports show | grep -i "$appname" | cut -c 7-)
@@ -26,7 +26,7 @@ fi
 #Get Prowlarr binaries
 mkdir -p "$HOME"/.config/.temp; cd $_
 wget -O "$HOME"/.config/.temp/prowlarr.tar.gz --content-disposition 'http://prowlarr.servarr.com/v1/update/develop/updatefile?os=linux&runtime=netcore&arch=x64' 
-tar -xvf prowlarr.tar.gz -C ../ && cd "$HOME"
+tar -xvf prowlarr.tar.gz -C "$HOME/" && cd "$HOME"
 rm -rf "$HOME"/.config/.temp
 
 #Install nginx conf
@@ -78,7 +78,7 @@ After=network-online.target
 [Service]
 Type=simple
 
-ExecStart=%h/.config/Prowlarr/Prowlarr -nobrowser -data=%h/.apps/prowlarr/
+ExecStart=%h/Prowlarr/Prowlarr -nobrowser -data=%h/.apps/prowlarr/
 TimeoutStopSec=20
 KillMode=process
 Restart=always
