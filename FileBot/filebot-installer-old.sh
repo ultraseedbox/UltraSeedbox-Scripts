@@ -39,7 +39,7 @@ tar xf "$PACKAGE_FILE"
 rm "$PACKAGE_FILE" reinstall-filebot.sh update-filebot.sh
 
 # Increase maximum amount of memory that can be allocated to the JVM heap
-sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-Xms128m -Xmx256m -XX:CompressedClassSpaceSize=175m -XX:MaxMetaspaceSize=175m -XX:NativeMemoryTracking=summary -XX:MaxRAM=1g -XX:MaxRAMPercentage=70\"' filebot.sh
+sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-Xms512m -Xmx1536m -XX:CompressedClassSpaceSize=175m -XX:MaxMetaspaceSize=175m -XX:NativeMemoryTracking=summary -XX:MaxRAM=2g -XX:MaxRAMPercentage=70\"' filebot.sh
 
 # Use custom OpenJDK 11 installation to run FileBot
 sed -i '/^java/ s#java#'"$PWD"'\/jdk-11.0.2\/bin\/java#' filebot.sh
