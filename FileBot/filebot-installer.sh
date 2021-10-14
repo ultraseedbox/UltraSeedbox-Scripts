@@ -5,7 +5,7 @@
 # Includes installer for OpenJDK 15.0.1
 
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -r -p "Type confirm if you wish to continue: " input
+read -r -p "Type CONFIRM if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
     exit
@@ -39,7 +39,7 @@ tar xf "$PACKAGE_FILE"
 rm "$PACKAGE_FILE" reinstall-filebot.sh update-filebot.sh
 
 # Increase maximum amount of memory that can be allocated to the JVM heap
-sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-XX:CompressedClassSpaceSize=175m -XX:MaxMetaspaceSize=175m -XX:NativeMemoryTracking=summary -XX:MaxRAM=2g -XX:MaxRAMPercentage=70\"' filebot.sh
+sed -i '/#!\/bin\/sh/a export JAVA_OPTS=\"-Xms128m -Xmx384m -XX:CompressedClassSpaceSize=256m -XX:MaxMetaspaceSize=256m -XX:NativeMemoryTracking=summary -XX:MaxRAM=2g -XX:MaxRAMPercentage=70 -XX:ActiveProcessorCount=4\"' filebot.sh
 
 # Use custom OpenJDK 15 installation to run FileBot
 sed -i '/^java/ s#java#'"$PWD"'\/jdk-15.0.1\/bin\/java#' filebot.sh
