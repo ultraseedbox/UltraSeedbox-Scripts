@@ -10,7 +10,7 @@ fi
 #Port-Picker by XAN
 app-ports show
 echo "Pick any application from this list that you're not currently using."
-echo "We'll be using this port for Prowlarr."
+echo "We'll be using this port for your 2nd Radarr instance."
 echo "For example, you chose SickChill so type in 'sickchill'. Please type it in full name."
 echo "Type in the application below."
 read -r appname
