@@ -25,7 +25,7 @@ fi
 
 #Get Readarr binaries
 mkdir -p "$HOME"/.config/.temp; cd $_
-wget -O "$HOME"/.config/.temp/readarr.tar.gz --content-disposition 'http://readarr.servarr.com/v1/update/nightly/updatefile?os=linux&runtime=netcore&arch=x64' 
+wget -c -O "$HOME"/.config/.temp/readarr.tar.gz --content-disposition 'http://readarr.servarr.com/v1/update/nightly/updatefile?os=linux&runtime=netcore&arch=x64' 
 tar -xvf readarr.tar.gz -C "$HOME/.config/" && cd "$HOME"
 sleep 5
 rm -rf "$HOME"/.config/.temp
