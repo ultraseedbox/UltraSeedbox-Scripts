@@ -25,7 +25,12 @@ fi
 
 #Get Readarr binaries
 mkdir -p "$HOME"/.config/.temp; cd $_
-wget -O "$HOME"/.config/.temp/readarr.tar.gz --content-disposition 'http://readarr.servarr.com/v1/update/nightly/updatefile?os=linux&runtime=netcore&arch=x64' && echo "Binaries Downloaded" || echo "Binary Download failed, exited." && exit 1
+wget -O "$HOME"/.config/.temp/readarr.tar.gz --content-disposition 'http://readarr.servarr.com/v1/update/nightly/updatefile?os=linux&runtime=netcore&arch=x64'
+if [[ $? -ne 0 ]]; then
+    rm -rf "$HOME"/.config/.temp
+    echo "Error: Binary download failed, try running the script again."
+    exit 1; 
+fi
 tar -xvf readarr.tar.gz -C "$HOME/.config/" && cd "$HOME"
 sleep 5
 rm -rf "$HOME"/.config/.temp
