@@ -26,6 +26,11 @@ fi
 #Get radarr binaries
 mkdir -p "$HOME"/.config/.temp; cd $_
 wget -O "$HOME"/.config/.temp/radarr.tar.gz --content-disposition 'http://radarr.servarr.com/v1/update/master/updatefile?os=linux&runtime=netcore&arch=x64'
+if [[ $? -ne 0 ]]; then
+    rm -rf "$HOME"/.config/.temp
+    echo "Error: Binary download failed, try running the script again."
+    exit 1; 
+fi
 tar -xvf radarr.tar.gz -C "$HOME/" && cd "$HOME"
 sleep 5
 mv "$HOME"/Radarr "$HOME"/.config/radarr2
