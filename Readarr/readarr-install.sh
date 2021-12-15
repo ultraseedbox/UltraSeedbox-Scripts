@@ -52,7 +52,7 @@ echo 'location /readarr2 {
     proxy_pass http://127.0.0.1:>port</readarr2/Content;
  }' > "$HOME/.apps/nginx/proxy.d/readarr2.conf"
 
-sed  -i "s/>port</$port/g" "$HOME"/.apps/nginx/proxy.d/readarr2.conf
+sed -i "s/>port</$port/g" "$HOME"/.apps/nginx/proxy.d/readarr2.conf
 
 #Install Systemd service
 cat << EOF | tee ~/.config/systemd/user/readarr2.service > /dev/null
