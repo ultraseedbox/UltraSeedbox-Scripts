@@ -26,8 +26,10 @@ fi
 #Get Readarr binaries
 mkdir -p "$HOME"/.config/.temp; cd $_
 wget -O "$HOME"/.config/.temp/readarr.tar.gz --content-disposition 'http://readarr.servarr.com/v1/update/nightly/updatefile?os=linux&runtime=netcore&arch=x64' 
-tar -xvf readarr.tar.gz -C "$HOME/" && cd "$HOME"
+tar -xvf readarr.tar.gz -C "$HOME/.config/" && cd "$HOME"
+sleep 5
 rm -rf "$HOME"/.config/.temp
+mv "$HOME"/.config/Readarr "$HOME"/.config/readarr2
 
 #Install nginx conf
 echo 'location /readarr2 {
@@ -60,7 +62,7 @@ After=network-online.target
 [Service]
 Type=simple
 
-ExecStart=%h/Readarr/Readarr -nobrowser -data=%h/.apps/readarr2/
+ExecStart=%h/.config/readarr2/Readarr -nobrowser -data=%h/.apps/readarr2/
 TimeoutStopSec=20
 KillMode=process
 Restart=always
