@@ -10,7 +10,7 @@ fi
 #Port-Picker by XAN
 app-ports show
 echo "Pick any application from this list that you're not currently using."
-echo "We'll be using this port for Prowlarr."
+echo "We'll be using this port for your second Readarr instance."
 echo "For example, you chose SickChill so type in 'sickchill'. Please type it in full name."
 echo "Type in the application below."
 read -r appname
@@ -30,8 +30,8 @@ tar -xvf readarr.tar.gz -C "$HOME/" && cd "$HOME"
 rm -rf "$HOME"/.config/.temp
 
 #Install nginx conf
-echo 'location /readarr {
-  proxy_pass        http://127.0.0.1:>port</readarr;
+echo 'location /readarr2 {
+  proxy_pass        http://127.0.0.1:>port</readarr2;
   proxy_set_header Host $host;
   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   proxy_set_header X-Forwarded-Host $host;
@@ -42,25 +42,25 @@ echo 'location /readarr {
   proxy_set_header Upgrade $http_upgrade;
   proxy_set_header Connection $http_connection;
 }
-  location /readarr/api { auth_request off;
-  proxy_pass       http://127.0.0.1:>port</readarr/api;
+  location /readarr2/api { auth_request off;
+  proxy_pass       http://127.0.0.1:>port</readarr2/api;
 }
 
-  location /readarr/Content { auth_request off;
-    proxy_pass http://127.0.0.1:>port</readarr/Content;
- }' > "$HOME/.apps/nginx/proxy.d/readarr.conf"
+  location /readarr2/Content { auth_request off;
+    proxy_pass http://127.0.0.1:>port</readarr2/Content;
+ }' > "$HOME/.apps/nginx/proxy.d/readarr2.conf"
 
-sed  -i "s/>port</$port/g" "$HOME"/.apps/nginx/proxy.d/readarr.conf
+sed  -i "s/>port</$port/g" "$HOME"/.apps/nginx/proxy.d/readarr2.conf
 
 #Install Systemd service
-cat << EOF | tee ~/.config/systemd/user/readarr.service > /dev/null
+cat << EOF | tee ~/.config/systemd/user/readarr2.service > /dev/null
 [Unit]
-Description=Readarr Daemon
+Description=Readarr2 Daemon
 After=network-online.target
 [Service]
 Type=simple
 
-ExecStart=%h/Readarr/Readarr -nobrowser -data=%h/.apps/readarr/
+ExecStart=%h/Readarr/Readarr -nobrowser -data=%h/.apps/readarr2/
 TimeoutStopSec=20
 KillMode=process
 Restart=always
@@ -69,28 +69,28 @@ WantedBy=default.target
 EOF
 
 systemctl --user daemon-reload
-systemctl --user enable --now readarr.service
+systemctl --user enable --now readarr2.service
 sleep 10
 
 #Set readarr port
 echo '<Config>
   <LogLevel>info</LogLevel>
-  <UrlBase>/readarr</UrlBase>
+  <UrlBase>/readarr2</UrlBase>
   <UpdateMechanism>BuiltIn</UpdateMechanism>
   <Branch>develop</Branch>
   <Port>temport</Port>
-</Config>' > "$HOME/.apps/readarr/config.xml"
+</Config>' > "$HOME/.apps/readarr2/config.xml"
 
-sed -i "s/temport/$port/g" "$HOME"/.apps/readarr/config.xml
+sed -i "s/temport/$port/g" "$HOME"/.apps/readarr2/config.xml
 
-systemctl --user restart readarr.service
+systemctl --user restart readarr2.service
 app-nginx restart
 
 echo ""
 echo ""
 echo "Installation complete."
-echo "You can access it via https://$USER.$HOSTNAME.usbx.me/readarr"
+echo "You can access it via https://$USER.$HOSTNAME.usbx.me/readarr2"
 echo "Go to Settings -> General and setup authentication. Form login is recommended."
-printf "\033[0;31mPlease do the above after first login!!! Failing to do so will keep your Readarr instance open to public.\033[0m\n"
+printf "\033[0;31mPlease do the above after first login!!! Failing to do so will keep your second Readarr instance open to public.\033[0m\n"
 
 exit
