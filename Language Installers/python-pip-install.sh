@@ -40,8 +40,9 @@ echo "Choose between 3.6, 3.7, 3.8, or latest."
 echo "1 = Python 3.6"
 echo "2 = Python 3.7"
 echo "3 = Python 3.8"
-echo "4 = Latest Python 3 release"
-echo "5 = Python 2.7"
+echo "4 = Python 3.10"
+echo "5 = Latest Python 3 release"
+echo "6 = Python 2.7"
 echo "We recommend using Python 3.8 as your default Python version."
 
 while true; do
@@ -60,6 +61,10 @@ read -r -p "Enter your response here: " pyver
             break
             ;;
         4)
+            "$HOME"/.pyenv/bin/pyenv latest install 3.10 -v
+            break
+            ;;
+        5)
             "$HOME"/.pyenv/bin/pyenv latest install -v
             break
             ;;
