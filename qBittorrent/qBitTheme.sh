@@ -2,8 +2,8 @@
 set -e
 
 #Install check
-if [[ -f "$HOME"/.apps/nginx/prody.d/qbitdark.conf ]]; then
-echo "Already installed, exiting.."
+if [[ -f "$HOME"/.apps/nginx/proxy.d/qbitdark.conf ]]; then
+echo "qBittorrent dark theme already installed. Visit at the following URL:https://$USER.$HOSTNAME.usbx.me/qbittorrent-dark"
 exit 0
 fi
 
