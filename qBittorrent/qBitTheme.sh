@@ -44,11 +44,12 @@ esac
 
 #Install theme
 app-nginx stop
+echo
 port=$(app-ports show| grep qBittorrent | awk '{print $1}')
 rm "$HOME"/.apps/nginx/proxy.d/qbittorrent.conf
-wget -P "$HOME/.apps/nginx/proxy.d/" https://raw.githubusercontent.com/raikiri72/UltraSeedbox-Scripts/qbitdarktheme/qBittorrent/qbittorrent.conf
+wget -P "$HOME/.apps/nginx/proxy.d/" -q https://raw.githubusercontent.com/raikiri72/UltraSeedbox-Scripts/qbitdarktheme/qBittorrent/qbittorrent.conf
 sed -i "s/>port</$port/g" "$HOME"/.apps/nginx/proxy.d/qbittorrent.conf
-sed -i "s/>theme</$theme/g" "$HOME"/.apps/nginx/proxy.d/qbittorrent.conf 
+sed -i "s/>theme</$theme/g" "$HOME"/.apps/nginx/proxy.d/qbittorrent.conf
 app-nginx restart
 
 echo "qBittorrent $theme theme installed, visit at following URL:https://$USER.$HOSTNAME.usbx.me/qbittorrent"
