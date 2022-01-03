@@ -30,6 +30,7 @@ case $theme in
 
   3)
     theme="dracula"
+    ;;
 
   4)
     theme="overseerr"
