@@ -12,7 +12,7 @@ while [ -z "$port" ]
 do
   app-ports show
   echo "Pick any application from the list above, that you're not currently using."
-  echo "We'll be using this port for your second instance of Radarr"
+  echo "We'll be using this port for your second instance of Sonarr."
   read -p "$(tput setaf 4)$(tput bold)Application name in full[Example: pyload]: $(tput sgr0)" appname
   proper_app_name=$(app-ports show | grep -i "$appname" | head -n 1 | cut -c 7-)
   port=$(app-ports show | grep -i "$appname" | head -n 1 | awk {'print $1'})
