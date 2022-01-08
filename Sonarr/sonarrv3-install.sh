@@ -7,20 +7,28 @@ then
     exit
 fi
 
-#Port-Picker by XAN
-app-ports show
-echo "Pick any application from this list that you're not currently using."
-echo "We'll be using this port for your 2nd Sonarr instance."
-echo "For example, you chose SickChill so type in 'sickchill'. Please type it in full name."
-echo "Type in the application below."
-read -r appname
-proper_app_name=$(app-ports show | grep -i "$appname" | cut -c 7-)
-port=$(app-ports show | grep -i "$appname" | cut -b -5)
-echo "Are you sure you want to use $proper_app_name's port? type 'confirm' to proceed."
+#Port-Picker by XAN & Raikiri
+while [ -z "$port" ]
+do
+  app-ports show
+  echo "Pick any application from the list above, that you're not currently using."
+  echo "We'll be using this port for your second instance of Radarr"
+  read -p "$(tput setaf 4)$(tput bold)Application name in full[Example: pyload]: $(tput sgr0)" appname
+  proper_app_name=$(app-ports show | grep -i "$appname" | head -n 1 | cut -c 7-)
+  port=$(app-ports show | grep -i "$appname" | head -n 1 | awk {'print $1'})
+  if [ -z "$port" ]
+  then
+     echo "$(tput setaf 1)Invalid choice! Please choose an application from the list and avoid typos.$(tput sgr0)"
+     echo "$(tput bold)Listing all applications again..$(tput sgr0)"
+     sleep 5
+     clear
+  fi
+done
+echo "$(tput setaf 2)Are you sure you want to use $proper_app_name's port? type 'confirm' to proceed.$(tput sgr0)"
 read -r input
 if [ ! "$input" = "confirm" ]
 then
-    exit
+  exit
 fi
 
 printf "\033[0;31mWARNING: This script builds mono into your userspace. It will take a long time!\033[0m\n"
