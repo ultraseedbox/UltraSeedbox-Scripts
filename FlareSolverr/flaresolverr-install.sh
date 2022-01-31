@@ -36,26 +36,26 @@ fi
 
 #Choose Flaresolverr version
 echo "Choose FlareSolverr version:
-1. Latest
-2. v2.0.2[Only this works at the moment]"
+1. v2.0.2[Only this works at the moment]
+2. Latest"
 
 read -p "Choice [default: 1]: " version
 
 case $version in
 
   1)
+    version="v2.0.2"
+    ;;
+
+  2)
     LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/FlareSolverr/FlareSolverr/releases/latest)
     LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
     version="$LATEST_VERSION"
     ;;
 
-  2)
-    version="v2.0.2"
-    ;;
-
   *)
-    echo -n "Invalid choice. Installing latest FlareSolverr version $LATEST_VERSION.."
-    version="$LATEST_VERSION"
+    echo -n "Invalid choice. Installing FlareSolverr v2.0.2.."
+    version="v2.0.2"
     ;;
 esac
 
