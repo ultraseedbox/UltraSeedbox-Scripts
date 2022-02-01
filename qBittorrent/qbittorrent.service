@@ -1,0 +1,17 @@
+[Unit]
+Description=qBittorrent - 2022.01.10
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+
+[Service]
+Type=exec
+ExecStart=%h/bin/qbittorrent-nox
+#ExecStop=/bin/kill -s QUIT $MAINPID
+Restart=on-failure
+SyslogIdentifier=qbittorrent-nox
+StandardOutput=file:%h/.local/share/qBittorrent/qbittorrent-systemd.log
+Environment="TMPDIR=%h/.local/share/qBittorrent"
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target
