@@ -6,7 +6,7 @@ RequiresMountsFor=%h/Stuff/Mount
 
 [Service]
 Type=forking
-KillMode=none
+TimeoutStopSec=none
 ExecStart=%h/bin/mergerfs \
     -o use_ino,func.getattr=newest,category.action=all \
     -o category.create=ff,cache.files=auto-full,threads=8 \
