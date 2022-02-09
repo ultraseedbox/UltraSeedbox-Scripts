@@ -69,6 +69,12 @@ sleep 5
 mv "$HOME"/Sonarr "$HOME"/.config/sonarr2
 rm -rf "$HOME"/.config/.temp
 
+#Create Local tmp directory for updates
+if [ ! -d "$HOME"/tmp ]
+then
+  mkdir -p "$HOME"/tmp
+fi
+
 #Install nginx conf
 echo 'location /sonarr2 {
   proxy_pass        http://127.0.0.1:>port</sonarr2;
@@ -99,6 +105,7 @@ Description=Sonarr Daemon
 After=network-online.target
 [Service]
 Environment=PATH=%h/bin:%h/.local/bin
+Environment="TMPDIR=%h/tmp"
 Type=simple
 
 ExecStart=%h/.local/bin/mono --debug %h/.config/sonarr2/Sonarr.exe -nobrowser -data=%h/.apps/sonarr2/
