@@ -39,7 +39,7 @@ then
 fi
 
 #Install mono
-if [ ! hash mono &> /dev/null ]
+if [ ! -f "$HOME"/.local/bin/mono ]
 then
   PATH=$PREFIX/bin:$PATH
   PREFIX="$HOME/.local"
