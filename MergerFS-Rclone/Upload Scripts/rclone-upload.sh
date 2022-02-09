@@ -17,7 +17,6 @@ else
         -vvv \
         --drive-stop-on-upload-limit \
         --delete-empty-src-dirs \
-        --fast-list \
         --bwlimit=8M \
         --use-mmap \
         --transfers=2 \
