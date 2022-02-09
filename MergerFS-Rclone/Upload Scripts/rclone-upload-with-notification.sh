@@ -34,7 +34,6 @@ else
       --drive-chunk-size 64M \
       --use-mmap \
       --delete-empty-src-dirs \
-      --fast-list \
       --log-file="$LOG_FILE" \
       --stats=9999m \
       --tpslimit=5 \

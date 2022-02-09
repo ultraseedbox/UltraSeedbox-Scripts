@@ -10,7 +10,6 @@ ExecStart=%h/bin/rclone move %h/Stuff/Local/ remote: \
     --tpslimit 5 \
     -vvv \
     --delete-empty-src-dirs \
-    --fast-list \
     --bwlimit=8M \
     --use-mmap \
     --transfers=2 \
