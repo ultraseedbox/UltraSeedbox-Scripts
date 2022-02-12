@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 Type=notify
-KillMode=none
+TimeoutStopSec=60
 Environment=GOMAXPROCS=2
 
 ExecStart=%h/bin/rclone mount remote: %h/Stuff/Mount \
