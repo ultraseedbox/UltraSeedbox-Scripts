@@ -39,25 +39,41 @@ then
 fi
 
 #Install mono
-PATH=$PREFIX/bin:$PATH
-PREFIX="$HOME/.local"
-VERSION=6.12.0.122
-wget -q -O mono.tar.xz https://download.mono-project.com/sources/mono/mono-$VERSION.tar.xz
-tar xvf mono.tar.xz
-cd mono-$VERSION
-./configure --prefix=$PREFIX
-make
-make install
-rm -rfv "$HOME/mono-$VERSION"
-rm "$HOME/mono.tar.xz"
+if [ ! -f "$HOME"/.local/bin/mono ]
+then
+  PATH=$PREFIX/bin:$PATH
+  PREFIX="$HOME/.local"
+  VERSION=6.12.0.122
+  wget -q -O mono.tar.xz https://download.mono-project.com/sources/mono/mono-$VERSION.tar.xz
+  tar xvf mono.tar.xz
+  cd mono-$VERSION
+  ./configure --prefix=$PREFIX
+  make
+  make install
+  rm -rfv "$HOME/mono-$VERSION"
+  rm "$HOME/mono.tar.xz"
+else
+  echo "Skipping Mono installation, already installed."
+  sleep 3
+fi
 
 #Get sonarr binaries
+if [ -d "$HOME"/.config/sonarr2 ]
+then
+  rm -rf "$HOME"/.config/sonarr2
+fi
 mkdir -p "$HOME"/.config/.temp; cd $_
 wget -O "$HOME"/.config/.temp/sonarr.tar.gz --content-disposition 'https://services.sonarr.tv/v1/download/main/latest?version=3&os=linux'
 tar -xvf sonarr.tar.gz -C "$HOME/" && cd "$HOME"
 sleep 5
 mv "$HOME"/Sonarr "$HOME"/.config/sonarr2
 rm -rf "$HOME"/.config/.temp
+
+#Create Local tmp directory for updates
+if [ ! -d "$HOME"/tmp ]
+then
+  mkdir -p "$HOME"/tmp
+fi
 
 #Install nginx conf
 echo 'location /sonarr2 {
@@ -88,6 +104,8 @@ cat << EOF | tee ~/.config/systemd/user/sonarr.service > /dev/null
 Description=Sonarr Daemon
 After=network-online.target
 [Service]
+Environment=PATH=%h/bin:%h/.local/bin
+Environment="TMPDIR=%h/tmp"
 Type=simple
 
 ExecStart=%h/.local/bin/mono --debug %h/.config/sonarr2/Sonarr.exe -nobrowser -data=%h/.apps/sonarr2/
@@ -115,6 +133,10 @@ sed -i "s/temport/$port/g" "$HOME"/.apps/sonarr2/config.xml
 
 systemctl --user restart sonarr.service
 app-nginx restart
+
+#Sync SSL certs to mono
+"$HOME"/.local/bin/cert-sync --user /etc/ssl/certs/ca-certificates.crt
+sleep 2
 
 echo ""
 echo ""
