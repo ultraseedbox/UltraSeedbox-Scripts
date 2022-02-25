@@ -11,7 +11,13 @@ ABS_PATH=$(readlink -f ~)
 PORT=$(( 11000 + (($UID - 1000) * 50) + 13))
 
 read -p "FTP Root Folder: " ROOT
-ROOT="${ROOT/#\~/$ABS_PATH}"
+if [[ ! $ROOT =~ $ABS_PATH ]]; then
+echo -e "\nYou have entered a Wrong Format OR Home Path is invalid.
+Directory Format should be in Absolute Path: \033[0;31m/homeXX/username/folder\033[0m
+To get Correct Absolute Path of Directory, Use command \033[0;31mcd directory_name; pwd -P\033[0m
+"
+exit
+fi
 
 echo "Installing ProFTPD..."
 
