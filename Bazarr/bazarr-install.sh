@@ -49,6 +49,10 @@ password_hash=$(echo -n "${password}" | md5sum | awk '{print $1}')
 
 #Perform Checks
 
+if [ ! -d "${HOME}/.apps/backup" ]; then
+  mkdir -p "${HOME}/.apps/backup"
+fi
+
 if systemctl --user is-active --quiet "bazarr.service"; then
   systemctl --user stop "bazarr.service"
   systemctl --user --quiet disable "bazarr.service"
@@ -76,6 +80,8 @@ clear
 
 if [ -n "${backup}" ]; then
   cp -r "${backup}/data" "${HOME}/.apps/bazarr2/"
+  base="$(basename "${backup}")"
+  tar -czf "${HOME}/.apps/backup/${base}.tar.gz" -C "${HOME}/.apps/" "${base}/data" && rm -rf "${HOME}/.apps/${base}"
 fi
 
 #Install Requirements
@@ -123,9 +129,9 @@ EOF
 echo "Staring Bazarr..(this will take a minute)"
 systemctl --user daemon-reload
 systemctl --user --quiet enable --now "bazarr.service"
-sleep 10
+sleep 5
 systemctl --user stop "bazarr.service"
-sleep 10
+sleep 5
 
 #Set config.ini
 
@@ -141,7 +147,7 @@ sed -i "/^\[auth\]$/,/^\[/ s/password = .*/password = ${password_hash}/g" "${con
 #Perform restarts
 
 systemctl --user restart "bazarr.service"
-sleep 5
+sleep 20
 app-nginx restart
 
 #Relay information about backup
@@ -149,7 +155,7 @@ app-nginx restart
 process="Installation"
 echo
 if [ -n "${backup}" ]; then
-  echo "Configuration data of the previous installation backed up at ${backup}"
+  echo "Data of the previous installation backed up at ${HOME}/.apps/backup/${base}.tar.gz"
   process="Update"
   echo
 fi
@@ -157,8 +163,7 @@ fi
 #Ensure that application is running
 
 x=1
-while [ ${x} -le 4 ] 
-do
+while [ ${x} -le 4 ]; do
   if systemctl --user is-active --quiet "bazarr.service"; then
     echo "${process} complete."
     echo "You can access the second instance of Bazarr via the following URL:https://${USER}.${HOSTNAME}.usbx.me/bazarr2"
