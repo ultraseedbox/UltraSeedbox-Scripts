@@ -46,6 +46,7 @@ done
 
 port=''
 backup=''
+status='fresh install'
 while [ -z "${port}" ]; do
   app-ports show
   echo "Pick any application from the list above, that you're not currently using."
@@ -84,29 +85,65 @@ if [ ! -d "${HOME}/tmp" ]; then
   mkdir -p "${HOME}/tmp"
 fi
 
+if [ ! -d "${HOME}/.apps/backup" ]; then
+  mkdir -p "${HOME}/.apps/backup"
+fi
+
 if systemctl --user is-active --quiet "${app}.service"; then
   systemctl --user stop "${app}.service"
   systemctl --user --quiet disable "${app}.service"
-  echo "Stopped existing second ${app^} instance."
+  echo
+  echo "Stopped the running second ${app^} instance."
+fi
+
+if [ -d "${HOME}/.apps/${app}2" ]; then
+  echo
+  echo "Old second instance of ${app^} detected. How do you wish to proceed? In the case of a fresh install the current AppData directory will be backed up."
+
+  select status in 'Fresh Install' 'Update' quit; do
+
+    case ${status} in
+    'Fresh Install')
+      status="fresh install"
+      break
+      ;;
+    'Update')
+      status='update'
+      break
+      ;;
+    quit)
+      exit 0
+      ;;
+    *)
+      echo "Invalid option $REPLY"
+      ;;
+    esac
+  done
+fi
+
+if [ -d "${HOME}/.apps/${app}2" ] && [ "${status}" == 'fresh install' ]; then
+  backup="${HOME}/.apps/backup/${app}2-$(date +"%FT%H%M").bak.tar.gz"
+  echo
+  echo "Creating a backup of the current instance's AppData directory.."
+  tar -czf "${backup}" -C "${HOME}/.apps/" "${app}2" && rm -rf "${HOME}/.apps/${app}2"
+  echo
+  echo "Installing fresh second instance of ${app^}.."
 fi
 
 if [ -d "${HOME}/.config/${app}2" ]; then
-  echo "Re-installing binaries.."
+  echo
+  echo "Removing old binaries.."
   sleep 2
   rm -rf "${HOME}/.config/${app}2"
 fi
 
-if [ -d "${HOME}/.apps/${app}2" ]; then
-  backup="${HOME}/.apps/${app}2-$(date +"%FT%H%M").bak"
-  mv "${HOME}/.apps/${app}2" "${backup}"
-  echo "Installing fresh second instance of ${app^}.."
-fi
-
 #Get binaries
 
+echo
+echo "Pulling new binaries.."
 mkdir -p "${HOME}"/.config/.temp
 wget -qO "${HOME}"/.config/.temp/${app}.tar.gz --content-disposition "http://${app}.servarr.com/v1/update/${branch}/updatefile?os=linux&runtime=netcore&arch=x64"
-tar -xvzf "${HOME}"/.config/.temp/${app}.tar.gz -C "${HOME}/.config/.temp" && mv "${HOME}/.config/.temp/${app^}" "${HOME}/.config/${app}2" && rm -rf "${HOME}"/.config/.temp
+tar -xzf "${HOME}"/.config/.temp/${app}.tar.gz -C "${HOME}/.config/.temp" && mv "${HOME}/.config/.temp/${app^}" "${HOME}/.config/${app}2" && rm -rf "${HOME}"/.config/.temp
 
 #Install nginx conf
 
@@ -167,25 +204,60 @@ cat <<EOF | tee "${HOME}/.apps/${app}2/config.xml" >/dev/null
 </Config>
 EOF
 
-# Create User
+# Create/Update User
 
 systemctl --user stop "${app}".service
 username=${USER}
 guid=$(python -c 'import uuid; print(str(uuid.uuid4()))')
 password_hash=$(echo -n "${password}" | sha256sum | awk '{print $1}')
 
-sqlite3 "${HOME}/.apps/${app}2/${app}.db" <<EOF
+if [ "${status}" == 'fresh install' ]; then
+  sqlite3 "${HOME}/.apps/${app}2/${app}.db" <<EOF
 INSERT INTO Users (Id, Identifier, Username, Password)
 VALUES ( 1, "$guid", "$username", "$password_hash");
 EOF
+elif [ "${status}" == 'update' ]; then
+  sqlite3 "${HOME}/.apps/${app}2/${app}.db" <<EOF
+UPDATE Users
+SET Password = "$password_hash"
+WHERE Username = "$username";
+EOF
+fi
 
 #Perform restarts
 
 systemctl --user restart "${app}".service
+sleep 10
 app-nginx restart
 
+#Relay information about backup
+
 echo
-if [ -n "${backup}" ]; then echo "Configuration data of the previous installation backed up at ${backup}"; fi
-echo "Installation complete."
-echo "You can access it via the following URL:https://${USER}.${HOSTNAME}.usbx.me/${app}2"
-exit
+if [ -n "${backup}" ]; then
+  echo "AppData directory of the previous installation backed up at ${backup}"
+  echo
+fi
+
+#Ensure that application is running
+
+x=1
+while [ ${x} -le 4 ]; do
+  if systemctl --user is-active --quiet "${app}.service"; then
+    echo "${status^} complete."
+    echo "You can access the second instance of ${app^} via the following URL:https://${USER}.${HOSTNAME}.usbx.me/${app}2"
+    exit
+  else
+    if [ ${x} -ge 4 ]; then
+      echo "${app^} failed to start. Try re-running the script and choose a different application's port."
+      echo "It has to be an application that you do not plan to use at all."
+      exit
+    fi
+    echo "${app^} failed to start."
+    echo
+    echo "Restarting ${app^} ${x}/3 times.."
+    echo
+    systemctl --user restart "${app}.service"
+    sleep 10
+    x=$(("${x}" + 1))
+  fi
+done
