@@ -126,10 +126,10 @@ ExecStartPre=/bin/sleep 10
 WantedBy=multi-user.target
 EOF
 
-echo "Staring Bazarr..(this will take a minute)"
+echo "Starting Bazarr..(this will take a minute)"
 systemctl --user daemon-reload
 systemctl --user --quiet enable --now "bazarr.service"
-sleep 5
+sleep 20
 systemctl --user stop "bazarr.service"
 sleep 5
 
