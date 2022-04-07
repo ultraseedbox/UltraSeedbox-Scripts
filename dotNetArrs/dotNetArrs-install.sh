@@ -222,6 +222,11 @@ EOF
 
 # Create/Update User
 
+if [ -z "$(sqlite3 "${HOME}/.apps/${app}2/${app}.db" ".tables")" ]; then
+  echo "Initial ${app}.db is corrupted. Install aborted."
+  exit
+fi
+
 username=${USER}
 guid=$(python -c 'import uuid; print(str(uuid.uuid4()))')
 password_hash=$(echo -n "${password}" | sha256sum | awk '{print $1}')
