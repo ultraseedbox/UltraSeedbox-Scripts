@@ -204,9 +204,15 @@ cat <<EOF | tee "${HOME}/.apps/${app}2/config.xml" >/dev/null
 </Config>
 EOF
 
+## Wait for DB
+
+while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ]; do
+sleep 5
+done
+systemctl --user stop "${app}".service
+
 # Create/Update User
 
-systemctl --user stop "${app}".service
 username=${USER}
 guid=$(python -c 'import uuid; print(str(uuid.uuid4()))')
 password_hash=$(echo -n "${password}" | sha256sum | awk '{print $1}')
