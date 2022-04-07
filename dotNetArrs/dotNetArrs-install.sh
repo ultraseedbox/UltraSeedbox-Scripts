@@ -191,7 +191,21 @@ systemctl --user daemon-reload
 systemctl --user --quiet enable --now "${app}".service
 sleep 10
 systemctl --user restart "${app}".service
-sleep 10
+
+## Wait for DB
+
+if systemctl --user is-active --quiet "${app}.service"; then
+  while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ] ; do
+    sleep 5
+  done
+fi
+
+if ! systemctl --user is-active --quiet "${app}.service"; then
+  echo "Initial instance of ${app^} failed to start properly, install aborted. Please check HDD IO and other resource utilization."
+  exit 1
+fi
+
+systemctl --user stop "${app}".service
 
 #Set port
 
@@ -205,19 +219,6 @@ cat <<EOF | tee "${HOME}/.apps/${app}2/config.xml" >/dev/null
   <AuthenticationMethod>Forms</AuthenticationMethod>
 </Config>
 EOF
-
-## Wait for DB
-
-while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ] && [ "$(systemctl --user is-active --quiet "${app}.service")" ]  ; do
-echo "while loop checks out"
-sleep 5
-done
-
-if ! systemctl --user is-active --quiet "${app}.service"; then
-  echo "Initial instance of ${app^} failed to start, install aborted. Please check HDD IO and other resource utilization."
-fi
-
-systemctl --user stop "${app}".service
 
 # Create/Update User
 
