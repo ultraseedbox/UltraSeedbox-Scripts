@@ -89,11 +89,11 @@ if [ ! -d "${HOME}/.apps/backup" ]; then
   mkdir -p "${HOME}/.apps/backup"
 fi
 
-if systemctl --user is-active --quiet "${app}.service"; then
+if systemctl --user is-active --quiet "${app}.service" || [ -f "${HOME}/.config/systemd/users/${app}.serive" ]; then
   systemctl --user stop "${app}.service"
   systemctl --user --quiet disable "${app}.service"
   echo
-  echo "Stopped the running second ${app^} instance."
+  echo "Disabled old second ${app^} instance."
 fi
 
 if [ -d "${HOME}/.apps/${app}2" ]; then
@@ -173,13 +173,13 @@ EOF
 
 cat <<EOF | tee "${HOME}"/.config/systemd/user/${app}.service >/dev/null
 [Unit]
-Description="${app^}" Daemon
+Description=${app^} Daemon
 After=network-online.target
 [Service]
 Environment="TMPDIR=%h/tmp"
 Type=simple
 
-ExecStart=%h/.config/${app}2/"${app^}" -nobrowser -data=%h/.apps/${app}2/
+ExecStart=%h/.config/${app}2/${app^} -nobrowser -data=%h/.apps/${app}2/
 TimeoutStopSec=20
 KillMode=process
 Restart=always
@@ -187,10 +187,30 @@ Restart=always
 WantedBy=default.target
 EOF
 
+#Set port
+
+if [ ! -d "${HOME}/.apps/${app}2" ]; then
+  mkdir -p "${HOME}/.apps/${app}2"
+fi
+
+cat <<EOF | tee "${HOME}/.apps/${app}2/config.xml" >/dev/null
+<Config>
+  <LogLevel>info</LogLevel>
+  <UrlBase>/${app}2</UrlBase>
+  <UpdateMechanism>BuiltIn</UpdateMechanism>
+  <Branch>${branch}</Branch>
+  <Port>${port}</Port>
+  <AuthenticationMethod>Forms</AuthenticationMethod>
+  <BindAddress>127.0.0.1</BindAddress>
+</Config>
+EOF
+
+#Start systemd service
+
+echo "Starting ${app^}..(this will take a minute)"
 systemctl --user daemon-reload
 systemctl --user --quiet enable --now "${app}".service
-sleep 10
-systemctl --user restart "${app}".service
+sleep 30
 
 ## Wait for DB
 
@@ -201,24 +221,11 @@ if systemctl --user is-active --quiet "${app}.service"; then
 fi
 
 if ! systemctl --user is-active --quiet "${app}.service"; then
-  echo "Initial instance of ${app^} failed to start properly, install aborted. Please check HDD IO and other resource utilization."
+  echo "Initial instance of ${app^} failed to start properly, install aborted. Please check port selection, HDD IO and other resource utilization."
   exit 1
 fi
 
 systemctl --user stop "${app}".service
-
-#Set port
-
-cat <<EOF | tee "${HOME}/.apps/${app}2/config.xml" >/dev/null
-<Config>
-  <LogLevel>info</LogLevel>
-  <UrlBase>/${app}2</UrlBase>
-  <UpdateMechanism>BuiltIn</UpdateMechanism>
-  <Branch>${branch}</Branch>
-  <Port>$port</Port>
-  <AuthenticationMethod>Forms</AuthenticationMethod>
-</Config>
-EOF
 
 # Create/Update User
 
