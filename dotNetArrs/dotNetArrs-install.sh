@@ -190,6 +190,22 @@ EOF
 systemctl --user daemon-reload
 systemctl --user --quiet enable --now "${app}".service
 sleep 10
+systemctl --user restart "${app}".service
+
+## Wait for DB
+
+if systemctl --user is-active --quiet "${app}.service"; then
+  while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ]; do
+    sleep 5
+  done
+fi
+
+if ! systemctl --user is-active --quiet "${app}.service"; then
+  echo "Initial instance of ${app^} failed to start properly, install aborted. Please check HDD IO and other resource utilization."
+  exit 1
+fi
+
+systemctl --user stop "${app}".service
 
 #Set port
 
@@ -206,7 +222,11 @@ EOF
 
 # Create/Update User
 
-systemctl --user stop "${app}".service
+if ! sqlite3 "${HOME}/.apps/${app}2/${app}.db" ".tables" | grep -q "Users"; then
+  echo "Initial ${app}.db is corrupted. Install aborted. Please check HDD IO and other resource utilization."
+  exit 1
+fi
+
 username=${USER}
 guid=$(python -c 'import uuid; print(str(uuid.uuid4()))')
 password_hash=$(echo -n "${password}" | sha256sum | awk '{print $1}')
