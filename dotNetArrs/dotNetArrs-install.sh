@@ -223,8 +223,8 @@ EOF
 # Create/Update User
 
 if [ -z "$(sqlite3 "${HOME}/.apps/${app}2/${app}.db" ".tables")" ]; then
-  echo "Initial ${app}.db is corrupted. Install aborted."
-  exit
+  echo "Initial ${app}.db is corrupted. Install aborted. Please check HDD IO and other resource utilization."
+  exit 1
 fi
 
 username=${USER}
