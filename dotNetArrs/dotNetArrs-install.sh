@@ -208,9 +208,15 @@ EOF
 
 ## Wait for DB
 
-while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ]; do
+while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ] && [ "$(systemctl --user is-active --quiet "${app}.service")" ]  ; do
+echo "while loop checks out"
 sleep 5
 done
+
+if ! systemctl --user is-active --quiet "${app}.service"; then
+  echo "Initial instance of ${app^} failed to start, install aborted. Please check HDD IO and other resource utilization."
+fi
+
 systemctl --user stop "${app}".service
 
 # Create/Update User
