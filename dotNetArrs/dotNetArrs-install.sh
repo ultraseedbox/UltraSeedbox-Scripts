@@ -195,7 +195,7 @@ systemctl --user restart "${app}".service
 ## Wait for DB
 
 if systemctl --user is-active --quiet "${app}.service"; then
-  while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ] ; do
+  while [ ! -f "${HOME}/.apps/${app}2/${app}.db" ]; do
     sleep 5
   done
 fi
@@ -222,7 +222,7 @@ EOF
 
 # Create/Update User
 
-if [ -z "$(sqlite3 "${HOME}/.apps/${app}2/${app}.db" ".tables")" ]; then
+if ! sqlite3 "${HOME}/.apps/${app}2/${app}.db" ".tables" | grep -q "Users"; then
   echo "Initial ${app}.db is corrupted. Install aborted. Please check HDD IO and other resource utilization."
   exit 1
 fi
