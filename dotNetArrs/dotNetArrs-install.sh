@@ -190,6 +190,8 @@ EOF
 systemctl --user daemon-reload
 systemctl --user --quiet enable --now "${app}".service
 sleep 10
+systemctl --user restart "${app}".service
+sleep 10
 
 #Set port
 
