@@ -14,7 +14,7 @@ fi
 
 echo "Select the application to install [ Choose from 1 - 5 ]: "
 
-select app in lidarr prowlarr radarr readarr quit; do
+select app in lidarr prowlarr radarr readarr whisparr quit; do
 
   case ${app} in
   lidarr)
@@ -31,6 +31,10 @@ select app in lidarr prowlarr radarr readarr quit; do
     ;;
   readarr)
     branch="develop" # {Update me if needed} branch to install
+    break
+    ;;
+  whisparr)
+    branch="nightly" # {Update me if needed} branch to install
     break
     ;;
   quit)
@@ -182,7 +186,7 @@ Type=simple
 ExecStart=%h/.config/${app}2/${app^} -nobrowser -data=%h/.apps/${app}2/
 TimeoutStopSec=20
 KillMode=process
-Restart=always
+Restart=on-failure
 [Install]
 WantedBy=default.target
 EOF
