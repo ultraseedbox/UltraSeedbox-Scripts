@@ -123,19 +123,24 @@ SyslogIdentifier=bazarr
 ExecStartPre=/bin/sleep 10
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 EOF
 
-echo "Staring Bazarr..(this will take a minute)"
+echo "Starting Bazarr..(this will take a minute)"
 systemctl --user daemon-reload
 systemctl --user --quiet enable --now "bazarr.service"
-sleep 5
+sleep 20
 systemctl --user stop "bazarr.service"
 sleep 5
 
 #Set config.ini
 
 config="${HOME}/.apps/bazarr2/data/config/config.ini"
+
+if [ ! -f "${config}" ]; then
+  echo "Initial Bazarr configuration file missing. Install aborted. Please check HDD IO utilization and port that you selected."
+  exit 1
+fi
 
 sed -i '/^\[general\]$/,/^\[/ s/ip = .*/ip = 127.0.0.1/g' "${config}"
 sed -i "/^\[general\]$/,/^\[/ s/port = .*/port = ${port}/g" "${config}"
