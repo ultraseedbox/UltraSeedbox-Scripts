@@ -1,30 +1,45 @@
 #!/bin/bash
-# MergerFS Installer/Updater by Xan#7777
+# MergerFS Installer/Updater by Xan#7777 & Raikiri
 
-if pgrep "mergerfs";
-then
+if pgrep "mergerfs"; then
     echo "mergerfs is running. Please close all mergerfs instances before proceeding."
     exit 0
 fi
 clear
-echo "Which version of mergerfs do you want to install?"
-echo "1 = 2.28.3"
-echo "2 = latest (2.31)"
-read -r -p "Please select between 1 or 2: " mfs
+echo "Select version of mergerfs to install. [ Choose from 1 - 3 ]: "
+
+select version in 2.31.0 Latest Quit; do
+    case ${version} in
+    2.31.0)
+        version="2.31.0"
+        break
+        ;;
+    Latest)
+        LATEST_RELEASE=$(curl -L -s -H 'Accept: application/json' https://github.com/trapexit/mergerfs/releases/latest)
+        LATEST_VERSION=$(echo "$LATEST_RELEASE" | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/')
+        version="$LATEST_VERSION"
+        break
+        ;;
+    Quit)
+        exit 0
+        ;;
+    *)
+        echo "Invalid option ${REPLY}"
+        ;;
+    esac
+done
 clear
-if [ "$mfs" = "1" ];
-then
+if [ "${version}" = "2.31.0" ]; then
     echo "mergerfs is installing/upgrading..."
     mkdir -p "$HOME"/.mergerfs-tmp/
-    wget https://github.com/trapexit/mergerfs/releases/download/2.28.3/mergerfs_2.28.3.debian-stretch_amd64.deb -O "$HOME"/.mergerfs-tmp/mergerfs.deb
+    wget https://github.com/trapexit/mergerfs/releases/download/2.31.0/mergerfs_2.31.0.debian-buster_amd64.deb -O "$HOME"/.mergerfs-tmp/mergerfs.deb
     rm -rf "$HOME"/bin/*mergerfs*
     dpkg -x "$HOME"/.mergerfs-tmp/mergerfs.deb "$HOME"/.mergerfs-tmp
     cp "$HOME"/.mergerfs-tmp/usr/bin/* "$HOME"/bin
-elif [ "$mfs" = "2" ];
-then
+else
     echo "mergerfs is installing/upgrading..."
     mkdir -p "$HOME"/.mergerfs-tmp/
-    wget https://github.com/trapexit/mergerfs/releases/download/2.31.0/mergerfs_2.31.0.debian-stretch_amd64.deb -O "$HOME"/.mergerfs-tmp/mergerfs.deb
+    wget "https://github.com/trapexit/mergerfs/releases/download/${version}/mergerfs_${version}.debian-buster_amd64.deb" -O "$HOME"/.mergerfs-tmp/mergerfs.deb
     rm -rf "$HOME"/bin/*mergerfs*
     dpkg -x "$HOME"/.mergerfs-tmp/mergerfs.deb "$HOME"/.mergerfs-tmp
     cp "$HOME"/.mergerfs-tmp/usr/bin/* "$HOME"/bin
@@ -37,6 +52,7 @@ if [[ $("$HOME"/bin/mergerfs -V) ]]; then
     rm -rf "$HOME"/.mergerfs-tmp
     exit 1
 else
+    echo "$version"
     echo "mergerfs install somehow failed. Please run this again!"
     rm -rf "$HOME"/.mergerfs-tmp
     exit 2
