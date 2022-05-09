@@ -300,7 +300,7 @@ chmod +x "${HOME}/scripts/rclone-upload.sh"
 croncmd="${HOME}/scripts/rclone-upload.sh > /dev/null 2>&1"
 cronjob="0 19 * * * $croncmd"
 (
-    crontab -l | grep -v -F "$croncmd" || :
+    crontab -l 2>/dev/null | grep -v -F "$croncmd" || :
     echo "$cronjob"
 ) | crontab -
 
