@@ -150,8 +150,8 @@ DISCORD_WEBHOOK_URL="${webhook}"
 DISCORD_ICON_OVERRIDE="https://i.imgur.com/MZYwA1I.png"
 DISCORD_NAME_OVERRIDE="RCLONE"
 
-LOCK_FILE="\$HOME/rclone-upload.lock"
-LOG_FILE="\$HOME/rclone-upload.log"
+LOCK_FILE="\$HOME/scripts/rclone-upload.lock"
+LOG_FILE="\$HOME/scripts/rclone-upload.log"
 
 # DO NOT EDIT BELOW THIS LINE UNLESS YOU KNOW WHAT YOU'RE DOING
 # -----------------------------------------------------------------------------
