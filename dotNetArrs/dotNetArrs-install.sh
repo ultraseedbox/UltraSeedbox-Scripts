@@ -93,7 +93,7 @@ if [ ! -d "${HOME}/.apps/backup" ]; then
   mkdir -p "${HOME}/.apps/backup"
 fi
 
-if systemctl --user is-active --quiet "${app}.service" || [ -f "${HOME}/.config/systemd/users/${app}.serive" ]; then
+if systemctl --user is-active --quiet "${app}.service" || [ -f "${HOME}/.config/systemd/users/${app}.service" ]; then
   systemctl --user stop "${app}.service"
   systemctl --user --quiet disable "${app}.service"
   echo
@@ -251,7 +251,6 @@ elif [ "${status}" == 'update' ]; then
   sqlite3 "${HOME}/.apps/${app}2/${app}.db" <<EOF
 UPDATE Users
 SET Password = "$password_hash"
-WHERE Username = "$username";
 EOF
 fi
 
