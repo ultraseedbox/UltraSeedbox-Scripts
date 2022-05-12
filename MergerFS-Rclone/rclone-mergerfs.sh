@@ -271,9 +271,12 @@ then
     echo "Rclone upload script is already running."
     exit
 else
-    rm "\$HOME"/scripts/rclone-upload.log
+    if [ -f "\$HOME"/scripts/rclone-upload.log ]
+    then
+        rm "\$HOME"/scripts/rclone-upload.log
+    fi
     touch "\$lock_file"
-    "\$HOME"/bin/rclone move "\$HOME"/Stuff/Local/ ${remote}: \\
+    "\$HOME"/bin/rclone move -P "\$HOME"/Stuff/Local/ ${remote}: \\
         --config="\$HOME"/.config/rclone/rclone.conf \\
         --exclude "Downloads/**" \\
         --drive-chunk-size 64M \\
