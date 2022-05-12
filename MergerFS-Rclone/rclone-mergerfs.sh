@@ -162,6 +162,10 @@ then
   echo "\$0 is already running."
   exit
 else
+  if [ -f "\$LOG_FILE" ]
+  then
+       rm "\$LOG_FILE"
+  fi
   touch "\$LOCK_FILE"
   
   rclone_move() {
