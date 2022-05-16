@@ -7,7 +7,7 @@ set -euo pipefail
 printf "\033[0;31mDisclaimer: This installer is unofficial and Ultra.cc staff will not support any issues with it.\033[0m\n"
 read -rp "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]; then
-    exit
+  exit
 fi
 echo
 
@@ -21,16 +21,16 @@ paths[5]="${HOME}/scripts"
 #Checks
 
 if [ ! -f "${HOME}/bin/rclone" ]; then
-    echo "rclone is not installed."
-    echo "Install rclone stable, then run the script again. https://docs.usbx.me/link/6#bkmrk-rclone-stable"
-    echo "Also, do not forget to configure your rclone remote."
-    exit 1
+  echo "rclone is not installed."
+  echo "Install rclone stable, then run the script again. https://docs.usbx.me/link/6#bkmrk-rclone-stable"
+  echo "Also, do not forget to configure your rclone remote."
+  exit 1
 fi
 
 if [ ! -f "${HOME}/bin/mergerfs" ]; then
-    echo "mergerfs is not installed."
-    echo "Install mergerfs, then run the script again. https://docs.usbx.me/link/344#bkmrk-preparation"
-    exit 1
+  echo "mergerfs is not installed."
+  echo "Install mergerfs, then run the script again. https://docs.usbx.me/link/344#bkmrk-preparation"
+  exit 1
 fi
 
 rclone selfupdate -q
@@ -38,39 +38,49 @@ rclone selfupdate -q
 read -rp "Enter the rclone remote name for your Google Drive: " remote
 echo
 if ! rclone lsd "${remote}:" >>/dev/null; then
-    echo "Configure your rclone remote correctly, then run the script again. https://docs.usbx.me/link/6#bkmrk-rclone"
-    exit 1
+  echo "Configure your rclone remote correctly, then run the script again. https://docs.usbx.me/link/6#bkmrk-rclone"
+  exit 1
 fi
 
 echo "Select type of rclone upload script [ Choose from 1 - 3 ]: "
 
 select upload in Normal Discord-Notification Quit; do
-    case ${upload} in
-    Normal)
-        upload="normal"
-        break
-        ;;
-    Discord-Notification)
-        upload="discord"
-        echo
-        read -rp "Enter the Discord Webhook URL: " webhook
-        break
-        ;;
-    Quit)
-        exit 0
-        ;;
-    *)
-        echo "Invalid option ${REPLY}"
-        ;;
-    esac
+  case ${upload} in
+  Normal)
+    upload="normal"
+    break
+    ;;
+  Discord-Notification)
+    upload="discord"
+    echo
+    read -rp "Enter the Discord Webhook URL: " webhook
+    break
+    ;;
+  Quit)
+    exit 0
+    ;;
+  *)
+    echo "Invalid option ${REPLY}"
+    ;;
+  esac
 done
 echo
 echo "Rclone-MergerFS workflow setup started.."
+
 for i in {1..5}; do
-    if [ ! -d "${paths[${i}]}" ]; then
-        mkdir -p "${paths[${i}]}"
-    fi
+  if [ ! -d "${paths[${i}]}" ]; then
+    mkdir -p "${paths[${i}]}"
+  fi
 done
+
+if [[ -n $(ls -A "${paths[1]}") || -n $(ls -A "${paths[4]}") ]]; then
+  echo
+  echo "ERROR: ${paths[1]} or ${paths[4]} is not empty."
+  echo "Please move the data out of these directories and then run the script again."
+  echo "Both of them must be empty for the rclone and mergerfs mounts to work properly."
+  echo
+  exit 1
+fi
 
 #Install systemd services
 
@@ -85,12 +95,12 @@ Type=notify
 TimeoutStopSec=60
 Environment=GOMAXPROCS=2
 
-ExecStart=%h/bin/rclone mount ${remote}: %h/Stuff/Mount \
-  --config %h/.config/rclone/rclone.conf \
-  --use-mmap \
-  --dir-cache-time 1000h \
-  --poll-interval=15s \
-  --vfs-cache-mode writes \
+ExecStart=%h/bin/rclone mount ${remote}: %h/Stuff/Mount \\
+  --config %h/.config/rclone/rclone.conf \\
+  --use-mmap \\
+  --dir-cache-time 1000h \\
+  --poll-interval=15s \\
+  --vfs-cache-mode writes \\
   --tpslimit 10
 
 StandardOutput=file:%h/scripts/rclone_vfs_mount.log
@@ -111,9 +121,9 @@ RequiresMountsFor=%h/Stuff/Mount
 [Service]
 Type=forking
 TimeoutStopSec=60
-ExecStart=%h/bin/mergerfs \
-    -o use_ino,func.getattr=newest,category.action=all \
-    -o category.create=ff,cache.files=auto-full,threads=8 \
+ExecStart=%h/bin/mergerfs \\
+    -o use_ino,func.getattr=newest,category.action=all \\
+    -o category.create=ff,cache.files=auto-full,threads=8 \\
     %h/Stuff/Local:%h/Stuff/Mount %h/MergerFS
 
 StandardOutput=file:%h/scripts/mergerfs_mount.log
@@ -134,7 +144,7 @@ mkdir -p "${HOME}/MergerFS/TV Shows"
 #Install rclone-upload script
 
 if [ "${upload}" == "discord" ]; then
-    cat <<EOF | tee "${HOME}/scripts/rclone-upload.sh" >/dev/null
+  cat <<EOF | tee "${HOME}/scripts/rclone-upload.sh" >/dev/null
 #!/bin/bash
 
 # Rclone upload script with optional Discord notification upon move completion (if something is moved)
@@ -264,7 +274,7 @@ else
 fi
 EOF
 else
-    cat <<EOF | tee "${HOME}/scripts/rclone-upload.sh" >/dev/null
+  cat <<EOF | tee "${HOME}/scripts/rclone-upload.sh" >/dev/null
 #!/bin/bash
 
 lock_file="\$HOME/scripts/rclone-upload.lock"
@@ -307,8 +317,8 @@ chmod +x "${HOME}/scripts/rclone-upload.sh"
 croncmd="${HOME}/scripts/rclone-upload.sh > /dev/null 2>&1"
 cronjob="0 19 * * * $croncmd"
 (
-    crontab -l 2>/dev/null | grep -v -F "$croncmd" || :
-    echo "$cronjob"
+  crontab -l 2>/dev/null | grep -v -F "$croncmd" || :
+  echo "$cronjob"
 ) | crontab -
 
 echo "Work flow set up complete. Continue following the guide."
