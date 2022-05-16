@@ -17,6 +17,7 @@ if [ ! -f "${HOME}/.config/plex/Library/Application Support/Plex Media Server/Pr
     echo "Preferences.xml file of Plex Media Server not found."
     echo "Please ensure that you have Plex Media Server installed, then run the script again."
     echo
+    exit 1
 fi
 
 #Get Certificate UUID
@@ -25,7 +26,7 @@ uuid=$(grep -o 'CertificateUUID="[a-zA-Z0-9]*"' "${HOME}/.config/plex/Library/Ap
 
 #Get IP Address
 
-ip=$(hostname -I | awk '{print $1}' | sed 's/\./-/g')
+ip=$(dig +short "${HOSTNAME}".usbx.me)
 
 #Create required URL
 
