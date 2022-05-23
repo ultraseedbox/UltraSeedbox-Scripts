@@ -5,7 +5,7 @@
 # Includes installer for OpenJDK 15.0.1
 
 printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -r -p "Type CONFIRM if you wish to continue: " input
+read -r -p "Type confirm if you wish to continue: " input
 if [ ! "$input" = "confirm" ]
 then
     exit
