@@ -26,7 +26,7 @@ def app_upgrade():
     spinner.start()
     count = 1
     while True:
-        status = check_output(f"app-{appname} upgrade".format(appname=appname), shell=True)
+        status = check_output("app-{appname} upgrade".format(appname=appname), shell=True)
         status = status.decode("utf-8")
         if "true" in status:
             spinner.stop()
@@ -36,7 +36,7 @@ def app_upgrade():
             count +=1
 def importhalo_runcode():
     try:
-        check_halo = os.popen("pip3 list | grep halo").read()
+        check_halo = os.popen("/usr/bin/pip3 list | grep halo").read()
         if not check_halo:
             package_install('halo')
     except Exception as e:
