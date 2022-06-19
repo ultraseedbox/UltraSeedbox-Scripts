@@ -114,10 +114,10 @@ ProtectSystem=full
 #ProtectHome=true
 
 # You can customize some Navidrome config options by setting environment variables here. Ex:
-Environment=ND_BASEURL="/navidrome"
-Environment=ND_PORT="${port}"
-Environment=ND_ADDRESS="127.0.0.1"
-Environment=ND_DATAFOLDER="${HOME}/.apps/navidrome"
+Environment="ND_BASEURL=/navidrome"
+Environment="ND_PORT=${port}"
+Environment="ND_ADDRESS=127.0.0.1"
+Environment="ND_DATAFOLDER=%h/.apps/navidrome"
 EOF
 
     systemctl --user daemon-reload
