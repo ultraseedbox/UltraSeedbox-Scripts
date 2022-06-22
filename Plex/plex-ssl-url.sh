@@ -26,7 +26,7 @@ uuid=$(grep -o 'CertificateUUID="[a-zA-Z0-9]*"' "${HOME}/.config/plex/Library/Ap
 
 #Get IP Address
 
-ip=$(dig +short "${HOSTNAME}".usbx.me | sed 's/\./-/g')
+ip=$(dig +short "${HOSTNAME}"-direct.usbx.me | sed 's/\./-/g')
 
 #Create required URL
 
