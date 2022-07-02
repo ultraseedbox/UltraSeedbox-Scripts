@@ -205,7 +205,7 @@ update_arr_config() {
 }
 
 create_arr_user() {
-
+  
   if ! systemctl --user is-active --quiet "${app}.service"; then
     echo "Initial instance of ${app^} failed to start properly, install aborted. Please check port selection, HDD IO and other resource utilization."
     echo "Then run the script again and choose Fresh Install."
@@ -228,6 +228,7 @@ create_arr_user() {
     echo "Then run the script again and choose Fresh Install."
     exit 1
   fi
+  echo -n "done."
 
   systemctl --user stop "${app}.service"
 
@@ -291,15 +292,19 @@ fresh_install() {
     systemd_service_install
 
     systemctl --user --quiet enable --now "${app}.service"
+    echo
+    echo
+    echo -n "Waiting for initial DB.."
     sleep 10
 
     create_arr_user
 
     if systemctl --user is-active --quiet "${app}.service" && systemctl --user is-active --quiet "nginx.service"; then
       echo
+      echo
       echo "${app^}2 installation is complete."
       echo "Visit the WebUI at the following URL:https://${USER}.${HOSTNAME}.usbx.me/${app}2"
-      if [ -n "${backup}" ]; then echo && echo "Backup of old instance has been saved at ${backup}."; fi
+      if [ -n "${backup}" ]; then echo && echo "Backup of old instance has been saved at ${backup}"; fi
       echo
       exit
     else
