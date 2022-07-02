@@ -141,7 +141,7 @@ create_arr_config() {
   <Branch>${branch}</Branch>
   <Port>${port}</Port>
   <AuthenticationMethod>Forms</AuthenticationMethod>
-  <BindAddress>127.0.0.1</BindAddress>
+  <BindAddress>*</BindAddress>
 </Config>
 EOF
 }
@@ -165,11 +165,11 @@ update_arr_config() {
 
   sed -i "s+<Port>.*</Port>+<Port>${port}</Port>+g" "${HOME}/.apps/sonarr2/config.xml"
   sed -i "s+<UrlBase>.*</UrlBase>+<UrlBase>/sonarr2</UrlBase>+g" "${HOME}/.apps/sonarr2/config.xml"
-  sed -i "s+<BindAddress>.*</BindAddress>+<BindAddress>127.0.0.1</BindAddress>+g" "${HOME}/.apps/sonarr2/config.xml"
+  sed -i "s+<BindAddress>.*</BindAddress>+<BindAddress>\*</BindAddress>+g" "${HOME}/.apps/sonarr2/config.xml"
 }
 
 create_arr_user() {
-
+  
   if ! systemctl --user is-active --quiet "sonarr.service"; then
     echo "Initial instance of Sonarr failed to start properly, install aborted. Please check port selection, HDD IO and other resource utilization."
     echo "Then run the script again and choose Fresh Install."
@@ -192,6 +192,7 @@ create_arr_user() {
     echo "Then run the script again and choose Fresh Install."
     exit 1
   fi
+  echo -n "done."
 
   systemctl --user stop "sonarr.service"
 
@@ -255,15 +256,19 @@ fresh_install() {
     systemd_service_install
 
     systemctl --user --quiet enable --now "sonarr.service"
+    echo
+    echo
+    echo -n "Waiting for initial DB.."
     sleep 10
 
     create_arr_user
 
     if systemctl --user is-active --quiet "sonarr.service" && systemctl --user is-active --quiet "nginx.service"; then
       echo
+      echo
       echo "Sonarr2 installation is complete."
       echo "Visit the WebUI at the following URL:https://${USER}.${HOSTNAME}.usbx.me/sonarr2"
-      if [ -n "${backup}" ]; then echo && echo "Backup of old instance has been saved at ${backup}."; fi
+      if [ -n "${backup}" ]; then echo && echo "Backup of old instance has been saved at ${backup}"; fi
       echo
       exit
     else
