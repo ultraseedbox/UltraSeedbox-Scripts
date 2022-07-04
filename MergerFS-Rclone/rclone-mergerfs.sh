@@ -35,7 +35,11 @@ if [ ! -f "${HOME}/bin/mergerfs" ]; then
   exit 1
 fi
 
-rclone selfupdate -q
+if ! rclone selfupdate -q > /dev/null 2>&1; then
+  echo "Self-update failed. Installed rclone version is very old."
+  echo "Install rclone stable, then run the script again. https://docs.usbx.me/link/6#bkmrk-rclone-stable"
+  exit 1
+fi
 
 read -rp "Enter the rclone remote name for your Google Drive: " remote
 echo
