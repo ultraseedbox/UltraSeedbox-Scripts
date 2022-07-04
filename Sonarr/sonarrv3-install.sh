@@ -228,8 +228,8 @@ create_backup() {
 uninstall() {
   echo
   echo "Uninstalling second instance of Sonarr.."
-  systemctl --user --force stop "sonarr.service"
-  systemctl --user --force disable "sonarr.service"
+  [ -f "${HOME}/.config/systemd/user/sonarr.service" ] && systemctl --user --force stop "sonarr.service"
+  [ -f "${HOME}/.config/systemd/user/sonarr.service" ] && systemctl --user --force disable "sonarr.service"
   rm -f "${HOME}/.config/systemd/user/sonarr.service"
   systemctl --user daemon-reload
   systemctl --user reset-failed
@@ -292,7 +292,7 @@ if [ -d "${HOME}/.apps/sonarr2" ]; then
 
     case ${status} in
     'Fresh Install')
-      systemctl --user stop "sonarr.service"
+      [ -f "${HOME}/.config/systemd/user/sonarr.service" ] && systemctl --user stop "sonarr.service"
       create_backup
       uninstall
       fresh_install
@@ -332,7 +332,7 @@ if [ -d "${HOME}/.apps/sonarr2" ]; then
       break
       ;;
     'Uninstall')
-      systemctl --user --force stop "sonarr.service"
+      [ -f "${HOME}/.config/systemd/user/sonarr.service" ] && systemctl --user --force stop "sonarr.service"
       create_backup
       uninstall
       echo "Backup of old AppData directory created at ${backup}."
