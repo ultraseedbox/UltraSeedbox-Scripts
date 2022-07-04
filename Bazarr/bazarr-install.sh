@@ -16,13 +16,19 @@ clear
 
 #Check Python3 version
 
-if ! python3 -V | grep -q -E "3.([7-9]|1[0-9]).*"; then
+if ! python3 -V | grep -q -E "3.([7-9]|1[0-9]).*"  &&  ! /usr/bin/python3 -V | grep -q -E "3.([7-9]|1[0-9]).*"id; then
  echo "Bazarr requires python3.7 + to run."
  echo "Please install a python3 version greater than 3.7, then run the script again https://docs.usbx.me/books/pyenv/page/how-to-install-python-using-pyenv"
  exit 1
 fi
 
 pythonbinary=$(which python3)
+
+if /usr/bin/python3 -V | grep -q -E "3.([7-9]|1[0-9]).*";then
+  pythonbinary="/usr/bin/python3"
+fi
+
+echo "$pythonbinary" && exit
 
 #Functions
 
@@ -96,7 +102,7 @@ get_binaries() {
   unzip "${HOME}/.config/.temp/bazarr.zip" -d "${HOME}/.apps/bazarr2" >/dev/null 2>&1
   [ -d "${HOME}/.config/.temp/data" ] && mv "${HOME}/.config/.temp/data" "${HOME}/.apps/bazarr2/"
   rm -rf "${HOME}"/.config/.temp
-  python3 -m pip install -q -r "${HOME}/.apps/bazarr2/requirements.txt"
+  "${pythonbinary}" -m pip install -q -r "${HOME}/.apps/bazarr2/requirements.txt"
   echo -n "done."
 }
 
