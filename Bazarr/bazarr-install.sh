@@ -191,8 +191,8 @@ create_backup() {
 uninstall() {
   echo
   echo "Uninstalling second instance of Bazarr.."
-  systemctl --user stop "bazarr.service"
-  systemctl --user disable "bazarr.service"
+  systemctl --user --force stop "bazarr.service"
+  systemctl --user --force disable "bazarr.service"
   rm -f "${HOME}/.config/systemd/user/bazarr.service"
   systemctl --user daemon-reload
   systemctl --user reset-failed
@@ -292,7 +292,7 @@ if [ -d "${HOME}/.apps/bazarr2" ]; then
       break
       ;;
     'Uninstall')
-      systemctl --user stop "bazarr.service"
+      systemctl --user --force stop "bazarr.service"
       create_backup
       uninstall
       echo "Backup of old AppData directory created at ${backup}."

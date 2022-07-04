@@ -264,8 +264,8 @@ create_backup() {
 uninstall() {
   echo
   echo "Uninstalling second instance of ${app^}.."
-  systemctl --user stop "${app}.service"
-  systemctl --user disable "${app}.service"
+  systemctl --user --force stop "${app}.service"
+  systemctl --user --force disable "${app}.service"
   rm -f "${HOME}/.config/systemd/user/${app}.service"
   systemctl --user daemon-reload
   systemctl --user reset-failed
@@ -367,7 +367,7 @@ if [ -d "${HOME}/.apps/${app}2" ]; then
       break
       ;;
     'Uninstall')
-      systemctl --user stop "${app}.service"
+      systemctl --user --force stop "${app}.service"
       create_backup
       uninstall
       echo "Backup of old AppData directory created at ${backup}."
