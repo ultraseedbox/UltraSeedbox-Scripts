@@ -28,8 +28,6 @@ if /usr/bin/python3 -V | grep -q -E "3.([7-9]|1[0-9]).*";then
   pythonbinary="/usr/bin/python3"
 fi
 
-echo "$pythonbinary" && exit
-
 #Functions
 
 port_picker() {
