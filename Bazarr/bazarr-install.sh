@@ -14,6 +14,16 @@ cd "${HOME}" || exit 1
 
 clear
 
+#Check Python3 version
+
+if ! python3 -V | grep -q -E "3.([7-9]|1[0-9]).*"; then
+ echo "Bazarr requires python3.7 + to run."
+ echo "Please install a python3 version greater than 3.7, then run the script again https://docs.usbx.me/books/pyenv/page/how-to-install-python-using-pyenv"
+ exit 1
+fi
+
+pythonbinary=$(which python3)
+
 #Functions
 
 port_picker() {
@@ -86,7 +96,7 @@ get_binaries() {
   unzip "${HOME}/.config/.temp/bazarr.zip" -d "${HOME}/.apps/bazarr2" >/dev/null 2>&1
   [ -d "${HOME}/.config/.temp/data" ] && mv "${HOME}/.config/.temp/data" "${HOME}/.apps/bazarr2/"
   rm -rf "${HOME}"/.config/.temp
-  /usr/bin/python3 -m pip install -q -r "${HOME}/.apps/bazarr2/requirements.txt"
+  python3 -m pip install -q -r "${HOME}/.apps/bazarr2/requirements.txt"
   echo -n "done."
 }
 
@@ -118,7 +128,7 @@ WorkingDirectory=%h/.apps/bazarr2
 Restart=on-failure
 RestartSec=5
 Type=simple
-ExecStart=/usr/bin/python3 %h/.apps/bazarr2/bazarr.py
+ExecStart=${pythonbinary} %h/.apps/bazarr2/bazarr.py
 KillSignal=SIGINT
 TimeoutStopSec=20
 SyslogIdentifier=bazarr
@@ -181,18 +191,23 @@ update_arr_user() {
 }
 
 create_backup() {
-  backup="${HOME}/.apps/backup/bazarr2-$(date +%Y-%m-%d_%H-%M-%S).bak.tar.gz"
-  echo
-  echo "Creating a backup of the data directory.."
-  tar -czf "${backup}" -C "${HOME}/.apps/" "bazarr2/data"
-  echo "Backup created."
+  if [ -d "${HOME}/.apps/bazarr2/data" ]; then
+    backup="${HOME}/.apps/backup/bazarr2-$(date +%Y-%m-%d_%H-%M-%S).bak.tar.gz"
+    echo
+    echo "Creating a backup of the data directory.."
+    tar -czf "${backup}" -C "${HOME}/.apps/" "bazarr2/data"
+    echo "Backup created."
+  else echo "Bazarr2 does not have a data directory. Backup not created."
+  fi
 }
 
 uninstall() {
   echo
   echo "Uninstalling second instance of Bazarr.."
-  systemctl --user --force stop "bazarr.service"
-  systemctl --user --force disable "bazarr.service"
+  if [ -f "${HOME}/.config/systemd/user/bazarr.service" ]; then
+    systemctl --user --force stop "bazarr.service"
+    systemctl --user --force disable "bazarr.service"
+  fi
   rm -f "${HOME}/.config/systemd/user/bazarr.service"
   systemctl --user daemon-reload
   systemctl --user reset-failed
@@ -252,7 +267,7 @@ if [ -d "${HOME}/.apps/bazarr2" ]; then
 
     case ${status} in
     'Fresh Install')
-      systemctl --user stop "bazarr.service"
+      [ -f "${HOME}/.config/systemd/user/bazarr.service" ] && systemctl --user --force stop "bazarr.service"
       create_backup
       uninstall
       fresh_install
@@ -292,10 +307,10 @@ if [ -d "${HOME}/.apps/bazarr2" ]; then
       break
       ;;
     'Uninstall')
-      systemctl --user --force stop "bazarr.service"
+      [ -f "${HOME}/.config/systemd/user/bazarr.service" ] && systemctl --user stop "bazarr.service"
       create_backup
       uninstall
-      echo "Backup of old AppData directory created at ${backup}."
+      test -n "${backup}" && echo "Backup of old AppData directory created at ${backup}."
       echo
       exit
       break
