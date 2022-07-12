@@ -10,7 +10,7 @@ wget -P $HOME/scripts/app_monitor/ https://raw.githubusercontent.com/ultraseedbo
 
 clear
 
-croncmd="/usr/bin/python3 $HOME/scripts/app_monitor/Discord_Notfication_monitory.py > /dev/null 2>&1"
+croncmd="/usr/bin/python3 $HOME/scripts/app_monitor/app_discord_notification.py > /dev/null 2>&1"
 cronjob="*/5 * * * * $croncmd"
 (
     crontab -l 2>/dev/null | grep -v -F "$croncmd" || :
@@ -18,5 +18,5 @@ cronjob="*/5 * * * * $croncmd"
 ) | crontab -
 
 
-/usr/bin/python3 $HOME/scripts/app_monitor/Discord_Notfication_monitory.py
+/usr/bin/python3 $HOME/scripts/app_monitor/app_discord_notification.py
 
