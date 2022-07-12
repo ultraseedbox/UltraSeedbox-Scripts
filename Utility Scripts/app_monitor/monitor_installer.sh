@@ -6,6 +6,8 @@ if [ ! "$input" = "confirm" ]; then
   exit
 fi
 
+cd "${HOME}" || exit 1
+
 printf "Please choose option from below if you want notification on discord or info as a log file on your service\n"
 printf "1. Store Applications status on your service at {~/script/app_monitor}\n"
 printf "2. To get application status on your Discord(You need Discord Webhook for it)\n"
