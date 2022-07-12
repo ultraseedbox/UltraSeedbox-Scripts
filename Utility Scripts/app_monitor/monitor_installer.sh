@@ -13,11 +13,11 @@ printf "2. To get application status on your Discord(You need Discord Webhook fo
 read -rp "Please select option 1 or 2: " choice
 
 if [ "$choice" = "1" ]; then
-  bash <(wget -qO- https://raw.githubusercontent.com/yashgupta-112/app_monitor/master/Monitor_installer.sh)
+  bash <(wget -qO- https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/Utility%20Scripts/app_monitor/log_installer.sh)
 fi
 
 if [ "$choice" = "2" ]; then
-  bash <(wget -qO- https://raw.githubusercontent.com/yashgupta-112/app_monitor/master/Discord_monitor_installer.sh)
+  bash <(wget -qO- https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/Utility%20Scripts/app_monitor/discord_monitor_installer.sh)
 fi
 
 if [ ! "$choice" = "1" ] && [ ! "$choice" = "2" ]; then
