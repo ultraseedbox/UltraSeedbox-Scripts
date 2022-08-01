@@ -16,8 +16,7 @@ mkdir -p "$HOME"/.xteve-tmp
 
 # xTeve Extract
 cd "$HOME"/.xteve-tmp || exit
-wget https://github.com/xteve-project/xTeVe-Downloads/raw/master/xteve_linux_amd64.zip
-unzip xteve_linux_amd64.zip -d "$HOME"/bin/
+wget https://github.com/SCP002/xTeVe/releases/latest/download/xteve_linux_amd64 -O "$HOME/bin/xteve"
 
 # Unused Port Picker
 app-ports show
