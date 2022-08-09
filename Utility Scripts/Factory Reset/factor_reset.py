@@ -191,9 +191,9 @@ reset = FactorReset()
 if __name__ == '__main__':
     print("\033[91m" + "Disclaimer: This script is unofficial and USB staff will not support any issues with it" + "\033[0m")
     s = input("Are you sure you want to delete all your data and applications config because once script is executed your data will be deleted forever we won't be able to get back your data ? (yes/no)")
-    confirmation = input("Please type 'confirm' to run the script:")
-    if s == "yes" or s == "Yes" or s == "YES" and confirmation == "confirm":
-
+   
+    if s == "yes" or s == "Yes" or s == "YES":
+        confirmation = input("Please type 'confirm' to run the script:")
         print("Choose the option from the list below.\n")
         print("1. Complete reset delete all data and config. \n")
         print("2. Delete all extra folders and files. \n")
