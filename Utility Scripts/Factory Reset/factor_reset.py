@@ -243,5 +243,6 @@ if __name__ == '__main__':
             print("Cleanup process has been completed")
     elif s == "no" or s == "NO" or s == "No":
         print("Factor Reset has been stopped,All your data is safe")
+        exit()
     else:
         print("Please run the script again and choose valid option.")
