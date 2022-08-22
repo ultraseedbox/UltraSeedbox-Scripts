@@ -191,56 +191,59 @@ reset = FactorReset()
 if __name__ == '__main__':
     print("\033[91m" + "Disclaimer: This script is unofficial and USB staff will not support any issues with it" + "\033[0m")
     s = input("Are you sure you want to delete all your data and applications config because once script is executed your data will be deleted forever we won't be able to get back your data ? (yes/no)")
-    confirmation = input("Please type 'confirm' to run the script:")
-    if s == "yes" or s == "Yes" or s == "YES" and confirmation == "confirm":
+    
+    if s == "yes" or s == "Yes" or s == "YES":
+        confirmation = input("Please type 'confirm' to run the script:")
+        if confirmation == "confirm":
+            print("Choose the option from the list below.\n")
+            print("1. Complete reset delete all data and config. \n")
+            print("2. Delete all extra folders and files. \n")
+            print("3. Uninstall all applications and their config but don't delete data. \n")
+            print("4. Delete data from default directories. \n")
+            choice = input("Please enter your choice: ")
+            if choice == "1":
 
-        print("Choose the option from the list below.\n")
-        print("1. Complete reset delete all data and config. \n")
-        print("2. Delete all extra folders and files. \n")
-        print("3. Uninstall all applications and their config but don't delete data. \n")
-        print("4. Delete data from default directories. \n")
-        choice = input("Please enter your choice: ")
-        if choice == "1":
+                reset.unmount_rclone()
+                reset.Remove_Extra_directory(path)
+                reset.uninstall_apps_directory(apps_path)
+                reset.delete_config(config_path)
+                reset.delete_Data_from_maindirectory(
+                    Movie_path, tv_path, music_path, book_path, files_path, downloads_path)
+                reset.Delete_Custom_media_files(media)
+                reset.ClearBin(bin_path)
+                reset.Stop_Systemd_app(systemd_app)
+                reset.Fresh_Bash_install()
+                reset.clear_corntab()
+                reset.Finalfix()
 
-            reset.unmount_rclone()
-            reset.Remove_Extra_directory(path)
-            reset.uninstall_apps_directory(apps_path)
-            reset.delete_config(config_path)
-            reset.delete_Data_from_maindirectory(
-                Movie_path, tv_path, music_path, book_path, files_path, downloads_path)
-            reset.Delete_Custom_media_files(media)
-            reset.ClearBin(bin_path)
-            reset.Stop_Systemd_app(systemd_app)
-            reset.Fresh_Bash_install()
-            reset.clear_corntab()
-            reset.Finalfix()
+                print("Cleanup process has been completed")
+            if choice == "3":
 
-            print("Cleanup process has been completed")
-        if choice == "3":
+                reset.uninstall_apps_directory(apps_path)
+                reset.delete_config(config_path)
+                reset.Stop_Systemd_app(systemd_app)
+                reset.ClearBin(bin_path)
+                reset.Fresh_Bash_install
+                reset.clear_corntab()
+                reset.Finalfix()
 
-            reset.uninstall_apps_directory(apps_path)
-            reset.delete_config(config_path)
-            reset.Stop_Systemd_app(systemd_app)
-            reset.ClearBin(bin_path)
-            reset.Fresh_Bash_install
-            reset.clear_corntab()
-            reset.Finalfix()
+                print("Cleanup process has been completed")
+            if choice == "2":
 
-            print("Cleanup process has been completed")
-        if choice == "2":
+                reset.Remove_Extra_directory(path)
+                reset.Finalfix()
 
-            reset.Remove_Extra_directory(path)
-            reset.Finalfix()
+                print("Cleanup process has been completed")
+            if choice == "4":
 
-            print("Cleanup process has been completed")
-        if choice == "4":
+                reset.delete_Data_from_maindirectory(
+                    Movie_path, tv_path, music_path, book_path, files_path, downloads_path)
+                reset.Delete_Custom_media_files(media)
+                reset.Finalfix()
 
-            reset.delete_Data_from_maindirectory(
-                Movie_path, tv_path, music_path, book_path, files_path, downloads_path)
-            reset.Delete_Custom_media_files(media)
-            reset.Finalfix()
-
-            print("Cleanup process has been completed")
+                print("Cleanup process has been completed")
+        else:
+            print("Script has been stoped.")
     elif s == "no" or s == "NO" or s == "No":
         print("Factor Reset has been stopped,All your data is safe")
         exit()
