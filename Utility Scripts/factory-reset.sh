@@ -6,7 +6,8 @@ set -euo pipefail
 
 if ! python3 -V | grep -q -E "3.([6-9]|1[0-9]).*"  &&  ! /usr/bin/python3 -V | grep -q -E "3.([6-9]|1[0-9]).*"; then
  echo "Python3.6+ required to run."
- echo "Please install a python3 version greater than 3.6, then run this script again https://docs.usbx.me/books/pyenv/page/how-to-install-python-using-pyenv"
+ echo "Please install a python3 version greater than 3.6, using the following guide: https://docs.usbx.me/books/pyenv/page/how-to-install-python-using-pyenv"
+ echo "Then, run this script again."
  exit 1
 fi
 
@@ -20,6 +21,6 @@ fi
 
 #Run the script
 
-"${pythonbinary}" <(wget -qO- https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/Utility%20Scripts/Factory%20Reset/factor_reset.py)
+"${pythonbinary}" <(wget -qO- https://scripts.usbx.me/util/factor_reset/Factor_reset.py)
 
 exit 0
