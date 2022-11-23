@@ -8,27 +8,38 @@ if test -f "$HOME/.migration/.config/systemd/user/rclone-vfs.service"; then
    cp $HOME/.migration/.config/systemd/user/rclone-vfs.service $HOME/.config/systemd/user/
    sed -i -E "s+/home[0-9]{0,2}/\w*+%h+g" $HOME/.config/systemd/user/rclone-vfs.service
    systemctl --user daemon-reload
-   systemctl --user enable rclone-vfs.service
-   systemctl --user restart rclone-vfs.service
-   echo -e "${GREEN}rclone-vfs service edited and restarted${NOCOLOR}"
-else echo -e "${RED}rclone-vfs.service not found in .migration folder${NOCOLOR}"
+   systemctl --user -q enable rclone-vfs.service
+   systemctl --user -q restart rclone-vfs.service
+   sleep 3
+   systemctl --user -q is-active rclone-vfs.service && echo -e "${GREEN}rclone-vfs service edited and restarted successfully.${NOCOLOR}"
+   systemctl --user -q is-failed rclone-vfs.service && echo -e "${RED}rclone-vfs service edited and failed to start. Check rclone mount log.${NOCOLOR}"
 fi
 
 if test -f "$HOME/.migration/.config/systemd/user/mergerfs.service"; then
    cp $HOME/.migration/.config/systemd/user/mergerfs.service $HOME/.config/systemd/user/
    sed -i -E "s+/home[0-9]{0,2}/\w*+%h+g" $HOME/.config/systemd/user/mergerfs.service
    systemctl --user daemon-reload
-   systemctl --user enable mergerfs.service
-   systemctl --user restart mergerfs.service
-   echo -e "${GREEN}mergerfs service edited and restarted${NOCOLOR}"
-else echo -e "${RED}mergerfs.service not found in .migration folder${NOCOLOR}"
+   systemctl --user -q enable mergerfs.service
+   systemctl --user -q restart mergerfs.service
+   sleep 3
+   systemctl --user -q is-active mergerfs.service && echo -e "${GREEN}mergerfs service edited and restarted successfully.${NOCOLOR}"
+   systemctl --user -q is-failed mergerfs.service && echo -e "${RED}mergerfs service edited and failed to start. Check mergerfs mount log.${NOCOLOR}"
 fi
 
 if test -f "$HOME/.migration/.config/systemd/user/rclone-uploader.service" && test -f "$HOME/.migration/.config/systemd/user/rclone-uploader.timer"; then
    cp $HOME/.migration/.config/systemd/user/rclone-uploader.service $HOME/.config/systemd/user/ && cp $HOME/.migration/.config/systemd/user/rclone-uploader.timer $HOME/.config/systemd/user/
    sed -i -E "s+/home[0-9]{0,2}/\w*+%h+g" $HOME/.config/systemd/user/rclone-uploader.service
    systemctl --user daemon-reload
-   systemctl --user enable --now rclone-uploader.service && systemctl --user enable --now rclone-uploader.timer
+   systemctl --user -q enable --now rclone-uploader.service && systemctl --user -q enable --now rclone-uploader.timer
    echo -e "${GREEN}rclone-uploader service & timer edited and enabled${NOCOLOR}"
-else echo -e "${RED}rclone-uploader or rclone-uploader.timer not found in .migrations folder${NOCOLOR}"
 fi
+
+ 
+if [[ -z $(grep '[^[:space:]]' "$HOME/.migration/crontab.dump") ]] ; then
+   exit
+fi
+
+crontab "$HOME/.migration/crontab.dump"
+echo -e "${GREEN}crontab restored.${NOCOLOR}"
+
+exit
