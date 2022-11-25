@@ -1,111 +1,74 @@
 #!/bin/bash
 
-# megatools installer/updater/uninstaller by Xan#7777
+set -euo pipefail
 
-# Unofficial Script warning
-clear
-echo "This is the megatools Installer!"
-echo ""
-printf "\033[0;31mDisclaimer: This installer is unofficial and USB staff will not support any issues with it\033[0m\n"
-read -p "Type confirm if you wish to continue: " input
-if [ ! "$input" = "confirm" ]
+cd "${HOME}" || exit
+
+printf "\033[0;31mDisclaimer: This installer is unofficial and Ultra.cc staff will not support any issues with it.\033[0m\n"
+read -rp "Type confirm if you wish to continue: " input
+if [ ! "$input" == "confirm" ]
 then
-    exit
+    exit 0
+fi
+echo
+
+grab_latest_version() {
+    LATEST=$(curl -s https://megatools.megous.com/builds/LATEST)
+    mkdir -p "$HOME"/.megatools-tmp
+    cd "$HOME"/.megatools-tmp || exit
+    wget -qO megatools.tar.gz "https://megatools.megous.com/builds/builds/${LATEST}-linux-x86_64.tar.gz"
+    tar -xf megatools.tar.gz "${LATEST}-linux-x86_64/megatools" && mv "${LATEST}-linux-x86_64/megatools" "${HOME}/bin/"
+    rm -rf "$HOME"/.megatools-tmp
+}
+
+old_install(){
+    if [ -f "${HOME}/bin/megadl" ] || [ -f "${HOME}/bin/megatools" ]; then
+        return 0
+    fi
+
+    return 1
+}
+
+uninstall() {
+    rm -rf "$HOME"/bin/{megacopy,megadf,megadl,megaget,megals,megamkdir,megaput,megareg,megarm}
+    rm -rf "${HOME}/bin/megatools"
+}
+
+if ! old_install; then
+    grab_latest_version
+    echo "$LATEST installed successfully."
+    echo
+    exit 0
 fi
 
-megalatest=1.10.3
-megacompla=$(echo "$megalatest" | sed 's/\.//g')
-megacompver=$(megadl --version | awk {'print $2'} | grep "1.10.[1-3]" | sed 's/\.//g')
-
-# Create temp folder
-mkdir -p "$HOME"/.megatools-tmp
-cd "$HOME"/.megatools-tmp || exit
-
-# Main Menu
-clear
-echo "What do you want to do?"
-echo "Type '1' to install megatools."
-echo "Type '2' to upgrade megatools."
-echo "Type '3' to uninstall megatools."
-echo "Type 'exit' to exit the installer."
-
-while true; do
-    read -p "Enter your response here: " mega
-    case $mega in
-        1)
-            if [ ! "$(megadl --version)" ]; then
-                clear
-                echo "Installing megatools..."
-                sleep 2
-                wget -qO megatools.tar.gz "https://megatools.megous.com/builds/megatools-$megalatest.tar.gz"
-                tar xf megatools.tar.gz
-                cd "$HOME"/.megatools-tmp/megatools-"$megalatest"/ || exit
-                ./configure --prefix="$HOME" --disable-docs
-                make
-                make install
-                clear
-                echo "Installation complete!"
-                sleep 1
-            else
-                echo "You already installed megatools!"
-                sleep 2
-            fi
-            break
-            ;;
-        2)
-            clear
-            if [ "$(megadl --version)" ]; then
-                if [[ "$megacompla" > "$megacompver" ]]; then
-                    echo "Upgrading megatools..."
-                    sleep 2
-                    rm -rf "$HOME"/bin/{megacopy,megadf,megadl,megaget,megals,megamkdir,megaput,megareg,megarm}
-                    wget -qO megatools.tar.gz "https://megatools.megous.com/builds/megatools-$megalatest.tar.gz"
-                    tar xf megatools.tar.gz
-                    cd "$HOME"/.megatools-tmp/megatools-"$megalatest"/ || exit
-                    ./configure --prefix="$HOME" --disable-docs
-                    make
-                    make install
-                    echo "megatools upgrade complete!"
-                elif [[ "$megacompla" == "$megacompver" ]]; then
-                    echo "You are on the latest version! Exiting..."
-                    sleep 2
-                elif [[ ! "$megacompla" > "$megacompver" ]]; then
-                    echo "Your megatools version is too old."
-                    echo "Run this installer and choose uninstall."
-                    echo "Then, run the installer again to install."
-                    sleep 2
-                fi
-            else
-                clear
-                echo "You haven't installed megatools."
-                sleep 2
-            fi
-            break
-            ;;
-        3)
-            clear
-            if [ "$(megadl --version)" ]; then
-                echo "Uninstalling megatools..."
-                sleep 2
-                rm -rf "$HOME"/bin/{megacopy,megadf,megadl,megaget,megals,megamkdir,megaput,megareg,megarm}
-                break
-            else
-                clear
-                echo "You already uninstalled megatools."
-                sleep 2
-                break
-            fi
-            ;;
-        exit)
-            break
-            ;;
-        * ) echo "Unknown response. Try again..." ;;
+echo "Old megatools installation detected."
+echo "How do you wish to proceed?"
+select status in 'Update' 'Uninstall' 'Quit'; do
+    case ${status} in
+    'Update')
+        uninstall
+        grab_latest_version
+        echo
+        echo "megatools updated."
+        echo
+        exit 0
+        break
+        ;;
+    'Uninstall')
+        uninstall
+        echo
+        echo "megatools uninstalled."
+        echo
+        exit 0
+        break
+        ;;
+    'Quit')
+        exit 0
+        ;;
+    *)
+        echo "Invalid option $REPLY. Choose between 1-3."
+        ;;
     esac
 done
 
-# cleanup
-clear
-cd "$HOME" || exit
-rm -rf "$HOME"/.megatools-tmp
-echo "Goodbye."
-exit
+exit 0
