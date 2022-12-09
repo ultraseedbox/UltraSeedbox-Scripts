@@ -39,7 +39,10 @@ if [[ -z $(grep '[^[:space:]]' "$HOME/.migration/crontab.dump") ]] ; then
    exit
 fi
 
-crontab "$HOME/.migration/crontab.dump"
+cp "$HOME/.migration/crontab.dump" "$HOME/.migration/crontab.dump.temp"
+sed -i -E "s+/home[0-9]{0,2}/[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\$)/+/home/$USER/+g" "$HOME/.migration/crontab.dump.temp"
+crontab "$HOME/.migration/crontab.dump.temp"
+rm "$HOME/.migration/crontab.dump.temp"
 echo -e "${GREEN}crontab restored.${NOCOLOR}"
 
 exit
