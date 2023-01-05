@@ -1,20 +1,10 @@
 #!/bin/bash
-# by finch #0853
+# by finch 
+# bless xan & probbzy
 
 # This is the repair function, could probably be cleaned up but works. 
 repair()
 {
-    # Create a rar backup for restore script.
-    echo "----------------------------------"
-    echo "Creating a backup of the plex databases directory for safe keeping."
-    echo "----------------------------------"
-    mkdir "$HOME"/plexbackup
-    rar a "$HOME"/plexbackup/plexdb.rar "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/*"
-    echo "----------------------------------"
-    echo "Done!"
-    echo "----------------------------------"
-    sleep 5
-    clear
     # Following guide per plexs instructions.
     echo "----------------------------------"
     echo "Repairing now with sqlite tools"
@@ -28,15 +18,20 @@ repair()
     mv com.plexapp.plugins.library.db tmp/com.plexapp.plugins.library.db
     cd tmp || exit
     # Running repair commands
-    "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db "DROP index 'index_title_sort_naturalsort'"
+    # Clean up DB Before low level repair
+    "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db "VACUUM;"
     sleep 1
-    "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db "DELETE from schema_migrations where version='20180501000000'"
+    "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db "REINDEX;"
+    # Starting Low Level Repair
     sleep 1
-    "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db .dump > dump.sql
+    "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db ".recover" | "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db-fixed
     sleep 1
-    rm com.plexapp.plugins.library.db
+    # Backup Cleaned Up Database before low level repair. 
+    mkdir -p "$HOME"/plexbackup
+    mv com.plexapp.plugins.library.db $HOME/plexbackup
     sleep 1
-    "$HOME"/bin/sqlite3 com.plexapp.plugins.library.db < dump.sql
+    # Rename back
+    mv com.plexapp.plugins.library.db-fixed com.plexapp.plugins.library.db
     sleep 1
     # Moving the DB back to the main databases folder
     mv com.plexapp.plugins.library.db "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/"
@@ -53,9 +48,46 @@ repair()
     /usr/bin/app-plex start
     echo "----------------------------------"
     echo "Plex has been started with recovered DB!"
-    echo "The old DB can be found in $HOME/plexbackup"
+    echo "The old cleaned DB can be found in $HOME/plexbackup but YMMV with this DB if you need it anyway."
     echo "----------------------------------"
     exit 0
+}
+
+#Install updated version of SQLite3 since its way out of date and cant use .recover. 
+sqlite3()
+{
+    echo "Have you installed the newest version of sqlite3?"
+    echo "y/n"
+    read -p "yes(y) / no(n):- " sqlite3response
+    if [ "$sqlite3response" = "y" ]; then 
+        echo "Not Updating."
+    elif [ "$sqlite3response" = "n" ];then
+        mkdir -p "$HOME"/scripts
+        wget -O "$HOME"/scripts/sqlite-installer.sh https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/Language%20Installers/sqlite-installer.sh
+        chmod +x "$HOME"/scripts/sqlite-installer.sh
+        "$HOME"/scripts/sqlite-installer.sh
+        echo "----------------------------------"
+        echo "Finished! Cleaning up!"
+        echo "----------------------------------"
+        sleep 5
+        clear
+    else 
+        echo "Wrong!"
+        exit
+    fi
+}
+
+# Corruption check for user. 
+corruption()
+{
+    echo "----------------------------------"
+    echo "Checking for corruption If the result comes back as “ok”, then the database file structure appears to be valid. It’s still possible that there may be other issues that haven’t been detected, such as incorrect formatting in the data itself."
+    echo "----------------------------------"
+   "$HOME"/bin/sqlite3 "$HOME/.config/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db" "PRAGMA integrity_check;"
+    echo "----------------------------------"
+    echo "We will still continue the repair..."
+    echo "----------------------------------"
+    sleep 3
 }
 
 # Start main of script
@@ -99,27 +131,7 @@ else
     echo "Passed final stop check."
     sleep 2
     clear
-fi
-
-# Start the DB Recovery
-if [[ -e "$HOME/bin/sqlite3" ]]; 
-then
-    repair
-else
-    echo "----------------------------------"
-    echo "Sqlite3 was not found! :( "
-    echo "Installing sqlite3 for you."
-    echo "You will get another prompt to run a script to install Sqlite3. The recovery process will continue once installed."
-    echo "----------------------------------"
-    sleep 2
-    mkdir -p "$HOME"/scripts
-    wget -O "$HOME"/scripts/sqlite-installer.sh https://raw.githubusercontent.com/ultraseedbox/UltraSeedbox-Scripts/master/Language%20Installers/sqlite-installer.sh
-    chmod +x "$HOME"/scripts/sqlite-installer.sh
-    "$HOME"/scripts/sqlite-installer.sh
-    echo "----------------------------------"
-    echo "Finished! Cleaning up!"
-    echo "----------------------------------"
-    sleep 5
-    clear
+    sqlite3
+    corruption
     repair
 fi
