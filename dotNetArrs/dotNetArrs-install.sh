@@ -16,9 +16,9 @@ clear
 
 #Application Select from https://wiki.servarr.com/install-script
 
-echo "Select the application to install [ Choose from 1 - 5 ]: "
+echo "Select the application to install [ Choose from 1 - 4 ]: "
 
-select app in lidarr prowlarr radarr readarr whisparr quit; do
+select app in lidarr prowlarr radarr readarr quit; do
 
   case ${app} in
   lidarr)
@@ -35,10 +35,6 @@ select app in lidarr prowlarr radarr readarr whisparr quit; do
     ;;
   readarr)
     branch="develop" # {Update me if needed} branch to install
-    break
-    ;;
-  whisparr)
-    branch="nightly" # {Update me if needed} branch to install
     break
     ;;
   quit)
