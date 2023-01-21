@@ -16,9 +16,9 @@ fi
 if [ ! -f "$HOME"/bin/sqlite3 ]; then
     mkdir -p "$HOME"/.sqlite-tmp
     cd "$HOME"/.sqlite-tmp || exit
-    wget https://www.sqlite.org/2020/sqlite-autoconf-3320300.tar.gz
-    tar xvfz sqlite-autoconf-3320300.tar.gz
-    cd "$HOME"/.sqlite-tmp/sqlite-autoconf-3320300 || exit
+    wget https://www.sqlite.org/2022/sqlite-autoconf-3400100.tar.gz
+    tar xvfz sqlite-autoconf-3400100.tar.gz
+    cd "$HOME"/.sqlite-tmp/sqlite-autoconf-3400100 || exit
     ./configure --prefix="$HOME"
     make
     make install
