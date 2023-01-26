@@ -2,6 +2,18 @@
 
 set -euo pipefail
 
+#Disclaimer
+
+printf "\033[0;31mDisclaimer: This installer is unofficial and Ultra.cc staff will not support any issues with it.\033[0m\n"
+read -rp "Type confirm if you wish to continue: " input
+if [ ! "$input" = "confirm" ]; then
+    exit
+fi
+
+clear
+
+cd "${HOME}" || exit 1
+
 #Functions
 
 port_picker() {
@@ -30,28 +42,47 @@ port_picker() {
 }
 
 media_server(){
+
+    plexport=$(app-ports show | grep "Plex Media Server" | head -n 1 | awk '{print $1}') || plexport=''
+    embyport=$(app-ports show | grep "Emby" | head -n 1 | awk '{print $1}') || embyport=''
+    jellyport=$(app-ports show | grep "Jellyfin" | head -n 1 | awk '{print $1}') || jellyport=''
+
     echo
     echo "Which media server are you planning to use autoscan with?"
-    select server in "Plex Media Server" "Emby" "Jellyfin"; do
 
-        serverport=$(app-ports show | grep "${server}" | head -n 1 | awk '{print $1}') || serverport=''
+    select server in "Plex Media Server" "Emby" "Jellyfin"; do
 
         case ${server} in
             "Plex Media Server")
                 target='plex'
+                target2='emby'
+                target3='jellyfin'
+                serverport="${plexport}"
                 url="http://172.17.0.1:${serverport}"
+                url2="http://172.17.0.1:${embyport}/emby"
+                url3="http://172.17.0.1:${jellyport}/jellyfin"
                 auth="${url}/?X-Plex-Token"
                 break
                 ;;
             "Emby")
                 target='emby'
+                target2='plex'
+                target3='jellyfin'
+                serverport="${embyport}"
                 url="http://172.17.0.1:${serverport}/emby"
+                url2="http://172.17.0.1:${plexport}"
+                url3="http://172.17.0.1:${jellyport}/jellyfin"
                 auth="${url}/System/Info?Api_key"
                 break
                 ;;
             "Jellyfin")
                 target='jellyfin'
+                target2='plex'
+                target3='emby'
+                serverport="${jellyport}"
                 url="http://172.17.0.1:${serverport}/jellyfin"
+                url2="http://172.17.0.1:${plexport}"
+                url3="http://172.17.0.1:${embyport}/emby"
                 auth="${url}/System/Info?Api_key"
                 break
                 ;;
@@ -135,6 +166,17 @@ targets:
   ${target}:
     - url: ${url}
       token: ${servertoken}
+
+#  ${target2}
+#   - url: ${url2}
+#      token: <token>
+
+#  ${target3}
+#   - url: ${url3}
+#      token: <token>
+
+#anchors:
+#  - ${HOME}/MergerFS/.anchor
 EOF
 }
 
