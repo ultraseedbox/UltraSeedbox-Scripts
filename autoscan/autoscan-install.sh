@@ -59,7 +59,7 @@ media_server(){
                 target3='jellyfin'
                 serverport="${plexport}"
                 url="http://172.17.0.1:${serverport}"
-                url2="http://172.17.0.1:${embyport}/emby"
+                url2="http://172.17.0.1:${embyport}"
                 url3="http://172.17.0.1:${jellyport}/jellyfin"
                 auth="${url}/?X-Plex-Token"
                 break
@@ -69,7 +69,7 @@ media_server(){
                 target2='plex'
                 target3='jellyfin'
                 serverport="${embyport}"
-                url="http://172.17.0.1:${serverport}/emby"
+                url="http://172.17.0.1:${serverport}"
                 url2="http://172.17.0.1:${plexport}"
                 url3="http://172.17.0.1:${jellyport}/jellyfin"
                 auth="${url}/System/Info?Api_key"
@@ -82,7 +82,7 @@ media_server(){
                 serverport="${jellyport}"
                 url="http://172.17.0.1:${serverport}/jellyfin"
                 url2="http://172.17.0.1:${plexport}"
-                url3="http://172.17.0.1:${embyport}/emby"
+                url3="http://172.17.0.1:${embyport}"
                 auth="${url}/System/Info?Api_key"
                 break
                 ;;
@@ -167,12 +167,12 @@ targets:
     - url: ${url}
       token: ${servertoken}
 
-#  ${target2}
-#   - url: ${url2}
+#  ${target2}:
+#    - url: ${url2}
 #      token: <token>
 
-#  ${target3}
-#   - url: ${url3}
+#  ${target3}:
+#    - url: ${url3}
 #      token: <token>
 
 #anchors:
