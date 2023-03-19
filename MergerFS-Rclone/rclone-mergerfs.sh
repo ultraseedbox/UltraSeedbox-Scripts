@@ -35,7 +35,17 @@ if [ ! -f "${HOME}/bin/mergerfs" ]; then
   exit 1
 fi
 
-if ! rclone selfupdate -q > /dev/null 2>&1; then
+if [[ -n $(ls -A "${paths[1]}") || -n $(ls -A "${paths[4]}") ]]; then
+  echo
+  echo "ERROR: ${paths[1]} or ${paths[4]} is not empty."
+  echo "Please stop all running rclone/mergerfs mount processes, and run the script again."
+  echo "If data is stored locally in above paths, move the data out of these directories and then run the script again."
+  echo "Both of them must be empty for the rclone and mergerfs mounts to work properly."
+  echo
+  exit 1
+fi
+
+if ! rclone selfupdate --version 1.61.1 -q > /dev/null 2>&1; then
   echo "Self-update failed. Installed rclone version is very old."
   echo "Install rclone stable, then run the script again. https://docs.usbx.me/link/6#bkmrk-rclone-stable"
   exit 1
@@ -78,15 +88,6 @@ for i in {1..7}; do
     mkdir -p "${paths[${i}]}"
   fi
 done
-
-if [[ -n $(ls -A "${paths[1]}") || -n $(ls -A "${paths[4]}") ]]; then
-  echo
-  echo "ERROR: ${paths[1]} or ${paths[4]} is not empty."
-  echo "Please move the data out of these directories and then run the script again."
-  echo "Both of them must be empty for the rclone and mergerfs mounts to work properly."
-  echo
-  exit 1
-fi
 
 #Install systemd services
 
