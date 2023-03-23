@@ -45,7 +45,7 @@ if [[ -n $(ls -A "${paths[1]}") || -n $(ls -A "${paths[4]}") ]]; then
   exit 1
 fi
 
-if ! rclone selfupdate --version 1.61.1 -q > /dev/null 2>&1; then
+if ! rclone selfupdate -q > /dev/null 2>&1; then
   echo "Self-update failed. Installed rclone version is very old."
   echo "Install rclone stable, then run the script again. https://docs.usbx.me/link/6#bkmrk-rclone-stable"
   exit 1
