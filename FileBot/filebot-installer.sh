@@ -12,7 +12,7 @@ then
 fi
 
 # Set FileBot version and URLs
-PACKAGE_VERSION=4.9.4
+PACKAGE_VERSION=5.0.1
 PACKAGE_SHA256=$(curl -fsSL https://raw.githubusercontent.com/filebot/website/master/get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/FileBot_$PACKAGE_VERSION-portable.tar.xz.sha256)
 PACKAGE_FILE=FileBot_$PACKAGE_VERSION-portable.tar.xz
 PACKAGE_URL=https://get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/$PACKAGE_FILE
