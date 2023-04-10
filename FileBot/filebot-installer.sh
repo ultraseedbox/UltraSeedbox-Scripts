@@ -12,13 +12,13 @@ then
 fi
 
 # Set FileBot version and URLs
-PACKAGE_VERSION=4.9.4
+PACKAGE_VERSION=5.0.1
 PACKAGE_SHA256=$(curl -fsSL https://raw.githubusercontent.com/filebot/website/master/get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/FileBot_$PACKAGE_VERSION-portable.tar.xz.sha256)
 PACKAGE_FILE=FileBot_$PACKAGE_VERSION-portable.tar.xz
 PACKAGE_URL=https://get.filebot.net/filebot/FileBot_$PACKAGE_VERSION/$PACKAGE_FILE
 
 # Create directory for all FileBot data and change working directory
-mkdir -p "$HOME"/.filebot-494 && cd "$HOME"/.filebot-494 || exit
+mkdir -p "$HOME"/.filebot && cd "$HOME"/.filebot || exit
 
 # Fetch OpenJDK 15 binaries archive
 curl -o Java15.tar.gz "https://download.java.net/java/GA/jdk15.0.1/51f4f36ad4ef43e39d0dfdbaf6549e32/9/GPL/openjdk-15.0.1_linux-x64_bin.tar.gz"
