@@ -14,6 +14,7 @@ ExecStart=%h/bin/rclone mount remote: %h/Stuff/Mount \
   --dir-cache-time 1000h \
   --poll-interval=15s \
   --vfs-cache-mode writes \
+  --temp-dir %h/.tmp-rclone \
   --tpslimit 10
 
 StandardOutput=file:%h/scripts/rclone_vfs_mount.log
