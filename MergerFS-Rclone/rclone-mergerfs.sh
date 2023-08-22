@@ -19,6 +19,7 @@ paths[4]="${HOME}/MergerFS"
 paths[5]="${HOME}/scripts"
 paths[6]="${HOME}/Stuff/Local/Movies"
 paths[7]="${HOME}/Stuff/Local/TV Shows"
+paths[8]="${HOME}/.tmp-rclone"
 
 #Checks
 
@@ -83,7 +84,7 @@ done
 echo
 echo "Rclone-MergerFS workflow setup started.."
 
-for i in {1..7}; do
+for i in {1..8}; do
   if [ ! -d "${paths[${i}]}" ]; then
     mkdir -p "${paths[${i}]}"
   fi
@@ -108,6 +109,7 @@ ExecStart=%h/bin/rclone mount ${remote}: %h/Stuff/Mount \\
   --dir-cache-time 1000h \\
   --poll-interval=15s \\
   --vfs-cache-mode writes \\
+  --temp-dir %h/.tmp-rclone \\
   --tpslimit 10
 
 StandardOutput=file:%h/scripts/rclone_vfs_mount.log

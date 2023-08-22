@@ -10,6 +10,7 @@ Environment=GOMAXPROCS=2
 
 ExecStart=%h/bin/rclone mount remote: %h/Stuff/Mount \
   --config %h/.config/rclone/rclone.conf \
+  --temp-dir %h/.tmp-rclone \
   --use-mmap
 
 StandardOutput=file:%h/scripts/rclone_mount.log
